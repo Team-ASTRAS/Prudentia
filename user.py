@@ -1,69 +1,58 @@
 #!/usr/bin/env python
 
-# WS server example that synchronizes state across clients
-
 import asyncio
 import json
 import logging
+import random
+import time
+
 import websockets
+import functools
+from threading import Lock
+from main import State
 
-logging.basicConfig()
-
-STATE = {"value": 0}
-
-USERS = set()
-
-
-def state_event():
-    return json.dumps({"type": "state", **STATE})
+dataLock = Lock()
+# Usage:    with dataLock:
+#               sharedData.variable = x
 
 
-def users_event():
-    return json.dumps({"type": "users", "count": len(USERS)})
 
+class DataPackage:
 
-async def notify_state():
-    if USERS:  # asyncio.wait doesn't accept an empty list
-        message = state_event()
-        await asyncio.wait([user.send(message) for user in USERS])
+    state = State(State.standby)
+    imuPosition = [0, 0, 0]
+    angularVelocity = 0
+    target = [0, 0, 0]
 
+    def getDataJson(self):
+        dataObject = {  "state" : self.state.name,
+                        "ImuPositionEuler" : self.imuPosition,
+                        "angularVelocity" : self.angularVelocity,
+                        "target" : self.target}
+        return json.dumps(dataObject)
 
-async def notify_users():
-    if USERS:  # asyncio.wait doesn't accept an empty list
-        message = users_event()
-        await asyncio.wait([user.send(message) for user in USERS])
+async def prudentiaServer(websocket, path, sharedData):
+    #We have access to sharedData from this function
+    print("Connected to user")
 
+    while True:
+        try:
+            async for message in websocket:
+                msgJSON = json.loads(message)
 
-async def register(websocket):
-    USERS.add(websocket)
-    await notify_users()
+                if msgJSON["messageType"] == "getData":
+                    with dataLock:
+                        print("Sending server data: ", sharedData.getDataJson())
+                        await websocket.send(sharedData.getDataJson())
 
-
-async def unregister(websocket):
-    USERS.remove(websocket)
-    await notify_users()
-
-
-async def counter(websocket, path):
-    # register(websocket) sends user_event() to websocket
-    await register(websocket)
-    try:
-        await websocket.send(state_event())
-        async for message in websocket:
-            data = json.loads(message)
-            if data["action"] == "minus":
-                STATE["value"] -= 1
-                await notify_state()
-            elif data["action"] == "plus":
-                STATE["value"] += 1
-                await notify_state()
-            else:
-                logging.error("unsupported event: {}", data)
-    finally:
-        await unregister(websocket)
-
-
-start_server = websockets.serve(counter, "localhost", 6789)
-
-asyncio.get_event_loop().run_until_complete(start_server)
-asyncio.get_event_loop().run_forever()
+                if msgJSON["messageType"] == "setState":
+                    with dataLock:
+                        if msgJSON["state"] == "disabled":
+                            sharedData.state = State.disabled
+                        elif msgJSON["state"] == "standby":
+                            sharedData.state = State.standby
+                        elif msgJSON["state"] == "running":
+                            sharedData.state = State.running
+        finally:
+            pass
+            #Consider sending disconnect message?
