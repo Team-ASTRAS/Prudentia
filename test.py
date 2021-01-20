@@ -33,10 +33,10 @@ userThread = Thread(target=startLoop, args=(newLoop, startServer))
 userThread.start()
 
 sharedData.state = State.running
-print("Starting state: ", sharedData.state," | IMU Data: {", sharedData.imuPosition, "}")
+print("Starting state: ", sharedData.state," | IMU Data: {", sharedData.angularPosition, "}")
 ## Main Loop
 while True:
-    print("State: ", sharedData.state," | IMU Data: {", sharedData.imuPosition, "}")
+    print("State: ", sharedData.state," | IMU Data: {", sharedData.angularPosition, "}")
     time.sleep(0.05)
     #The primary state of Prudentia is an enum defined in user.py in sharedData
     if sharedData.state is State.running:
@@ -45,14 +45,14 @@ while True:
         x = random.randrange(-180, 180)
         y = random.randrange(-180, 180)
         z = random.randrange(-180, 180)
-        sharedData.imuPosition = [x, y, z]
+        sharedData.angularPosition = [x, y, z]
 
     elif sharedData.state is State.standby:
-        sharedData.imuPosition[0] += random.randrange(-1, 1)
-        sharedData.imuPosition[1] += random.randrange(-1, 1)
-        sharedData.imuPosition[2] += random.randrange(-1, 1)
+        sharedData.angularPosition[0] += random.randrange(-1, 1)
+        sharedData.angularPosition[1] += random.randrange(-1, 1)
+        sharedData.angularPosition[2] += random.randrange(-1, 1)
         #Get and set IMU data
         #Motors are off, so x,y,z aren't changing (ideally)
 
-    elif sharedData.state is State.disabled:
+    elif sharedData.state is State.shutdown:
         pass

@@ -1,55 +1,36 @@
 import asyncio
-import functools
+import signal
 import time, numpy, controlLaw
 from threading import Thread
 import websockets
-import user
 from enum import Enum, unique
 from utilities import log
+import user
 
-@unique
-class State(Enum):
-    standby = 1 #Loop is running and server is active, waiting for input [Motors off]
-    running = 2 #Running routine specified by user (goto coordinate, tracking, calibrate, etc) [Motors on
-    disabled = 3 #Program has crashed and cannot continue [Motors off]
+from user import State
 
 @unique
 class ControlRoutine(Enum):
-    standby = 1
-    stabilize = 2
-    realTimeControl = 3
-    attitudeInput = 4
-    search = 5
+    standby = 1 #Do nothing [Motors off]
+    stabilize = 2 #Stabilize angular position
+    realTimeControl = 3 #Change target vector based on RTC input
+    attitudeInput = 4 #Set a target vector for Prudentia
+    search = 5 #Search routines
 
 controlRoutine = ControlRoutine.standby
 
 ## Web Server Setup
-
-sharedData = user.DataPackage() #Create a DataPackage class
-
-def startLoop(eventLoop, server):
-    eventLoop.run_until_complete(server)
-    eventLoop.run_forever()
-
-# Bind sharedData as an extra argument to prudentiaServer
-boundServerFunction = functools.partial(user.prudentiaServer, sharedData=sharedData)
-
-# Create a new event loop for the user client
-newLoop = asyncio.new_event_loop()
-
-# Create websocket object with our bound function, network options, and the new loop
-startServer = websockets.serve(boundServerFunction, '127.0.0.1', 6789, loop=newLoop)
+# Create a single DataPackage class instance
+sharedData = user.DataPackage()
 
 # Start thread to begin server
-userThread = Thread(target=startLoop, args=(newLoop, startServer))
+userThread = Thread(target=user.startServer, args=(sharedData,))
 userThread.start()
 
-
 ## Initialization
-running = True
 
 sharedData.state = State.running
-sharedData.imuPosition = [0, 0, 0]
+sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = 0
 sharedData.target = [0, 0, 0]
 
@@ -63,8 +44,22 @@ log('Setting up..')
 
 ControlLaw = controlLaw.ControlLaw()
 
-while running:
+def processCommands():
+    while not sharedData.commandQueue.empty():
+        msgJSON = sharedData.commandQueue.get()
+        if msgJSON["messageType"] == "setState":
+            if msgJSON["state"] == "disabled":
+                sharedData.state = State.shutdown
+            elif msgJSON["state"] == "standby":
+                sharedData.state = State.standby
+            elif msgJSON["state"] == "running":
+                sharedData.state = State.running
+
+while True:
     loopStart = time.time()
+
+    #Check sharedData.commandQueue for any incoming commands
+    processCommands()
 
     # If state changes, update and log
     if sharedData.state != lastState:
@@ -72,13 +67,19 @@ while running:
         lastState = sharedData.state
 
     # Switch behavior depending on state
-    if sharedData.state == State.disabled:
+    if sharedData.state == State.shutdown:
+        #Stop server (defined in startServer in user.py)
+        sharedData.stopServer.set_result(None)
         break #If disabled, end program
+
     elif sharedData.state == State.standby:
         pass #Do nothing
+
     elif sharedData.state == State.running:
         # We are now in control, get IMU data
         # current attitude from imu.py
+
+        sharedData.angularPosition[0] += 1
 
         if controlRoutine == ControlRoutine.standby:
             # Do nothing
@@ -91,19 +92,19 @@ while running:
             # Use response to actuate motors
 
         elif controlRoutine == ControlRoutine.realTimeControl:
-            # Stabilize
+            # Real time control
             # Set ControlLaw Data
             response = ControlLaw.routineRealTimeControl()
             # Use response to actuate motors
 
         elif controlRoutine == ControlRoutine.attitudeInput:
-            # Stabilize
+            # Attitude input
             # Set ControlLaw Data
             response = ControlLaw.routineAttitudeInput()
             # Use response to actuate motors
 
         elif controlRoutine == ControlRoutine.search:
-            # Stabilize
+            # Search
             # Set ControlLaw Data
             response = ControlLaw.routineSearch()
             # Use response to actuate motors
@@ -112,7 +113,6 @@ while running:
             log("Error: controlRoutine not found")
             pass
 
-        #time.sleep(0.001)
 
     ## Timing
 

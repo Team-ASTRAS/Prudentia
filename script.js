@@ -11,7 +11,7 @@ refreshData()
 
 // Button callbacks
 disabledBtn.onclick = function (event) {
-    setState("disabled")
+    setState("shutdown")
 }
 
 standbyBtn.onclick = function (event) {
@@ -22,23 +22,34 @@ runningBtn.onclick = function (event) {
     setState("running")
 }
 
+function setState(state){
+    var msg = {"messageType":"setState", "state":state}
+    websocket.send(JSON.stringify(msg));
+}
+
 function start(websocketServerLocation){
     restarting = false;
     websocket = new WebSocket(websocketServerLocation);
 
+    //Right now, we assume the only message Prudentia sends is it's sharedData
     websocket.onmessage = function (event) {
         data = JSON.parse(event.data);
         dataField.textContent = "Data:" + JSON.stringify(data);
     };
 
-    //Retry connection
+    websocket.onerror = function(error){
+        console.error("WebSocket error: Closing socket.");
+        websocket.close();
+    }
+
     websocket.onclose = function(event){
-        if(!restarting){ /* Avoid firing a new setInterval, after one has been done */
-            setInterval(function(){start(websocketServerLocation)}, 3000);
-            restarting = true;
-        }
+        retryTime = 300
+        console.log("Websocket closed: ", event.reason, "Reconnecting in ", retryTime, " ms.")
+        setTimeout(function(){start(websocketServerLocation)}, retryTime);
+        restarting = true;
     }
 }
+
 
 function refreshData(){
     if (websocket.readyState === websocket.OPEN){//Websocket open
@@ -49,8 +60,4 @@ function refreshData(){
     setTimeout(refreshData, 1000);
 }
 
-function setState(state){
-    var msg = {"messageType":"setState", "state":state}
-    websocket.send(JSON.stringify(msg));
-}
 

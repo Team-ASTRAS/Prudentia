@@ -1,7 +1,6 @@
 import inspect
-import numpy
 
-# Displays text print along with script caller for better debuging.
+# Displays text print along with script caller for better debugging.
 def log(text):
     logCaller = inspect.stack()[1][1] #Inspect stack to see what script path called this
     logCaller = logCaller.split('/') #Split path
