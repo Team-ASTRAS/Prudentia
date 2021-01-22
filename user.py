@@ -22,8 +22,10 @@ class DataPackage:
 
     state = State.standby
     angularPosition = [0, 0, 0]
-    angularVelocity = 0
+    angularVelocity = [0, 0, 0]
     target = [0, 0, 0]
+
+    stopServer = None
 
 
     def getDataJson(self):
@@ -67,8 +69,9 @@ async def prudentiaServer(websocket, path, sharedData):
 
             else:
                 sharedData.commandQueue.put(msgJSON)
-    except:
-        print("Websocket experienced an error: Closing")
+
+    except websockets.WebSocketException as e:
+        print("Websocket experienced an error: ", e, "Closing")
         await websocket.close()
 
     print("User disconnected")
