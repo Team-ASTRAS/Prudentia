@@ -8,7 +8,7 @@ class MotorsSingleton:
     pinMotor4 = 0
 
     # This function expects an array of motor RPMs ex: [1000.2, -1820, 3000, -3000]
-    def setAllMotorRPM(self, motorArray):
+    def setAllMotorRpm(self, motorArray):
         if len(motorArray) != 4:
             log("Error! setAllMotorRP expected argument of length 4, got %s instead" % len(motorArray))
             return

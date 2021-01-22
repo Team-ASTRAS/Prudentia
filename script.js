@@ -4,7 +4,7 @@ standbyBtn = document.querySelector('.standbyBtn'),
 runningBtn = document.querySelector('.runningBtn')
 
 //Connect to RPi here
-ip = "ws://127.0.0.1:6789/";
+ip = "ws://127.0.0.1:8010/";
 start(ip);
 
 dataUpdate = 1000;
@@ -36,6 +36,7 @@ function start(websocketServerLocation){
     //This assumption can be changed later on if necessary
     websocket.onmessage = function (event) {
         data = JSON.parse(event.data);
+        console.log(data["angularPosition"])
         dataField.textContent = "Data:" + JSON.stringify(data);
     };
 

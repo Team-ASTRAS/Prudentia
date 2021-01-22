@@ -17,7 +17,7 @@ class ControlLawSingleton:
     def routineStabilize(self):
         pass
 
-    def routineRealTimeControl(self, input):
+    def routineRealTimeControl(self):
         pass
 
     def routineAttitudeInput(self):
