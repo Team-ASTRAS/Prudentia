@@ -30,13 +30,13 @@ htmlThread.start()
 
 import imu
 #Create IMU class and open a connection
-#Imu = imu.ImuSingleton()
+Imu = imu.ImuSingleton()
 #conn = Imu.openConnection('com4', 9600)
 #assert conn is not None #Make sure the port opened correctly
 
 #Start thread to read data asynchronously
-#serialThread = Thread(target=Imu.asyncRead)
-#serialThread.start()
+serialThread = Thread(target=Imu.asyncRead)
+serialThread.start()
 
 
 ## Control Law Setup
@@ -105,7 +105,13 @@ while True:
         log("Main thread shutting down.")
         break #If disabled, end program
 
-    elif sharedData.state == State.standby:
+    if (sharedData.state and State.standby) or (sharedData.state and State.running):
+        #Set IMU data
+        sharedData.angularPosition = Imu.position
+
+
+
+    if sharedData.state == State.standby:
         pass #Do nothing
 
     elif sharedData.state == State.running:

@@ -7,7 +7,7 @@ runningBtn = document.querySelector('.runningBtn')
 ip = "ws://127.0.0.1:8010/";
 start(ip);
 
-dataUpdate = 1000;
+dataUpdate = 20;
 refreshData() //This function is called recursively
 
 // Button callbacks

@@ -91,7 +91,7 @@ async def prudentiaServer(websocket, path, sharedData):
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
-            self.path = 'backendWebpage.html'
+            self.path = '/GUI Files/backendWebpage.html'
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 # Run the html server

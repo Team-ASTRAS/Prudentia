@@ -24,14 +24,18 @@ class ImuSingleton:
 
     #This will update the imu data fields.
     def asyncRead(self):
-        serial.time.sleep(1)
-        out = ''
         while True:
-            while self.conn.inWaiting() > 0:
-                out += self.conn.read(1)
+            serial.time.sleep(0.004)
+            self.position[0] += 1
+            self.position[1] += 2
+            self.position[2] += 3
 
-            if out != '':
-                #Process data
-                print(">>" + out)
+            #out = ''
+            #while self.conn.inWaiting() > 0:
+            #    out += self.conn.read(1)
+
+            #if out != '':
+            #    #Process data
+            #    print(">>" + out)
 
 
