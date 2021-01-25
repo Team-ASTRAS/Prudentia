@@ -1,4 +1,5 @@
 import serial
+import random
 
 class ImuSingleton:
 
@@ -26,9 +27,12 @@ class ImuSingleton:
     def asyncRead(self):
         while True:
             serial.time.sleep(0.004)
-            self.position[0] += 1
-            self.position[1] += 2
-            self.position[2] += 3
+            self.position[0] += random.randrange(-10,10, 1) / 10
+            self.position[0] = max(min(self.position[0], 180), -180)
+            self.position[1] += random.randrange(-10,10, 1) / 10
+            self.position[1] = max(min(self.position[1], 180), -180)
+            self.position[2] += random.randrange(-10,10, 1) / 10
+            self.position[2] = max(min(self.position[2], 180), -180)
 
             #out = ''
             #while self.conn.inWaiting() > 0:

@@ -26,6 +26,7 @@ class SharedDataPackage:
     state = State.standby
     angularPosition = [0, 0, 0]
     angularVelocity = [0, 0, 0]
+    angularVelocityMagnitude = 0
     target = [0, 0, 0]
 
     stopServer = None
@@ -86,16 +87,21 @@ async def prudentiaServer(websocket, path, sharedData):
 
 
 ## HTML Server
-
+import os
 # Redirect http GETs to our html content
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
-            self.path = '/GUI Files/backendWebpage.html'
+            log("CWD:" + os.getcwd())
+            self.path = 'Homepage.html'
+            log("Set Path:" + os.path.realpath(self.path))
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 # Run the html server
 def startHtmlServer(sharedDataRef, ip, port):
+
+    guiDir = os.path.join(os.path.dirname(__file__), 'Gui Files')
+    os.chdir(guiDir)
 
     handle = MyHttpRequestHandler
     sharedDataRef.htmlServer = socketserver.TCPServer((ip, port), handle)

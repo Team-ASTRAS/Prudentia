@@ -1,4 +1,9 @@
-var dataField = document.querySelector('.data'),
+var dataMode = document.querySelector('.dataMode'),
+    dataYaw = document.querySelector('.dataYaw'),
+    dataPitch = document.querySelector('.dataPitch'),
+    dataRoll = document.querySelector('.dataRoll'),
+    dataSpeed = document.querySelector('.dataSpeed'),
+
 disabledBtn = document.querySelector('.disableBtn'),
 standbyBtn = document.querySelector('.standbyBtn'),
 runningBtn = document.querySelector('.runningBtn')
@@ -7,21 +12,21 @@ runningBtn = document.querySelector('.runningBtn')
 ip = "ws://127.0.0.1:8010/";
 start(ip);
 
-dataUpdate = 20;
+dataUpdate =  1000;
 refreshData() //This function is called recursively
 
 // Button callbacks
-disabledBtn.onclick = function (event) {
-    setState("shutdown")
-}
+//disabledBtn.onclick = function (event) {
+//    setState("shutdown")
+//}
 
-standbyBtn.onclick = function (event) {
-    setState("standby")
-}
+//standbyBtn.onclick = function (event) {
+//    setState("standby")
+//}
 
-runningBtn.onclick = function (event) {
-    setState("running")
-}
+//runningBtn.onclick = function (event) {
+//    setState("running")
+//}
 
 function setState(state){
     var msg = {"messageType":"setState", "state":state}
@@ -36,8 +41,11 @@ function start(websocketServerLocation){
     //This assumption can be changed later on if necessary
     websocket.onmessage = function (event) {
         data = JSON.parse(event.data);
-        console.log(data["angularPosition"])
-        dataField.textContent = "Data:" + JSON.stringify(data);
+        dataMode.textContent = data["state"]
+        dataYaw.textContent = data["angularPosition"][0];
+        dataPitch.textContent = data["angularPosition"][1];
+        dataRoll.textContent = data["angularPosition"][2];
+        dataSpeed.textContent = data["angularVelocityMagnitude"];
     };
 
     //If an error occurs, close socket. This will call websocket.onclose
