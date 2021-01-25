@@ -1,0 +1,71 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE-edge,chrome=1">
+	<meta name="robots" content="index,follow">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Prudentia's Control System</title>
+	<link href="styles.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<h1 class="title">REAL TIME CONTROL</h1>
+	</header>
+	<div class="navigation">
+		<button class="HomeButton" onclick="document.location='Homepage.html'">HOME</button>
+		<button class="InstructionButton" onclick="document.location='InstructionPage.html'">INSTRUCTIONS</button>
+		<button class="SettingsButton" onclick="document.location='SettingsPage.html'">SETTINGS</button>
+		<button class="RTCButton" onclick="document.location='RTCPage.html'">REAL TIME CONTROL</button>
+		<button class="AIButton" onclick="document.location='AIPage.html'">ATTITUDE INPUT</button>
+		<button class="SMButton" onclick="document.location='SMPage.html'">SEARCH MODE</button>
+	</div>
+	<div class="control">
+		<div class="yaw">
+			
+		</div>
+	</div>
+	<div class="datawindow">
+		<p class="LiveData">LIVE DATA</p>
+		<table class="DataTable">
+			<tr>
+				<th class="DataLabel">MODE</th>
+				<td class="Data">hold</td>
+			</tr>
+			<tr>
+				<th class="DataLabel">YAW</th>
+				<td class="Data">hold</td>
+			</tr>
+			<tr>
+				<th class="DataLabel">PITCH</th>
+				<td class="Data">hold</td>
+			</tr>
+			<tr>
+				<th class="DataLabel">ROLL</th>
+				<td class="Data">hold</td>
+			</tr>
+			<tr>
+				<th class="DataLabel">SPEED</th>
+				<td class="Data">hold</td>
+			</tr>	
+		</table>
+		<p class="LogOpt">LOGGING OPTIONS</p>
+		<button class="StartLog" onclick="">Start Logging</button>
+		<button class="StopLog" onclick="">Stop Logging</button>
+		<button class="ClearLog" onclick="">Clear Log</button>
+		<button class="Save" onclick="">Save</button>
+	</div>
+	<div class="Speed">
+		<form action="">
+			<input type="radio" id="Speed5" name="speed" value="5">
+			<label for="Speed5">5 &deg/s</label>
+			<input type="radio" id="Speed10" name="speed" value="10">
+			<label for="Speed10">10 &deg/s</label>
+			<input type="radio" id="Speed15" name="speed" value="15">
+			<label for="Speed15">15 &deg/s</label>
+		</form>
+	</div>
+	<div class="stop">
+		<button class="StopButton" onclick="">STOP</button>
+	</div>
+</body>
+</html>
