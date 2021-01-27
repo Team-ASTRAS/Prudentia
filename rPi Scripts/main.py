@@ -4,10 +4,11 @@ from threading import Thread
 from utilities import log
 import user
 from user import State
+import camera
+import imu
+import motors
 import controlLaw
 from controlLaw import ControlRoutine
-import camera
-import motors
 
 log('Hello world from Prudentia!')
 log('Setting up..')
@@ -17,18 +18,19 @@ log('Setting up..')
 # Create a single DataPackage class instance
 sharedData = user.SharedDataPackage()
 
+ip = '127.0.0.1' #Local Machine
+
 # Start threads to begin websocket server and html server
 # The websocket server is responsible for all data transfer between the GUI and Prudentia
-websocketThread = Thread(target=user.startWebsocketServer, args=(sharedData, '127.0.0.1', 8010))
+websocketThread = Thread(target=user.startWebsocketServer, args=(sharedData, ip, 8010))
 websocketThread.start()
 
 # The html server is responsible for delivering html content to the connecting user.
-htmlThread = Thread(target=user.startHtmlServer, args=(sharedData, '127.0.0.1', 8009))
+htmlThread = Thread(target=user.startHtmlServer, args=(sharedData, ip, 8009))
 htmlThread.start()
 
 ## IMU Serial Setup
 
-import imu
 #Create IMU class and open a connection
 Imu = imu.ImuSingleton()
 #conn = Imu.openConnection('com4', 9600)

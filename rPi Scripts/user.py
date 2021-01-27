@@ -6,6 +6,7 @@ import asyncio
 import json
 import queue
 import functools
+import os
 from enum import Enum, unique
 from utilities import log
 
@@ -36,6 +37,7 @@ class SharedDataPackage:
         dataObject = {  "state" : self.state.name,
                         "angularPosition" : self.angularPosition,
                         "angularVelocity" : self.angularVelocity,
+                        "angularVelocityMagnitude" : self.angularVelocityMagnitude,
                         "target" : self.target}
         return json.dumps(dataObject)
 
@@ -87,21 +89,19 @@ async def prudentiaServer(websocket, path, sharedData):
 
 
 ## HTML Server
-import os
 # Redirect http GETs to our html content
 class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
     def do_GET(self):
         if self.path == '/':
-            log("CWD:" + os.getcwd())
             self.path = 'Homepage.html'
-            log("Set Path:" + os.path.realpath(self.path))
         return http.server.SimpleHTTPRequestHandler.do_GET(self)
 
 # Run the html server
 def startHtmlServer(sharedDataRef, ip, port):
 
-    guiDir = os.path.join(os.path.dirname(__file__), 'Gui Files')
+    guiDir = os.path.join(os.path.dirname(__file__), 'GUI Files')
     os.chdir(guiDir)
+    log("CWD:" + os.getcwd())
 
     handle = MyHttpRequestHandler
     sharedDataRef.htmlServer = socketserver.TCPServer((ip, port), handle)
