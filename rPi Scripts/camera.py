@@ -4,15 +4,12 @@ class CameraSingleton:
 
     def __init__(self):
         #Camera setup.
-
-
-
-
         #Set resolution, other settings
         pass
 
     def getPicture(self):
         #This now gets a picture
+
         #Return bitmap/whatever format. Preferably a fast format if we can choose
         pass
 
