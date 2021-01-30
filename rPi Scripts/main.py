@@ -118,11 +118,7 @@ while True:
 
     elif sharedData.state == State.running:
         #Motors can now be run (No motor code should run outside this statement!)
-        if ControlLaw.controlRoutine == ControlRoutine.standby:
-            # Do nothing
-            pass
-
-        elif ControlLaw.controlRoutine == ControlRoutine.stabilize:
+        if ControlLaw.controlRoutine == ControlRoutine.stabilize:
             # Stabilize
             # Set ControlLaw Data
             response = ControlLaw.routineStabilize()
