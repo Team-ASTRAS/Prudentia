@@ -12,15 +12,16 @@
 		<h1 class="title">ATTITUDE INPUT</h1>
 	</header>
 
-	<div class="container">
-		<div class="navigation">
-			<button class="HomeButton" onclick="document.location='Homepage.html'">HOME</button>
-			<button class="InstructionButton" onclick="document.location='InstructionPage.html'">INSTRUCTIONS</button>
-			<button class="SettingsButton" onclick="document.location='SettingsPage.html'">SETTINGS</button>
-			<button class="RTCButton" onclick="document.location='RTCPage.html'">REAL TIME CONTROL</button>
-			<button class="AIButton" onclick="document.location='AIPage.html'">ATTITUDE INPUT</button>
-			<button class="SMButton" onclick="document.location='SMPage.html'">SEARCH MODE</button>
-		</div>
+	<button class="Power" onclick="">POWER</button>
+	<button class="Stabilize" onclick="">STABILIZE</button>
+
+	<div class="navigation">
+		<button class="HomeButton" onclick="document.location='Homepage.html'">HOME</button>
+		<button class="InstructionButton" onclick="document.location='InstructionPage.html'">INSTRUCTIONS</button>
+		<button class="SettingsButton" onclick="document.location='SettingsPage.html'">SETTINGS</button>
+		<button class="RTCButton" onclick="document.location='RTCPage.html'">REAL TIME CONTROL</button>
+		<button class="AIButton" onclick="document.location='AIPage.html'">ATTITUDE INPUT</button>
+		<button class="SMButton" onclick="document.location='SMPage.html'">SEARCH MODE</button>
 	</div>
 
 	<div class="datawindow">
@@ -55,10 +56,19 @@
 		<button class="Save" onclick="">Save</button>
 	</div>
 
-	<div class="EntryBar">
+	<div class = "EntryBar">
+		<p class="Yawlimit">-360&deg- 360&deg</p>
+		<p class="Pitchlimit">-20&deg- 20&deg</p>
+		<p class="Rolllimit">-360&deg- 360&deg</p>
 		<form action="">
-			<input type="number" step="0.01" class="YAWin" name="YawIn">
+			<input type="number" step="0.01" class="YAWin" name="YawIn" min="-360" max="360">
+			<input type="number" step="0.01" class="PITCHin" name="PitchIn" min="-20" max="20">
+			<input type="number" step="0.01" class="ROLLin" name="RollIn" min="-360" max="360">
+			<input type="submit" class="GO" Value="GO">
 		</form>
+		<p class="Yawtitle">YAW</p>
+		<p class="Pitchtitle">PITCH</p>
+		<p class="Rolltitle">ROLL</p>
 	</div>
 
 	<div class="graphs">
@@ -74,7 +84,6 @@
 	</div>
 	<div class="stop">
 		<button class="StopButton" onclick="">STOP</button>
-		<button class="StartButton" onclick="">START</button>
 	</div>
 
 	<script src="script.js"></script>

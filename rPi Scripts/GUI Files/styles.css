@@ -1,17 +1,27 @@
-/* Backgound Image */	
+/* Backgound Image */
 	body{background-image: url('PlanetBackground.jpg');
 		background-repeat: no-repeat;
 		background-attachment: fixed;
-		background-size: cover;}		
-	
-/* Page Title */	
+		background-size: cover;}
+
+/* Page Title */
 	.title{font: 60px Tiger;
 			color: white;
 			text-align: center;
 			padding-top: 10px;
 			margin-bottom: 0px;}
-	
-/* Navigation Bar */	
+	.Power{width: 7%;
+				border-radius: 5px;
+				position: absolute;
+				top: 1%;
+				left: 1%;}
+	.Stabilize{width: 7%;
+				border-radius: 5px;
+				position: absolute;
+				top: 1%;
+				right: 1%;}
+
+/* Navigation Bar */
 	.navigation{display:flex;}
 	.HomeButton{font: 27px Calibri;
 					color: black;
@@ -62,7 +72,7 @@
 					text-align: center;
 					padding: 4px 0px 4px 0px;}
 
-/* Emergency Stop Button */				
+/* Emergency Stop Button */
 	.StopButton{font: 50px Tiger;
 				font-weight: 900;
 				color: black;
@@ -73,7 +83,7 @@
 				bottom: 0.5%;
 				padding-top: 15px;
 				padding-bottom: 15px;}
-				
+
 /* Live Data/Logging Window */
 	.datawindow{background-color: #B8B8B8;
 				height: 510px;
@@ -150,7 +160,7 @@
 			position: absolute;
 			left: 15px;
 			top: 440px;}
-				
+
 /* Home Page */
 	.welcomemsg1{font: 20px Tahoma;
 				color: white;
@@ -158,8 +168,8 @@
 	.welcomemsg2{font: 20px Tahoma;
 				color: white;
 				text-align: center;}
-				
-/* Instructions Page */	
+
+/* Instructions Page */
 	.heading{font: 30px Audiowide;
 			color: white;
 			text-align: left;
@@ -176,7 +186,7 @@
 			padding-right: 20px;
 			padding-left: 20px;
 			padding-top: 150px;}
-/* Settings Page */	
+/* Settings Page */
 /* Real Time Control Page */
 	.Speed{font: 25px Calibri;
 		color: white;
@@ -184,6 +194,92 @@
 		padding-top: 100px;}
 	.Speed>input[type=radio]{height: 30px;}
 /* Attitude Input Page */
+.Yawlimit{font: 20px calibri;
+		color: white;
+		width: 150px;
+		text-align: center;
+		position: absolute;
+		left: 450px;
+		top: 180px;}
+.Pitchlimit{font: 20px calibri;
+		color: white;
+		width: 150px;
+		text-align: center;
+		position: absolute;
+		left: 717px;
+		top: 180px;}
+.Rolllimit{font: 20px calibri;
+		color: white;
+		width: 150px;
+		text-align: center;
+		position: absolute;
+		left: 983px;
+		top: 180px;}
+.YAWin{position: absolute;
+		left: 450px;
+		top: 230px;
+		font: 25px calibri;
+		color: #F7F7F7;
+		width: 150px;
+		background-image: radial-gradient(at top,#97BBF0,#3069BF),
+						radial-gradient(at bottom,#97BBF0,#3069BF);
+		border-radius: 10px;
+		text-align: center;
+		border: 5px solid #2A60B0;}
+.PITCHin{position: absolute;
+		left: 717px;
+		top: 230px;
+		font: 25px calibri;
+		color: #F7F7F7;
+		width: 150px;
+		background-image: radial-gradient(at top,#97BBF0,#3069BF),
+						radial-gradient(at bottom,#97BBF0,#3069BF);
+		border-radius: 10px;
+		text-align: center;
+		border: 5px solid #2A60B0;}
+.ROLLin{position: absolute;
+		left: 983px;
+		top: 230px;
+		font: 25px calibri;
+		color: #F7F7F7;
+		width: 150px;
+		background-image: radial-gradient(at top,#97BBF0,#3069BF),
+						radial-gradient(at bottom,#97BBF0,#3069BF);
+		border-radius: 10px;
+		text-align: center;
+		border: 5px solid #2A60B0;}
+.GO{position: absolute;
+		left: 1250px;
+		top: 230px;
+		font: 25px calibri;
+		color: #F7F7F7;
+		width: 150px;
+		background-image: radial-gradient(at top,#97BBF0,#3069BF),
+						radial-gradient(at bottom,#97BBF0,#3069BF);
+		border-radius: 10px;
+		text-align: center;
+		border: 5px solid #2A60B0;}
+.Yawtitle{font: 20px calibri;
+		color: white;
+		width: 150px;
+		text-align: center;
+		position: absolute;
+		left: 450px;
+		top: 260px;}
+.Pitchtitle{font: 20px calibri;
+		color: white;
+		width: 150px;
+		text-align: center;
+		position: absolute;
+		left: 717px;
+		top: 260px;}
+.Rolltitle{font: 20px calibri;
+		color: white;
+		width: 150px;
+		text-align: center;
+		position: absolute;
+		left: 983px;
+		top: 260px;}
 	.YPRError{font: 27px calibri;
 				color: white;
 				background-color: #D1D1D1;
