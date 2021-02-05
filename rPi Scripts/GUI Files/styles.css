@@ -8,10 +8,9 @@
 	.title{font: 4vw Tiger;
 			color: white;
 			text-align: center;}
-	.Power{width: 7%;
-				border-radius: 5px;
-				position: absolute;
-				top: 1%;
+	.Power{
+			position: absolute;
+				top: 3%;
 				left: 1%;}
 	.Stabilize{width: 7%;
 				border-radius: 5px;
@@ -108,16 +107,26 @@
 	.LiveData{font: 2.1vw Calibri;
 			color: black;
 			text-align: center;
-			font-weight: 1000;}
+			font-weight: 1000;
+			position: absolute;
+			width: 98%;
+			left: 1%;
+			top: 2%;
+			margin-top: 0%;}
 	.LogOpt{font: 2.1vw Calibri;
 			color: black;
 			text-align: center;
 			font-weight: 1000;
-			padding-top: 64%;}
+			position: absolute;
+			width: 98%;
+			left: 1%;
+			top: 59%;
+			margin-top: 0%;}
 	.DataTable{border-collapse: collapse;
 				position: absolute;
 				left: 1%;
-				top: 14%;}
+				top: 9%;
+				width: 98%;}
 	.DataLabel{font: 2vw Calibri;
 			color: #F7F7F7;
 			border: 1px solid black;
@@ -234,10 +243,64 @@
 			right: 5%;}
 /* Settings Page */
 /* Real Time Control Page */
-	.Speed{font: 25px Calibri;
+	.Speed{font: 2vw Calibri;
 		color: white;
-		padding-left: 500px;
-		padding-top: 100px;}
+		position: absolute;
+		top: 20%;
+		left: 25%;
+		width: 70%;}
+	input[type=radio]{width: 10%;}
+	.YawR{position: absolute;
+				top: 40%;
+				left: 30%;
+				height: 10%;
+				width: 8%;}
+	.YawL{position: absolute;
+				top: 40%;
+				left: 38%;
+				height: 10%;
+				width: 8%;}
+	.PitchU{position: absolute;
+				top: 40%;
+				left: 52%;
+				height: 10%;
+				width: 8%;}
+	.PitchD{position: absolute;
+				top: 40%;
+				left: 60%;
+				height: 10%;
+				width: 8%;}
+	.RollCCW{position: absolute;
+				top: 40%;
+				left: 74%;
+				height: 10%;
+				width: 8%;}
+	.RollCW{position: absolute;
+				top: 40%;
+				left: 82%;
+				height: 10%;
+				width: 8%;}
+	.YawtitleRTC{font: 1.5vw calibri;
+						color: white;
+						width: 16%;
+						text-align: center;
+						position: absolute;
+						left: 30%;
+						top: 48%;}
+	.PitchtitleRTC{font: 1.5vw calibri;
+						color: white;
+						width: 16%;
+						text-align: center;
+						position: absolute;
+						left: 52%;
+						top: 48%;}
+	.RolltitleRTC{font: 1.5vw calibri;
+						color: white;
+						width: 16%;
+						text-align: center;
+						position: absolute;
+						left: 74%;
+						top: 48%;}
 /* Attitude Input Page */
 .Yawlimit{font: 1.5vw calibri;
 		color: white;
