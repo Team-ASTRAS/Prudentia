@@ -1,6 +1,8 @@
+import time
+from time import sleep
+
 import serial
 from threading import Thread
-from queue import Queue
 
 class ImuSingleton:
 
@@ -9,21 +11,22 @@ class ImuSingleton:
     baudrate = 0
     conn = None
 
+    imuSpeed = 40
+    
     #Imu data fields. These are updated by self.asyncRead() on another thread
 
-    yaw = [0] * 10
-    pitch = [0] * 10
-    roll = [0] * 10
+    yaw = [0] * (imuSpeed / 20)
+    pitch = [0] * (imuSpeed / 20)
+    roll = [0] * (imuSpeed / 20)
     
-    gyroX = [0] * 10
-    gyroY = [0] * 10
-    gyroZ = [0] * 10
+    gyroX = [0] * (imuSpeed / 20)
+    gyroY = [0] * (imuSpeed / 20)
+    gyroZ = [0] * (imuSpeed / 20)
     
-    accX = [0] * 10
-    accY = [0] * 10
-    accZ = [0] * 10
+    accX = [0] * (imuSpeed / 20)
+    accY = [0] * (imuSpeed / 20)
+    accZ = [0] * (imuSpeed / 20)
     
-
 
     def openConnection(self, port, baudrate):
         self.port = port
@@ -34,55 +37,97 @@ class ImuSingleton:
         except:
             print("Failed to open port %s " % str(self.port))
 
+    def getAverageData(self):
+        dataOut = [0] * 9
+        dataOut[0] = self.avg(self.yaw)
+        dataOut[1] = self.avg(self.pitch)
+        dataOut[2] = self.avg(self.roll)
+        dataOut[3] = self.avg(self.gyroX)
+        dataOut[4] = self.avg(self.gyroY)
+        dataOut[5] = self.avg(self.gyroZ)
+        dataOut[6] = self.avg(self.accX)
+        dataOut[7] = self.avg(self.accY)
+        dataOut[8] = self.avg(self.accZ)
+        return dataOut
+
+    def avg(self, array):
+        return sum(array) / len(array)
+
+    def report(self):
+        print("YPR - [%s,%s,%s], GYRO - [%s, %s, %s], ACCEL - [%s, %s. %s]" %
+              (self.avg(self.yaw), self.avg(self.pitch), self.avg(self.roll),
+               self.avg(self.gyroX), self.avg(self.gyroY), self.avg(self.gyroZ),
+               self.avg(self.accX), self.avg(self.accY), self.avg(self.accZ)))
+
+    def literalToFloat(self, literal):
+        try:
+            returnValue = float(literal)
+            return returnValue
+
+        except ValueError:
+            try:
+                array = literal.split('*')
+                returnValue = float(array[0]) * int(array[1], 16)
+                return returnValue
+            except:
+                return None
+
     #This will update the imu data fields.
     def asyncRead(self):
         conn.reset_input_buffer()
         output = " "
         i = 0
         while True:
-            print("---")
+            #print("---")
+            t0 = time.time()
             while output != "":
                 output = conn.readline().decode('ascii')
                 
-                splitOutput = output.split(',')
+                splitOutput = output.strip().split(',')
                 
                 if len(splitOutput) > 12:
                     dataType = splitOutput[0]
                     if dataType == "$VNYMR":
-                        self.yaw[i] = splitOutput[1]
-                        self.pitch[i] = splitOutput[2]
-                        self.roll[i] = splitOutput[3]
-                        
-                        self.gyroX[i] = splitOutput[7]
-                        self.gyroY[i] = splitOutput[8]
-                        self.gyroZ[i] = splitOutput[9]
-                        
-                        self.accX[i] = splitOutput[10]
-                        self.accY[i] = splitOutput[11]
-                        self.accZ[i] = splitOutput[12]
-                        
-                        print("YPR - [%s,%s,%s], GYRO - [%s, %s, %s], ACCEL - [%s, %s. %s]" %
-                              (self.yaw[i], self.pitch[i], self.roll[i],
-                               self.gyroX[i], self.gyroY[i], self.gyroZ[i],
-                               self.accX[i], self.accY[i], self.accZ[i]) )
+                        self.yaw[i] = float(splitOutput[1])
+                        self.pitch[i] = float(splitOutput[2])
+                        self.roll[i] = float(splitOutput[3])
+
+                        self.accX[i] = float(splitOutput[7])
+                        self.accY[i] = float(splitOutput[8])
+                        self.accZ[i] = float(splitOutput[9])
+
+                        self.gyroX[i] = float(splitOutput[10])
+                        self.gyroY[i] = float(splitOutput[11])
+                        self.gyroZ[i] = self.literalToFloat(splitOutput[12])
+
                     else:
                         print("VN Code %s not supported!" % dataType)
                     
                     i += 1
-                    if i >= 10:
+                    if i >= (self.imuSpeed / 20):
                         i = 0
                         
                 else:
                     print("ERROR: splitOutput length is not greater than zero!")
-                
+
+            print time.time() - t0
             #Reset output
             output = " "
                 
 
 
 Imu = ImuSingleton()
-conn = Imu.openConnection('/dev/ttyUSB0', 460800)
+#conn = Imu.openConnection('/dev/ttyUSB0', 460800) # Raspi USB
+conn = Imu.openConnection('com13', 115200) # Windows USB
 assert conn is not None
 serialThread = Thread(target=Imu.asyncRead)
 serialThread.start()
 
+i = 0
+t0 = time.time()
+while i < 1000000:
+    i += 1
+    arr = Imu.getAverageData()
+    Imu.report()
+t = time.time() - t0
+print(t)
