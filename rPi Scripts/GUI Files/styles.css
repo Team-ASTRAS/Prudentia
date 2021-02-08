@@ -12,11 +12,18 @@
 			position: absolute;
 				top: 3%;
 				left: 1%;}
-	.Stabilize{width: 7%;
-				border-radius: 5px;
+	.Stabilize{font: 1.5vw Calibri;
+				width: 10%;
+				height: 6%;
 				position: absolute;
-				top: 1%;
-				right: 1%;}
+				top: 3.5%;
+				right: 1%;
+				color: black;
+				background-image: radial-gradient(at top,#D9D9D9,#757575),
+								radial-gradient(at bottom,#919191,#757575);
+				border-radius: 5px;
+				text-align: center;
+				border: 2px solid #525252;}
 
 /* Navigation Bar */
 	.HomeButton{font: 2vw Calibri;
@@ -244,42 +251,68 @@
 /* Settings Page */
 /* Real Time Control Page */
 	.Speed{font: 2vw Calibri;
-		color: white;
-		position: absolute;
-		top: 20%;
-		left: 25%;
-		width: 70%;}
-	input[type=radio]{width: 10%;}
+		color: white;}
+	input[type=radio] {
+		    border: 0px;
+		    width: 15%;
+		    height: 2em;}
+	.speed5{position: absolute;
+				top: 27%;
+				left: 30%;
+				width: 10%;
+				text-align: center;}
+	.speed10{position: absolute;
+					top: 27%;
+					left: 43.25%;
+					width: 10%;}
+	.speed15{position: absolute;
+					top: 27%;
+					left: 56.5%;
+					width: 10%;}
+	.speed30{position: absolute;
+					top: 27%;
+					left: 69.75%;
+					width: 10%;}
+	.speed50{position: absolute;
+					top: 27%;
+					left: 83%;
+					width: 10%;}
 	.YawR{position: absolute;
 				top: 40%;
 				left: 30%;
 				height: 10%;
-				width: 8%;}
+				width: 8%;
+				border-radius: 10px 0px 0px 10px;}
 	.YawL{position: absolute;
 				top: 40%;
 				left: 38%;
 				height: 10%;
-				width: 8%;}
+				width: 8%;
+				border-radius: 0px 10px 10px 0px;}
 	.PitchU{position: absolute;
 				top: 40%;
 				left: 52%;
 				height: 10%;
-				width: 8%;}
+				width: 8%;
+				border-radius: 10px 0px 0px 10px;}
 	.PitchD{position: absolute;
 				top: 40%;
 				left: 60%;
 				height: 10%;
-				width: 8%;}
+				width: 8%;
+				border-radius: 0px 10px 10px 0px;}
 	.RollCCW{position: absolute;
 				top: 40%;
 				left: 74%;
 				height: 10%;
-				width: 8%;}
+				width: 8%;
+				border-radius: 10px 0px 0px 10px;}
 	.RollCW{position: absolute;
 				top: 40%;
 				left: 82%;
 				height: 10%;
-				width: 8%;}
+				width: 8%;
+				border-radius: 0px 10px 10px 0px;}
 	.YawtitleRTC{font: 1.5vw calibri;
 						color: white;
 						width: 16%;
