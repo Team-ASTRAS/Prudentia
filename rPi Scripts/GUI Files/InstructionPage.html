@@ -7,25 +7,24 @@
 	<title>Prudentia's Control System</title>
 	<link href="styles.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
-	<script src="script.js"></script>
 </head>
 <body>
 	<header>
 		<h1 class="title">INSTRUCTIONS</h1>
 	</header>
 
-	<button class="Power" onclick="">POWER</button>
-	<button class="Stabilize" onclick="">STABILIZE</button>
+	<button class="Shutdown">SHUTDOWN</button>
+	<button class="Stabilize">STABILIZE</button>
 
 	<div class="navigation">
-		<button class="HomeButton" onclick="document.location='Homepage.html'">HOME</button>
-		<button class="InstructionButton" onclick="document.location='InstructionPage.html'">INSTRUCTIONS</button>
-		<button class="SettingsButton" onclick="document.location='SettingsPage.html'">SETTINGS</button>
-		<button class="RTCButton" onclick="document.location='RTCPage.html'">REAL TIME CONTROL</button>
-		<button class="AIButton" onclick="document.location='AIPage.html'">ATTITUDE INPUT</button>
-		<button class="SMButton" onclick="document.location='SMPage.html'">SEARCH MODE</button>
+		<button class="HomeButton">HOME</button>
+		<button class="InstructionButton">INSTRUCTIONS</button>
+		<button class="SettingsButton">SETTINGS</button>
+		<button class="RTCButton">REAL TIME CONTROL</button>
+		<button class="AIButton">ATTITUDE INPUT</button>
+		<button class="SMButton">SEARCH MODE</button>
 	</div>
-	
+
 	<div class="messages">
 		<h1 class="heading1">REAL TIME CONTROL</h1>
 			<p class="Intext1">This mode allows the user to direct the Yaw, Pitch, and Roll of Prudentia in a remote control setting. Click on or hold down a button to drive Prudentia about the specified axis.</p>
@@ -36,7 +35,8 @@
 		<p class="warningmsg">USE CAUTION DURING OPERATION! REMAIN 6ft AWAY FROM THE SYSTEM DURING OPERATION TO AVOID INJURY. PRESS ON THE EMERGENCY STOP BUTTON TO TURN OFF THE SYSTEM AT ANY TIME. READ THE FULL INSTRUCTION MANUAL BEFORE OPERATING THE SYSTEM. </p>
 	</div>
 	<div class="stop">
-		<button class="StopButton" onclick="">STOP</button>
+		<button class="StopButton">STOP</button>
+		<script src="script.js" ></script>
 	</div>
 </body>
 </html>

@@ -6,29 +6,28 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Prudentia's Control System</title>
 	<link href="styles.css" rel="stylesheet">
-	<script>src="GUITest.js"</script>
 </head>
 <body>
 	<header>
 		<h1 class="title">PRUDENTIA</h1>
 	</header>
 
-	<button class="Power">POWER</button>
-	<button class="Stabilize" onclick="">STABILIZE</button>
+	<button class="Shutdown">SHUTDOWN</button>
+	<button class="Stabilize">STABILIZE</button>
 
 	<div class="navigation">
-		<button class="HomeButton" onclick="document.location='Homepage.html'">HOME</button>
-		<button class="InstructionButton" onclick="document.location='InstructionPage.html'">INSTRUCTIONS</button>
-		<button class="SettingsButton" onclick="document.location='SettingsPage.html'">SETTINGS</button>
-		<button class="RTCButton" onclick="document.location='RTCPage.html'">REAL TIME CONTROL</button>
-		<button class="AIButton" onclick="document.location='AIPage.html'">ATTITUDE INPUT</button>
-		<button class="SMButton" onclick="document.location='SMPage.html'">SEARCH MODE</button>
+		<button class="HomeButton">HOME</button>
+		<button class="InstructionButton">INSTRUCTIONS</button>
+		<button class="SettingsButton">SETTINGS</button>
+		<button class="RTCButton">REAL TIME CONTROL</button>
+		<button class="AIButton">ATTITUDE INPUT</button>
+		<button class="SMButton">SEARCH MODE</button>
 	</div>
 
 	<p class="welcomemsg1">Welcome to Prudentia&apos;s controller interface!</p>
 	<p class="welcomemsg2">Click on the instructions to learn more about Prudentia&apos;s capabilities or click on any control mode to get started.</p>
-	<div class="stop">
-		<button class="StopButton" onclick="">STOP</button>
-	</div>
+
+	<button class="StopButton">STOP</button>
+	<script src="script.js" ></script>
 </body>
 </html>

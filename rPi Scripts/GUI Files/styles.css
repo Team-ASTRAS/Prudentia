@@ -8,7 +8,7 @@
 	.title{font: 4vw Tiger;
 			color: white;
 			text-align: center;}
-	.Power{
+	.Shutdown{
 			position: absolute;
 				top: 3%;
 				left: 1%;}
@@ -301,13 +301,13 @@
 				height: 10%;
 				width: 8%;
 				border-radius: 0px 10px 10px 0px;}
-	.RollCCW{position: absolute;
+	.RollCW{position: absolute;
 				top: 40%;
 				left: 74%;
 				height: 10%;
 				width: 8%;
 				border-radius: 10px 0px 0px 10px;}
-	.RollCW{position: absolute;
+	.RollCCW{position: absolute;
 				top: 40%;
 				left: 82%;
 				height: 10%;

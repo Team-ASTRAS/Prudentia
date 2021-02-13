@@ -3,10 +3,31 @@ var dataMode = document.querySelector('.dataMode'),
     dataPitch = document.querySelector('.dataPitch'),
     dataRoll = document.querySelector('.dataRoll'),
     dataSpeed = document.querySelector('.dataSpeed'),
-
-disabledBtn = document.querySelector('.disableBtn'),
-standbyBtn = document.querySelector('.standbyBtn'),
-runningBtn = document.querySelector('.runningBtn')
+    // SHUTDOWN, STABILIZE, STOP BUTTONS
+    shutdown = document.querySelector('.Shutdown'),
+    stabilize = document.querySelector('.Stabilize'),
+    stop = document.querySelector('.StopButton'),
+    // NAVIGATION BUTTONS
+    homeNav = document.querySelector('.HomeButton'),
+    instructionsNav = document.querySelector('.InstructionButton'),
+    settingsNav = document.querySelector('.SettingsButton'),
+    rtcNav = document.querySelector('.RTCButton'),
+    aiNav = document.querySelector('.AIButton'),
+    searchNav = document.querySelector('.SMButton'),
+    // LOGGING BUTTONS
+    startlog = document.querySelector('.StartLog'),
+    stoplog = document.querySelector('.StopLog'),
+    clearlog = document.querySelector('.ClearLog'),
+    downloadlog = document.querySelector('.Save'),
+    // RTC BUTTONS
+    yawl = document.querySelector('.YawL'),
+    yawr = document.querySelector('.YawR'),
+    pitchu = document.querySelector('.PitchU'),
+    pitchd = document.querySelector('.PitchD'),
+    rollcw = document.querySelector('.RollCW'),
+    rollccw = document.querySelector('.RollCCW'),
+    // AI BUTTONS
+    // SM BUTTONS
 
 //Connect to RPi here
 ip = "ws://127.0.0.1:8010/";
@@ -16,17 +37,60 @@ dataUpdate =  1000;
 refreshData() //This function is called recursively
 
 // Button callbacks
-//disabledBtn.onclick = function (event) {
-//    setState("shutdown")
-//}
-
-//standbyBtn.onclick = function (event) {
-//    setState("standby")
-//}
-
-//runningBtn.onclick = function (event) {
-//    setState("running")
-//}
+// SHUTDOWN, STABILIZE, STOP BUTTONS
+shutdown.onclick = function (event) {
+    console.log('Shutdown');
+}
+stabilize.onclick = function (event) {
+    console.log('Stabilize');
+}
+stop.onclick = function (event) {
+    console.log('Stop');
+}
+// NAVIGATION BUTTONS
+homeNav.onclick = function (event) {
+    console.log('Home Navigation');
+    window.location = "Homepage.html";
+}
+instructionsNav.onclick = function (event) {
+    console.log('Instructions Navigation');
+    window.location = "InstructionPage.html";
+}
+settingsNav.onclick = function (event) {
+    console.log('Settings Navigation');
+    window.location = "SettingsPage.html";
+}
+rtcNav.onclick = function (event) {
+    console.log('RTC Navigation');
+    window.location = "RTCPage.html";
+}
+aiNav.onclick = function (event) {
+    console.log('AI Navigation');
+    window.location = "AIPage.html";
+}
+searchNav.onclick = function (event) {
+    console.log('Search Navigation');
+    window.location = "SMPage.html";
+}
+// LOGGING BUTTONS
+startlog.onclick = function (event) {
+    console.log('Start Logging');
+}
+stoplog.onclick = function (event) {
+    console.log('Stop Logging');
+}
+clearlog.onclick = function (event) {
+    console.log('Clear Log');
+}
+downloadlog.onclick = function (event) {
+    console.log('Download Log');
+}
+// RTC BUTTONS
+yawl.onmousedown = function (event) {
+    yawl.css('background-color','red');
+}
+// AI BUTTONS
+// SM BUTTONS
 
 function setState(state){
     var msg = {"messageType":"setState", "state":state}
@@ -73,5 +137,3 @@ function refreshData(){
     //Repeat this function again later
     setTimeout(refreshData, dataUpdate);
 }
-
-
