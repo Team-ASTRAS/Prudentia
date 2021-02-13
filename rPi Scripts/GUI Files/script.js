@@ -255,9 +255,23 @@ if (go){
       yawTarget = document.getElementById("YawTarget").value;
       pitchTarget = document.getElementById("PitchTarget").value;
       rollTarget = document.getElementById("RollTarget").value;
-      console.log('Target Yaw = ' + yawTarget);
-      console.log('Target Pitch = ' + pitchTarget);
-      console.log('Target Roll = ' + rollTarget);
+      if (yawTarget <= 360 && yawTarget >= -360 && pitchTarget <= 19 && pitchTarget >= -19 && rollTarget <= 360 && rollTarget >= -360){
+        console.log('Target Yaw = ' + yawTarget);
+        console.log('Target Pitch = ' + pitchTarget);
+        console.log('Target Roll = ' + rollTarget);
+      }
+      else if (yawTarget > 360 || yawTarget < -360){
+        alert('Target Yaw must be between -360\u00B0 and +360\u00B0');
+      }
+      else if (pitchTarget > 19 || pitchTarget < -19){
+        alert('Target Pitch must be between -19\u00B0 and +19\u00B0');
+      }
+      else if (rollTarget > 360 || rollTarget < -360){
+        alert('Target Roll must be between -360\u00B0 and +360\u00B0');
+      }
+      else{
+        alert('Target Yaw must be between -360\u00B0 and +360\u00B0 \nTarget Pitch must be between -19\u00B0 and +19\u00B0 \nTarget Roll must be between -360\u00B0 and +360\u00B0');
+      }
   }
 }
 
