@@ -277,13 +277,13 @@
 					top: 27%;
 					left: 83%;
 					width: 10%;}
-	.YawR{position: absolute;
+	.YawL{position: absolute;
 				top: 40%;
 				left: 30%;
 				height: 10%;
 				width: 8%;
 				border-radius: 10px 0px 0px 10px;}
-	.YawL{position: absolute;
+	.YawR{position: absolute;
 				top: 40%;
 				left: 38%;
 				height: 10%;

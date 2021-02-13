@@ -60,12 +60,12 @@
 		<p class="Yawlimit">-360&deg- 360&deg</p>
 		<p class="Pitchlimit">-19&deg- 19&deg</p>
 		<p class="Rolllimit">-360&deg- 360&deg</p>
-		<form action="">
-			<input type="number" step="1" class="YAWin" name="YawIn" min="-360" max="360">
-			<input type="number" step="1" class="PITCHin" name="PitchIn" min="-19" max="19">
-			<input type="number" step="1" class="ROLLin" name="RollIn" min="-360" max="360">
-			<input type="submit" class="GO" Value="GO">
-		</form>
+
+		<input type="number" step="1" class="YAWin" id="YawTarget" min="-360" max="360" value="0">
+		<input type="number" step="1" class="PITCHin" id="PitchTarget" min="-19" max="19" value="0">
+		<input type="number" step="1" class="ROLLin" id="RollTarget" min="-360" max="360" value="0">
+		<button class="GO">GO</button>
+
 		<p class="Yawtitle">YAW</p>
 		<p class="Pitchtitle">PITCH</p>
 		<p class="Rolltitle">ROLL</p>
@@ -82,9 +82,8 @@
 			<p>ANGULAR VELOCITY</p>
 		</div>
 	</div>
-	<div class="stop">
-		<button class="StopButton">STOP</button>
-	</div>
+
+	<button class="StopButton">STOP</button>
 
 	<script src="script.js"></script>
 </body>
