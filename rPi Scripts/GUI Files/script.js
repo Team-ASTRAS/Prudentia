@@ -3,10 +3,14 @@ var dataMode = document.querySelector('.dataMode'),
     dataPitch = document.querySelector('.dataPitch'),
     dataRoll = document.querySelector('.dataRoll'),
     dataSpeed = document.querySelector('.dataSpeed'),
+    calibrated, // Variable should come from IMU instead of button press
+    ready, // Variable should come from IMU/Motors instead of button press
     // SHUTDOWN, STABILIZE, STOP BUTTONS
     shutdown = document.querySelector('.Shutdown'),
     stabilize = document.querySelector('.Stabilize'),
     stop = document.querySelector('.StopButton'),
+    calibrate = document.querySelector('.Calibrate'),
+    spinup = document.querySelector('.Spinup'),
     // NAVIGATION BUTTONS
     homeNav = document.querySelector('.HomeButton'),
     instructionsNav = document.querySelector('.InstructionButton'),
@@ -41,10 +45,30 @@ refreshData() //This function is called recursively
 // Button callbacks
 // SHUTDOWN, STABILIZE, STOP BUTTONS
 shutdown.onclick = function (event) {
-    console.log('Shutdown');
+    var quit = confirm('Did you remember to save your data? Click CANCEL to go back and save your data. Click OK to continue the shut down process. ');
+    if (quit == true){
+      alert('Hold Prudentia steady while the motors spin down. Click OK to begin spin down.');
+      console.log('Shutdown');
+    }
 }
 stabilize.onclick = function (event) {
+  if (ready == true){
     console.log('Stabilize');
+  }
+}
+if (calibrate){
+  calibrate.onclick = function (event) {
+      alert('Align Prudentia with the calibration target. Click OK when Prudentia is aligned.');
+      calibrated = true;
+      console.log('System Calibrated');
+  }
+  spinup.onclick = function (event) {
+      if (calibrated == true){
+        alert('Hold Prudentia steady while the motors spin up. Click OK to begin spin up.');
+        ready = true;
+        console.log('Spinup');
+    }
+  }
 }
 stop.onclick = function (event) {
     console.log('Stop');
@@ -63,16 +87,22 @@ settingsNav.onclick = function (event) {
     window.location = "SettingsPage.html";
 }
 rtcNav.onclick = function (event) {
-    console.log('RTC Navigation');
-    window.location = "RTCPage.html";
+  if (ready == true){
+      console.log('RTC Navigation');
+      window.location = "RTCPage.html";
+  }
 }
 aiNav.onclick = function (event) {
-    console.log('AI Navigation');
-    window.location = "AIPage.html";
+  if (ready == true){
+      console.log('AI Navigation');
+      window.location = "AIPage.html";
+  }
 }
 searchNav.onclick = function (event) {
-    console.log('Search Navigation');
-    window.location = "SMPage.html";
+  if (ready == true){
+      console.log('Search Navigation');
+      window.location = "SMPage.html";
+  }
 }
 // LOGGING BUTTONS
 if (startlog){
@@ -255,22 +285,22 @@ if (go){
       yawTarget = document.getElementById("YawTarget").value;
       pitchTarget = document.getElementById("PitchTarget").value;
       rollTarget = document.getElementById("RollTarget").value;
-      if (yawTarget <= 360 && yawTarget >= -360 && pitchTarget <= 19 && pitchTarget >= -19 && rollTarget <= 360 && rollTarget >= -360){
+      if (yawTarget <= 180 && yawTarget >= -180 && pitchTarget <= 19 && pitchTarget >= -19 && rollTarget <= 180 && rollTarget >= -180){
         console.log('Target Yaw = ' + yawTarget);
         console.log('Target Pitch = ' + pitchTarget);
         console.log('Target Roll = ' + rollTarget);
       }
-      else if (yawTarget > 360 || yawTarget < -360){
-        alert('Target Yaw must be between -360\u00B0 and +360\u00B0');
+      else if (yawTarget > 180 || yawTarget < -180){
+        alert('Target Yaw must be between -180\u00B0 and +180\u00B0');
       }
       else if (pitchTarget > 19 || pitchTarget < -19){
         alert('Target Pitch must be between -19\u00B0 and +19\u00B0');
       }
-      else if (rollTarget > 360 || rollTarget < -360){
-        alert('Target Roll must be between -360\u00B0 and +360\u00B0');
+      else if (rollTarget > 180 || rollTarget < -180){
+        alert('Target Roll must be between -180\u00B0 and +180\u00B0');
       }
       else{
-        alert('Target Yaw must be between -360\u00B0 and +360\u00B0 \nTarget Pitch must be between -19\u00B0 and +19\u00B0 \nTarget Roll must be between -360\u00B0 and +360\u00B0');
+        alert('Target Yaw must be between -180\u00B0 and +180\u00B0 \nTarget Pitch must be between -19\u00B0 and +19\u00B0 \nTarget Roll must be between -180\u00B0 and +180\u00B0');
       }
   }
 }
