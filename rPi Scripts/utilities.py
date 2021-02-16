@@ -1,6 +1,6 @@
 import inspect
 
-debugging = True
+debugging = False
 
 # Displays text print along with script caller for better debugging.
 def log(text):
