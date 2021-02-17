@@ -6,22 +6,24 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Prudentia's Control System</title>
 	<link href="styles.css" rel="stylesheet">
-	<script src="script.js"></script>
 </head>
 <body>
 	<header>
 		<h1 class="title">SEARCH MODE</h1>
 	</header>
-	<div class="container">
-		<div class="navigation">
-			<button class="HomeButton" onclick="document.location='Homepage.html'">HOME</button>
-			<button class="InstructionButton" onclick="document.location='InstructionPage.html'">INSTRUCTIONS</button>
-			<button class="SettingsButton" onclick="document.location='SettingsPage.html'">SETTINGS</button>
-			<button class="RTCButton" onclick="document.location='RTCPage.html'">REAL TIME CONTROL</button>
-			<button class="AIButton" onclick="document.location='AIPage.html'">ATTITUDE INPUT</button>
-			<button class="SMButton" onclick="document.location='SMPage.html'">SEARCH MODE</button>
-		</div>
+
+	<button class="Shutdown">SHUTDOWN</button>
+	<button class="Stabilize">STABILIZE</button>
+
+	<div class="navigation">
+		<button class="HomeButton">HOME</button>
+		<button class="InstructionButton">INSTRUCTIONS</button>
+		<button class="SettingsButton">SETTINGS</button>
+		<button class="RTCButton">REAL TIME CONTROL</button>
+		<button class="AIButton">ATTITUDE INPUT</button>
+		<button class="SMButton">SEARCH MODE</button>
 	</div>
+
 	<div class="datawindow">
 		<p class="LiveData">LIVE DATA</p>
 		<table class="DataTable">
@@ -44,15 +46,15 @@
 			<tr>
 				<th class="DataLabel">SPEED</th>
 				<td class="Data">hold</td>
-			</tr>	
+			</tr>
 		</table>
 		<p class="LogOpt">LOGGING OPTIONS</p>
-		<button class="StartLog" onclick="">Start Logging</button>
-		<button class="StopLog" onclick="">Stop Logging</button>
-		<button class="ClearLog" onclick="">Clear Log</button>
-		<button class="Save" onclick="">Save</button>
+		<button class="StartLog">Start Logging</button>
+		<button class="StopLog">Stop Logging</button>
+		<button class="ClearLog">Clear Log</button>
+		<button class="Save">Download</button>
 	</div>
-	<button class="SearchButton" onclick="">SEARCH</button>
+	<button class="SearchButton">SEARCH</button>
 	<div class="graphs">
 		<div class="CameraView">
 			<p>CAMERA VIEW</p>
@@ -64,8 +66,9 @@
 			<p>ANGULAR VELOCITY</p>
 		</div>
 	</div>
-	<div class="stop">
-		<button class="StopButton" onclick="">STOP</button>
-	</div>
+
+	<button class="StopButton">STOP</button>
+
+	<script src="script.js"></script>
 </body>
 </html>

@@ -6,23 +6,27 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Prudentia's Control System</title>
 	<link href="styles.css" rel="stylesheet">
-	<script src="script.js"></script>
 </head>
 <body>
 	<header>
 		<h1 class="title">REAL TIME CONTROL</h1>
 	</header>
+
+	<button class="Shutdown">SHUTDOWN</button>
+	<button class="Stabilize">STABILIZE</button>
+
 	<div class="navigation">
-		<button class="HomeButton" onclick="document.location='Homepage.html'">HOME</button>
-		<button class="InstructionButton" onclick="document.location='InstructionPage.html'">INSTRUCTIONS</button>
-		<button class="SettingsButton" onclick="document.location='SettingsPage.html'">SETTINGS</button>
-		<button class="RTCButton" onclick="document.location='RTCPage.html'">REAL TIME CONTROL</button>
-		<button class="AIButton" onclick="document.location='AIPage.html'">ATTITUDE INPUT</button>
-		<button class="SMButton" onclick="document.location='SMPage.html'">SEARCH MODE</button>
+		<button class="HomeButton">HOME</button>
+		<button class="InstructionButton">INSTRUCTIONS</button>
+		<button class="SettingsButton">SETTINGS</button>
+		<button class="RTCButton">REAL TIME CONTROL</button>
+		<button class="AIButton">ATTITUDE INPUT</button>
+		<button class="SMButton">SEARCH MODE</button>
 	</div>
+
 	<div class="control">
 		<div class="yaw">
-			
+
 		</div>
 	</div>
 	<div class="datawindow">
@@ -47,26 +51,52 @@
 			<tr>
 				<th class="DataLabel">SPEED</th>
 				<td class="Data">hold</td>
-			</tr>	
+			</tr>
 		</table>
 		<p class="LogOpt">LOGGING OPTIONS</p>
-		<button class="StartLog" onclick="">Start Logging</button>
-		<button class="StopLog" onclick="">Stop Logging</button>
-		<button class="ClearLog" onclick="">Clear Log</button>
-		<button class="Save" onclick="">Save</button>
+		<button class="StartLog">Start Logging</button>
+		<button class="StopLog">Stop Logging</button>
+		<button class="ClearLog">Clear Log</button>
+		<button class="Save">Download</button>
 	</div>
 	<div class="Speed">
 		<form action="">
-			<input type="radio" id="Speed5" name="speed" value="5">
-			<label for="Speed5">5 &deg/s</label>
-			<input type="radio" id="Speed10" name="speed" value="10">
-			<label for="Speed10">10 &deg/s</label>
-			<input type="radio" id="Speed15" name="speed" value="15">
-			<label for="Speed15">15 &deg/s</label>
+			<div class="speed5">
+				<input type="radio" id="Speed5" name="speed" value="5">
+				<label for="Speed5">5 &deg/s</label>
+			</div>
+			<div class="speed10">
+				<input type="radio" id="Speed10" name="speed" value="10">
+				<label for="Speed10">10 &deg/s</label>
+			</div>
+			<div class="speed15">
+				<input type="radio" id="Speed15" name="speed" value="15">
+				<label for="Speed15">15 &deg/s</label>
+			</div>
+			<div class="speed30">
+				<input type="radio" id="Speed30" name="speed" value="30">
+				<label for="Speed30">30 &deg/s</label>
+			</div>
+			<div class="speed50">
+				<input type="radio" id="Speed50" name="speed" value="50">
+				<label for="Speed50">50 &deg/s</label>
+			</div>
 		</form>
 	</div>
-	<div class="stop">
-		<button class="StopButton" onclick="">STOP</button>
+	<div class="Direction">
+			<button class="YawL"></button>
+			<button class="YawR"></button>
+			<button class="PitchU"></button>
+			<button class="PitchD"></button>
+			<button class="RollCW"></button>
+			<button class="RollCCW"></button>
+			<p class="YawtitleRTC">YAW</p>
+			<p class="PitchtitleRTC">PITCH</p>
+			<p class="RolltitleRTC">ROLL</p>
 	</div>
+
+	<button class="StopButton">STOP</button>
+	<script src="script.js"></script>
+
 </body>
 </html>
