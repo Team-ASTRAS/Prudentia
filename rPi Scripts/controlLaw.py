@@ -118,8 +118,8 @@ class ControlLawSingleton:
         #Reaction wheels
         Irw = 0.000453158
 
-        largeAngle = np.cos(np.deg2rad(45.0))
-        smallAngle = np.sin(np.deg2rad(45.0))
+        largeAngle = np.cos(np.deg2rad(70.0))
+        smallAngle = np.sin(np.deg2rad(70.0))
         
         #This is the 3D vector representation of the reaction wheel's applied momentum, orientated about the X axis
         #This is previously "e" in simulink files
