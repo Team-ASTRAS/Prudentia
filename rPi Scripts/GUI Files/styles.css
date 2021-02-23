@@ -432,9 +432,7 @@
 		position: absolute;
 		left: 65%;
 		top: 30%;}
-.YPRError{font: 1.5vw calibri;
-			color: white;
-			background-color: #D1D1D1;
+#YPRErrorGraph{background-color: #D1D1D1;
 			border: 10px solid #DEDEDE;
 			border-radius: 10px;
 			height: 45%;
@@ -443,9 +441,7 @@
 			left: 22%;
 			top: 40%;
 			text-align: center;}
-.YPRGraph{font: 1.5vw calibri;
-			color: white;
-			background-color: #D1D1D1;
+#YPRGraph{background-color: #D1D1D1;
 			border: 10px solid #DEDEDE;
 			border-radius: 10px;
 			height: 45%;
@@ -454,9 +450,7 @@
 			left: 48%;
 			top: 40%;
 			text-align: center;}
-.AngVelGraph{font: 1.5vw calibri;
-			color: white;
-			background-color: #D1D1D1;
+#AngVelGraph{background-color: #D1D1D1;
 			border: 10px solid #DEDEDE;
 			border-radius: 10px;
 			height: 45%;
