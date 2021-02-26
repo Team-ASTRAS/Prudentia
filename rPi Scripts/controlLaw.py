@@ -26,6 +26,7 @@ class routineReport:
     qError = np.array([0, 0, 0, 0])
     qErrorAdjusted = np.array([0, 0, 0, 0])
     lqrMode = LqrMode.nominal
+    inertialTorque = np.array([0, 0, 0])
     motorTorques = np.array([0, 0, 0, 0])
     motorAlpha = np.array([0, 0, 0, 0])
 
@@ -105,6 +106,7 @@ class ControlLawSingleton:
         results.qError = qError
         results.qErrorAdjusted = qErrorAdjusted
         results.lqrMode = lqrMode
+        results.inertialTorque = inertialTorque
         results.motorAlpha = np.dot(self.IrwArray, -1 * inertialTorque)
         results.motorTorques = results.motorAlpha * self.Irw
         return results
@@ -271,19 +273,22 @@ class ControlLawSingleton:
 
         return np.dot(K, xbar)
 
-cls = ControlLawSingleton()
 
-q = ypr2quat(0,25,0)
-w = np.array([0, 0, 0])
-qTarget = ypr2quat(100,0,0)
+if __name__ == "__main__":
+    cls = ControlLawSingleton()
 
-res = cls.routineAttitudeInput(q, w, qTarget)
-log("IN q:             %s" % q)
-log("IN w:             %s" % w)
-log("IN qTarget:       %s" % qTarget)
-log("-"*20)
-log("OUT qError:       %s" % res.qError)
-log("OUT qAdjusted:    %s" % res.qErrorAdjusted)
-log("OUT lqrMode:      %s" % res.lqrMode)
-log("OUT Motor Torque: %s" % res.motorTorques)
-log("OUT Motor Alpha:  %s" % res.motorAlpha)
+    q = ypr2quat(0,0,0)
+    w = np.array([0, 0, 0])
+    qTarget = ypr2quat(30,10,-25)
+
+    res = cls.routineAttitudeInput(q, w, qTarget)
+    log("IN q:             %s [%s, %s, %s]" % (q , quat2ypr(q).y, quat2ypr(q).p, quat2ypr(q).r) )
+    log("IN w:             %s" % w)
+    log("IN qTarget:       %s [%s, %s, %s]" % (qTarget , quat2ypr(qTarget).y, quat2ypr(qTarget).p, quat2ypr(qTarget).r))
+    log("-"*20)
+    log("OUT qError:       %s [%s, %s, %s]" % (res.qError , quat2ypr(res.qError).y, quat2ypr(res.qError).p, quat2ypr(res.qError).r))
+    log("OUT qAdjusted:    %s [%s, %s, %s]" % (res.qErrorAdjusted , quat2ypr(res.qErrorAdjusted).y, quat2ypr(res.qErrorAdjusted).p, quat2ypr(res.qErrorAdjusted).r))
+    log("OUT lqrMode:      %s" % res.lqrMode)
+    log("OUT Inert Torque: %s" % res.inertialTorque)
+    log("OUT Motor Torque: %s" % res.motorTorques)
+    log("OUT Motor Alpha:  %s" % res.motorAlpha)

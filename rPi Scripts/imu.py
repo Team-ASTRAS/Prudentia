@@ -10,22 +10,8 @@ class ImuSingleton:
     port = ''
     baudrate = 0
     conn = None
-
-    imuSpeed = 40
-    
+        
     #Imu data fields. These are updated by self.asyncRead() on another thread
-
-    yaw = [0] * (imuSpeed / 20)
-    pitch = [0] * (imuSpeed / 20)
-    roll = [0] * (imuSpeed / 20)
-    
-    gyroX = [0] * (imuSpeed / 20)
-    gyroY = [0] * (imuSpeed / 20)
-    gyroZ = [0] * (imuSpeed / 20)
-    
-    accX = [0] * (imuSpeed / 20)
-    accY = [0] * (imuSpeed / 20)
-    accZ = [0] * (imuSpeed / 20)
     
 
     def openConnection(self, port, baudrate):
@@ -110,24 +96,24 @@ class ImuSingleton:
                 else:
                     print("ERROR: splitOutput length is not greater than zero!")
 
-            print time.time() - t0
+            print(time.time() - t0)
             #Reset output
             output = " "
                 
 
+if __name__ == "__main__":
+    Imu = ImuSingleton()
+    #conn = Imu.openConnection('/dev/ttyUSB0', 460800) # Raspi USB
+    conn = Imu.openConnection('com13', 115200) # Windows USB
+    assert conn is not None
+    serialThread = Thread(target=Imu.asyncRead)
+    serialThread.start()
 
-Imu = ImuSingleton()
-#conn = Imu.openConnection('/dev/ttyUSB0', 460800) # Raspi USB
-conn = Imu.openConnection('com13', 115200) # Windows USB
-assert conn is not None
-serialThread = Thread(target=Imu.asyncRead)
-serialThread.start()
-
-i = 0
-t0 = time.time()
-while i < 1000000:
-    i += 1
-    arr = Imu.getAverageData()
-    Imu.report()
-t = time.time() - t0
-print(t)
+    i = 0
+    t0 = time.time()
+    while i < 1000000:
+        i += 1
+        arr = Imu.getAverageData()
+        Imu.report()
+    t = time.time() - t0
+    print(t)

@@ -37,8 +37,8 @@ Imu = imu.ImuSingleton()
 #assert conn is not None #Make sure the port opened correctly
 
 #Start thread to read data asynchronously
-serialThread = Thread(target=Imu.asyncRead)
-serialThread.start()
+#serialThread = Thread(target=Imu.asyncRead)
+#serialThread.start()
 
 
 ## Control Law Setup
@@ -109,8 +109,7 @@ while True:
 
     if (sharedData.state and State.standby) or (sharedData.state and State.running):
         #Set IMU data
-        sharedData.angularPosition = Imu.position
-
+        pass#sharedData.angularPosition = Imu.position
 
 
     if sharedData.state == State.standby:
