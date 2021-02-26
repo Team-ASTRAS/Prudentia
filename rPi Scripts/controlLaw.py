@@ -73,6 +73,9 @@ def quat2ypr(q):
     result.r = np.arctan2(2 * (q[1] * q[2] + q[0] * q[3]), q[3]**2 - q[0]**2 - q[1]**2 + q[2]**2) * 180 / np.pi
     return result
 
+def ypr2str(ypr):
+    return "[%s, %s, %s]" % (round(ypr.y, 4), round(ypr.p), round(ypr.r)) 
+
 class ControlLawSingleton:
 
     controlRoutine = ControlRoutine.stabilize
@@ -90,7 +93,7 @@ class ControlLawSingleton:
     #by main.py when the state machine is set to run a particular routine
     
     def __init__(self):
-        np.set_printoptions(precision=4)
+        np.set_printoptions(precision=4, suppress=True, floatmode='maxprec_equal')
         self.initialize()
 
     def routineStabilize(self):
@@ -279,16 +282,19 @@ if __name__ == "__main__":
 
     q = ypr2quat(0,0,0)
     w = np.array([0, 0, 0])
-    qTarget = ypr2quat(30,10,-25)
+    qTarget = ypr2quat(-90, 0, 0)
 
     res = cls.routineAttitudeInput(q, w, qTarget)
-    log("IN q:             %s [%s, %s, %s]" % (q , quat2ypr(q).y, quat2ypr(q).p, quat2ypr(q).r) )
+    log("IN q:             %s Euler: %s" % (q , ypr2str(quat2ypr(q))) )
     log("IN w:             %s" % w)
-    log("IN qTarget:       %s [%s, %s, %s]" % (qTarget , quat2ypr(qTarget).y, quat2ypr(qTarget).p, quat2ypr(qTarget).r))
+    log("IN qTarget:       %s Euler: %s" % (qTarget , ypr2str(quat2ypr(qTarget))) )
     log("-"*20)
-    log("OUT qError:       %s [%s, %s, %s]" % (res.qError , quat2ypr(res.qError).y, quat2ypr(res.qError).p, quat2ypr(res.qError).r))
-    log("OUT qAdjusted:    %s [%s, %s, %s]" % (res.qErrorAdjusted , quat2ypr(res.qErrorAdjusted).y, quat2ypr(res.qErrorAdjusted).p, quat2ypr(res.qErrorAdjusted).r))
+    log("OUT qError:       %s Euler: %s]" % (res.qError , ypr2str(quat2ypr(res.qError))) )
+    log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , ypr2str(quat2ypr(res.qErrorAdjusted))) )
     log("OUT lqrMode:      %s" % res.lqrMode)
     log("OUT Inert Torque: %s" % res.inertialTorque)
     log("OUT Motor Torque: %s" % res.motorTorques)
-    log("OUT Motor Alpha:  %s" % res.motorAlpha)
+    log("OUT Motor Alpha:  %s (rad/s)" % res.motorAlpha)
+    log("OUT Motor Alpha:  %s (rpm)" % (res.motorAlpha * 9.5493))
+    deltaDC = (res.motorAlpha * 9.5493 + 267.34) / 524.55
+    log("OUT deltaDC:      %s" % deltaDC)
