@@ -61,7 +61,7 @@ shutdown.onclick = function (event) {
     }
 }
 stabilize.onclick = function (event) {
-  if (ready == true){
+  if (ready == true){           // Change to if mode = running
     console.log('Stabilize');
   }
 }
@@ -74,7 +74,7 @@ if (calibrate){
   spinup.onclick = function (event) {
       if (calibrated == true){
         alert('Hold Prudentia steady while the motors spin up. Click OK to begin spin up.');
-        ready = true;
+        ready = true;           //mode = running
         console.log('Spinup');
     }
   }
@@ -96,24 +96,24 @@ settingsNav.onclick = function (event) {
     window.location = "SettingsPage.html";
 }
 rtcNav.onclick = function (event) {
-  if (ready == true){
+  if (ready == true){               // mode = running
       console.log('RTC Navigation');
       window.location = "RTCPage.html";
   }
 }
 aiNav.onclick = function (event) {
-  if (ready == true){
+  if (ready == true){             // mode = running
       console.log('AI Navigation');
       window.location = "AIPage.html";
   }
 }
 searchNav.onclick = function (event) {
-  if (ready == true){
+  if (ready == true){         //mode = running
       console.log('Search Navigation');
       window.location = "SMPage.html";
   }
 }
-// LOGGING BUTTONS
+// LOGGING
 if (startlog){
     startlog.onclick = function (event) {
         console.log('Start Logging');
@@ -128,6 +128,18 @@ if (startlog){
         console.log('Download Log');
       }
   }
+//if mode = running
+var TableUpdateTime = 1000;
+
+function updateLogTable(){
+  document.getElementById('DataMode').innerHTML = Math.random().toFixed(2);
+  document.getElementById('DataYaw').innerHTML = Math.random().toFixed(2);
+  document.getElementById('DataPitch').innerHTML = Math.random().toFixed(2);
+  document.getElementById('DataRoll').innerHTML = Math.random().toFixed(2);
+  document.getElementById('DataSpeed').innerHTML = Math.random().toFixed(2);
+  setTimeout(updateLogTable,TableUpdateTime);
+}
+updateLogTable();
 
   // RTC BUTTONS
   if (yawl){
@@ -300,7 +312,7 @@ if (go){
         console.log('Target Roll = ' + rollTarget);
 
 // AI Graphs
-        var UpdateTime = 100; // in ms
+        var GraphUpdateTime = 100; // in ms
         var ElementsKept = 100;
         var ElementsCounted = 0;
 
@@ -402,12 +414,12 @@ if (go){
           }
         };
 
-        function updateData(){
+        function updateAIGraphData(){
           data=Math.random();
           addData(data);
-          setTimeout(updateData,UpdateTime);
+          setTimeout(updateAIGraphData,GraphUpdateTime);
         }
-        updateData();
+        updateAIGraphData();
 
       }
       else if (yawTarget > 180 || yawTarget < -180){
@@ -429,7 +441,7 @@ if (go){
 if (searchmode){
   searchmode.onclick = function (event) {
       console.log('Search Mode');
-      var UpdateTime = 100; // in ms
+      var GraphUpdateTime = 100; // in ms
       var ElementsKept = 100;
       var ElementsCounted = 0;
 
@@ -507,12 +519,12 @@ if (searchmode){
         }
       };
 
-      function updateData(){
+      function updateSMGraphData(){
         data=Math.random();
         addData(data);
-        setTimeout(updateData,UpdateTime);
+        setTimeout(updateSMGraphData,GraphUpdateTime);
       }
-      updateData();
+      updateSMGraphData();
   }
 }
 
