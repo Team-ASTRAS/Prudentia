@@ -78,7 +78,6 @@ def ypr2str(ypr):
 
 class ControlLawSingleton:
 
-    controlRoutine = ControlRoutine.stabilize
     lqrMode = LqrMode.nominal
 
     yawSweepThreshold = 20
@@ -110,7 +109,7 @@ class ControlLawSingleton:
         results.qErrorAdjusted = qErrorAdjusted
         results.lqrMode = lqrMode
         results.inertialTorque = inertialTorque
-        results.motorAlpha = np.dot(self.IrwArray, -1 * inertialTorque)
+        results.motorAccel = np.dot(self.IrwArray, -1 * inertialTorque)
         results.motorTorques = results.motorAlpha * self.Irw
         return results
 

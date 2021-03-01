@@ -28,17 +28,20 @@ websocketThread.start()
 # The html server is responsible for delivering html content to the connecting user.
 htmlThread = Thread(target=user.startHtmlServer, args=(sharedData, ip, 8009))
 htmlThread.start()
+time.sleep(1) #Give the html thread a moment to setup
 
 ## IMU Serial Setup
 
 #Create IMU class and open a connection
 Imu = imu.ImuSingleton()
-#conn = Imu.openConnection('com4', 9600)
+conn = Imu.openConnection('com4', 9600)
 #assert conn is not None #Make sure the port opened correctly
 
 #Start thread to read data asynchronously
-#serialThread = Thread(target=Imu.asyncRead)
-#serialThread.start()
+#imuReadThread = Thread(target=Imu.asyncRead)
+imuReadThread = Thread(target=Imu.emulateImu)
+imuReadThread.start()
+time.sleep(1) #Give the imu thread a moment to setup
 
 
 ## Control Law Setup
@@ -56,9 +59,10 @@ Camera = camera.CameraSingleton()
 ## Variable Initialization
 
 sharedData.state = State.running
+sharedData.controlRoutine = ControlRoutine.attitudeInput
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
-sharedData.target = [0, 0, 0]
+sharedData.qTarget = [0, 0, 0]
 
 lastState = sharedData.state #Store a copy of last state to see mode transitions
 
@@ -117,25 +121,29 @@ while True:
 
     elif sharedData.state == State.running:
         #Motors can now be run (No motor code should run outside this statement!)
-        if ControlLaw.controlRoutine == ControlRoutine.stabilize:
+        if sharedData.controlRoutine == ControlRoutine.stabilize:
             # Stabilize
             # Set ControlLaw Data
             response = ControlLaw.routineStabilize()
             # Use response to actuate motors
 
-        elif ControlLaw.controlRoutine == ControlRoutine.realTimeControl:
-            # Real time control
-            # Set ControlLaw Data
-            response = ControlLaw.routineRealTimeControl()
+        elif sharedData.controlRoutine == ControlRoutine.attitudeInput:
+            
+            #Unpack qTarget from shared data.
+            qTarget = controlLaw.ypr2quat(sharedData.qTarget[0], sharedData.qTarget[1], sharedData.qTarget[2])
+            
+            #Run control law with latest IMU data and qTarget
+            response = ControlLaw.routineAttitudeInput(Imu.q, Imu.w, qTarget)
+            #print('-'*20)
+            #print("Q:%s, Accel:%s" % (Imu.q, response.motorAccel))
+            
             # Use response to actuate motors
+            Motors.setAllMotorRpm(response.motorAccel)
+            
+            #print("DCs:%s" % Motors.dutys)
+            
 
-        elif ControlLaw.controlRoutine == ControlRoutine.attitudeInput:
-            # Attitude input
-            # Set ControlLaw Data
-            response = ControlLaw.routineAttitudeInput()
-            # Use response to actuate motors
-
-        elif ControlLaw.controlRoutine == ControlRoutine.search:
+        elif sharedData.controlRoutine == ControlRoutine.search:
             # Search
             # Set ControlLaw Data
             response = ControlLaw.routineSearch()
