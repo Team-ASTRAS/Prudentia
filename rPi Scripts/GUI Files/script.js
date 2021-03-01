@@ -312,8 +312,8 @@ if (go){
         console.log('Target Roll = ' + rollTarget);
 
 // AI Graphs
-        var GraphUpdateTime = 100; // in ms
-        var ElementsKept = 100;
+        var GraphUpdateTime = 300; // in ms
+        var ElementsKept = 50;
         var ElementsCounted = 0;
 
         var YPRErrorGraph = $("#YPRErrorGraph");
@@ -323,54 +323,119 @@ if (go){
         var AngVelGraph = $("#AngVelGraph");
 
         var commonOptions = {
-          scales: {
-            xAxes: [{
-              type: 'time',
-              time: {
-                displayFormats: {
-                  millisecond: 'mm:ss:SSS'
-                }
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              }
-            }]
-          },
+          responsive: true,
+          maintainAspectRatio: false,
           legend: {display: false},
-          tooltips:{enabled: false}
+          tooltips:{enabled: false},
+          elements: {
+                    point:{
+                        radius: 0
+                    }
+                }
         };
 
         var YPRErrorChartInstant = new Chart(YPRErrorGraph,{
           type: 'line',
           data: {
             datasets: [{
-              label: "YPR Error",
+              label: "Yaw Error",
               data: 0,
-            }]
+              borderColor: ['rgb(255,0,0)'],
+              borderWidth: 1,
+              fill: false},
+            {label: "Pitch Error",
+              data: 0,
+              borderColor: ['rgb(0,255,0)'],
+              borderWidth: 1,
+              fill: false},
+            {label: "Roll Error",
+              data: 0,
+              borderColor: ['rgb(0,0,255)'],
+              borderWidth: 1,
+              fill: false}
+          ]
           },
           options: Object.assign({}, commonOptions,{
             title:{
               display: true,
               text: "YPR Error",
-              fontSize: 8
+              fontSize: 18
+            },
+            scales: {
+              xAxes: [{
+                type: 'time',
+                scaleLabel: {
+                  display: true,
+                  labelString: 'time (min:sec)',
+                },
+                time: {
+                  displayFormats: {
+                    second: 'mm:ss'
+                  }
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Degrees'
+                }
+              }]
             }
-          })
-        });
+        })
+      });
+
         var YPRChartInstant = new Chart(YPRGraph,{
           type: 'line',
           data: {
             datasets: [{
-              label: "YPR",
+              label: "Yaw",
               data: 0,
-            }]
+              borderColor: ['rgb(255,0,0)'],
+              borderWidth: 1,
+              fill: false},
+            {label: "Pitch",
+              data: 0,
+              borderColor: ['rgb(0,255,0)'],
+              borderWidth: 1,
+              fill: false},
+            {label: "Roll",
+              data: 0,
+              borderColor: ['rgb(0,0,255)'],
+              borderWidth: 1,
+              fill: false}
+          ]
           },
           options: Object.assign({}, commonOptions,{
             title:{
               display: true,
               text: "YPR",
-              fontSize: 8
+              fontSize: 18
+            },
+            scales: {
+              xAxes: [{
+                type: 'time',
+                scaleLabel: {
+                  display: true,
+                  labelString: 'time (min:sec)',
+                },
+                time: {
+                  displayFormats: {
+                    second: 'mm:ss'
+                  }
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Degrees'
+                }
+              }]
             }
           })
         });
@@ -380,30 +445,64 @@ if (go){
             datasets: [{
               label: "Angular Velocity",
               data: 0,
+              borderColor: ['rgb(0,255,0)'],
+              borderWidth: 1,
+              fill: false
             }]
           },
           options: Object.assign({}, commonOptions,{
             title:{
               display: true,
               text: "Angular Velocity",
-              fontSize: 8
+              fontSize: 18
+            },
+            scales: {
+              xAxes: [{
+                type: 'time',
+                scaleLabel: {
+                  display: true,
+                  labelString: 'time (min:sec)',
+                },
+                time: {
+                  displayFormats: {
+                    second: 'mm:ss'
+                  }
+                }
+              }],
+              yAxes: [{
+                ticks: {
+                  beginAtZero: true
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Degrees/Sec'
+                }
+              }]
             }
           })
         });
 
-        function addData(data) {
-          if(data){
+        function addData() {
+        //  if(data){
             YPRErrorChartInstant.data.labels.push(new Date());
-            YPRErrorChartInstant.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+            YPRErrorChartInstant.data.datasets[0].data.push(Math.random()*10-4);
+            YPRErrorChartInstant.data.datasets[1].data.push(Math.random()*10-4);
+            YPRErrorChartInstant.data.datasets[2].data.push(Math.random()*10-4);
             YPRChartInstant.data.labels.push(new Date());
-            YPRChartInstant.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+            YPRChartInstant.data.datasets[0].data.push(Math.random()*10-4);
+            YPRChartInstant.data.datasets[1].data.push(Math.random()*10-4);
+            YPRChartInstant.data.datasets[2].data.push(Math.random()*10-4);
             AngVelChartInstant.data.labels.push(new Date());
-            AngVelChartInstant.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+            AngVelChartInstant.data.datasets[0].data.push(Math.random()*10-4);
             if(ElementsCounted > ElementsKept){
               YPRErrorChartInstant.data.labels.shift();
               YPRErrorChartInstant.data.datasets[0].data.shift();
+              YPRErrorChartInstant.data.datasets[1].data.shift();
+              YPRErrorChartInstant.data.datasets[2].data.shift();
               YPRChartInstant.data.labels.shift();
               YPRChartInstant.data.datasets[0].data.shift();
+              YPRChartInstant.data.datasets[1].data.shift();
+              YPRChartInstant.data.datasets[2].data.shift();
               AngVelChartInstant.data.labels.shift();
               AngVelChartInstant.data.datasets[0].data.shift();
             }
@@ -411,12 +510,11 @@ if (go){
             YPRErrorChartInstant.update();
             YPRChartInstant.update();
             AngVelChartInstant.update();
-          }
-        };
+          };
+      //  };
 
         function updateAIGraphData(){
-          data=Math.random();
-          addData(data);
+          addData();
           setTimeout(updateAIGraphData,GraphUpdateTime);
         }
         updateAIGraphData();
@@ -441,46 +539,74 @@ if (go){
 if (searchmode){
   searchmode.onclick = function (event) {
       console.log('Search Mode');
-      var GraphUpdateTime = 100; // in ms
-      var ElementsKept = 100;
+      var GraphUpdateTime = 300; // in ms
+      var ElementsKept = 50;
       var ElementsCounted = 0;
 
       var YPRGraph = $("#YPRGraph");
       var AngVelGraph = $("#AngVelGraph");
 
       var commonOptions = {
-        scales: {
-          xAxes: [{
-            type: 'time',
-            time: {
-              displayFormats: {
-                millisecond: 'mm:ss:SSS'
-              }
-            }
-          }],
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        },
+        responsive: true,
+        maintainAspectRatio: false,
         legend: {display: false},
-        tooltips:{enabled: false}
+        tooltips:{enabled: false},
+        elements: {
+                  point:{
+                      radius: 0
+                  }
+              }
       };
 
       var YPRChartInstant = new Chart(YPRGraph,{
         type: 'line',
         data: {
           datasets: [{
-            label: "YPR",
+            label: "Yaw",
             data: 0,
-          }]
+            borderColor: ['rgb(255,0,0)'],
+            borderWidth: 1,
+            fill: false},
+          {label: "Pitch",
+            data: 0,
+            borderColor: ['rgb(0,255,0)'],
+            borderWidth: 1,
+            fill: false},
+          {label: "Roll",
+            data: 0,
+            borderColor: ['rgb(0,0,255)'],
+            borderWidth: 1,
+            fill: false}
+        ]
         },
         options: Object.assign({}, commonOptions,{
           title:{
             display: true,
             text: "YPR",
-            fontSize: 8
+            fontSize: 18
+          },
+          scales: {
+            xAxes: [{
+              type: 'time',
+              scaleLabel: {
+                display: true,
+                labelString: 'time (min:sec)',
+              },
+              time: {
+                displayFormats: {
+                  second: 'mm:ss'
+                }
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Degrees'
+              }
+            }]
           }
         })
       });
@@ -490,38 +616,67 @@ if (searchmode){
           datasets: [{
             label: "Angular Velocity",
             data: 0,
+            borderColor: ['rgb(0,255,0)'],
+            borderWidth: 1,
+            fill: false
           }]
         },
         options: Object.assign({}, commonOptions,{
           title:{
             display: true,
             text: "Angular Velocity",
-            fontSize: 8
+            fontSize: 18
+          },
+          scales: {
+            xAxes: [{
+              type: 'time',
+              scaleLabel: {
+                display: true,
+                labelString: 'time (min:sec)',
+              },
+              time: {
+                displayFormats: {
+                  second: 'mm:ss'
+                }
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Degrees/Sec'
+              }
+            }]
           }
         })
       });
 
-      function addData(data) {
-        if(data){
+      function addData() {
+      //  if(data){
           YPRChartInstant.data.labels.push(new Date());
-          YPRChartInstant.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+          YPRChartInstant.data.datasets[0].data.push(Math.random()*10-4);
+          YPRChartInstant.data.datasets[1].data.push(Math.random()*10-4);
+          YPRChartInstant.data.datasets[2].data.push(Math.random()*10-4);
           AngVelChartInstant.data.labels.push(new Date());
-          AngVelChartInstant.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+          AngVelChartInstant.data.datasets[0].data.push(Math.random()*10-4);
           if(ElementsCounted > ElementsKept){
             YPRChartInstant.data.labels.shift();
             YPRChartInstant.data.datasets[0].data.shift();
+            YPRChartInstant.data.datasets[1].data.shift();
+            YPRChartInstant.data.datasets[2].data.shift();
             AngVelChartInstant.data.labels.shift();
             AngVelChartInstant.data.datasets[0].data.shift();
           }
           else ElementsCounted++;
           YPRChartInstant.update();
           AngVelChartInstant.update();
-        }
-      };
+        };
+      //};
 
       function updateSMGraphData(){
-        data=Math.random();
-        addData(data);
+        addData();
         setTimeout(updateSMGraphData,GraphUpdateTime);
       }
       updateSMGraphData();

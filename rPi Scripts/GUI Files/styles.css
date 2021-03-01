@@ -432,7 +432,7 @@
 		position: absolute;
 		left: 65%;
 		top: 30%;}
-#YPRErrorGraph{background-color: #D1D1D1;
+.YPRError{background-color: #D1D1D1;
 			border: 10px solid #DEDEDE;
 			border-radius: 10px;
 			height: 45%;
@@ -441,7 +441,7 @@
 			left: 22%;
 			top: 40%;
 			text-align: center;}
-#YPRGraph{background-color: #D1D1D1;
+.YPR{background-color: #D1D1D1;
 			border: 10px solid #DEDEDE;
 			border-radius: 10px;
 			height: 45%;
@@ -450,7 +450,7 @@
 			left: 48%;
 			top: 40%;
 			text-align: center;}
-#AngVelGraph{background-color: #D1D1D1;
+.AngVel{background-color: #D1D1D1;
 			border: 10px solid #DEDEDE;
 			border-radius: 10px;
 			height: 45%;
