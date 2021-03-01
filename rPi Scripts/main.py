@@ -6,7 +6,7 @@ import user
 from user import State
 import camera
 import imu
-import motors
+#import motors
 import controlLaw
 from controlLaw import ControlRoutine
 
@@ -50,7 +50,7 @@ ControlLaw = controlLaw.ControlLawSingleton()
 
 ## Motor Setup
 
-Motors = motors.MotorsSingleton()
+#Motors = motors.MotorsSingleton()
 
 ## Camera Setup
 
@@ -59,7 +59,7 @@ Camera = camera.CameraSingleton()
 ## Variable Initialization
 
 sharedData.state = State.running
-sharedData.controlRoutine = ControlRoutine.attitudeInput
+sharedData.controlRoutine = ControlRoutine.stabilize
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
 sharedData.qTarget = [0, 0, 0]
@@ -122,10 +122,12 @@ while True:
     elif sharedData.state == State.running:
         #Motors can now be run (No motor code should run outside this statement!)
         if sharedData.controlRoutine == ControlRoutine.stabilize:
-            # Stabilize
-            # Set ControlLaw Data
-            response = ControlLaw.routineStabilize()
+            
+            #Run control law with latest IMU data. Stabilize based on current yaw, with zero roll and pitch.
+            response = ControlLaw.routineStabilize(Imu.q, Imu.w)
+
             # Use response to actuate motors
+            #Motors.setAllMotorRpm(response.motorAccel)
 
         elif sharedData.controlRoutine == ControlRoutine.attitudeInput:
             
@@ -134,15 +136,10 @@ while True:
             
             #Run control law with latest IMU data and qTarget
             response = ControlLaw.routineAttitudeInput(Imu.q, Imu.w, qTarget)
-            #print('-'*20)
-            #print("Q:%s, Accel:%s" % (Imu.q, response.motorAccel))
             
             # Use response to actuate motors
-            Motors.setAllMotorRpm(response.motorAccel)
+            #Motors.setAllMotorRpm(response.motorAccel)
             
-            #print("DCs:%s" % Motors.dutys)
-            
-
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search
             # Set ControlLaw Data

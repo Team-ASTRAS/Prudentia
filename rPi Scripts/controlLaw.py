@@ -7,9 +7,8 @@ from utilities import log
 @unique
 class ControlRoutine(Enum):
     stabilize = 1 #Stabilize angular position
-    realTimeControl = 2 #Change target vector based on RTC input
-    attitudeInput = 3 #Set a target vector for Prudentia
-    search = 4 #Search routines
+    attitudeInput = 2 #Set a target vector for Prudentia
+    search = 3 #Search routines
 
 class LqrMode(Enum):
     nominal = 1 #Standard LQR controller tuned for fast pointing
@@ -80,8 +79,8 @@ class ControlLawSingleton:
 
     lqrMode = LqrMode.nominal
 
-    yawSweepThreshold = 20
-    rollSweepThreshold = 20
+    yawSweepThreshold = 45
+    rollSweepThreshold = 45
     correctivePitchThreshold = 20
     
     K_nominal = np.zeros((3,6))
@@ -95,11 +94,29 @@ class ControlLawSingleton:
         np.set_printoptions(precision=4, suppress=True, floatmode='maxprec_equal')
         self.initialize()
 
-    def routineStabilize(self):
-        pass
+    def routineStabilize(self, q, w):
+        ypr = quat2ypr(q)
+        ypr.p = 0
+        ypr.r = 0
+        qTarget = ypr2quat(ypr.y, ypr.p, ypr.r)
+        qError = getQuatError(q, qTarget)
+
+        lqrMode = self.getControllerType(q, qError)
+        qErrorAdjusted = self.adjustAttitude(lqrMode, q, qTarget, qError)
+        inertialTorque = self.getTorque(lqrMode, qErrorAdjusted, w)
+
+        results = routineReport()
+        results.qError = qError
+        results.qErrorAdjusted = qErrorAdjusted
+        results.lqrMode = lqrMode
+        results.inertialTorque = inertialTorque
+        results.motorAccel = np.dot(self.IrwArray, -1 * inertialTorque)
+        results.motorTorques = results.motorAlpha * self.Irw
+        return results
 
     def routineAttitudeInput(self, q, w, qTarget):
         qError = getQuatError(q, qTarget)
+
         lqrMode = self.getControllerType(q, qError)
         qErrorAdjusted = self.adjustAttitude(lqrMode, q, qTarget, qError)
         inertialTorque = self.getTorque(lqrMode, qErrorAdjusted, w)
