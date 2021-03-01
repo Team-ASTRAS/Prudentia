@@ -29,23 +29,23 @@
 		<table class="DataTable">
 			<tr>
 				<th class="DataLabel">MODE</th>
-				<td class="Data dataMode">hold</td>
+				<td class="Data" id="DataMode" ></td>
 			</tr>
 			<tr>
 				<th class="DataLabel">YAW</th>
-				<td class="Data dataYaw">hold</td>
+				<td class="Data" id="DataYaw"></td>
 			</tr>
 			<tr>
 				<th class="DataLabel">PITCH</th>
-				<td class="Data dataPitch">hold</td>
+				<td class="Data" id="DataPitch"></td>
 			</tr>
 			<tr>
 				<th class="DataLabel">ROLL</th>
-				<td class="Data dataRoll">hold</td>
+				<td class="Data" id="DataRoll"></td>
 			</tr>
 			<tr>
 				<th class="DataLabel">SPEED</th>
-				<td class="Data dataSpeed">hold</td>
+				<td class="Data" id="DataSpeed"></td>
 			</tr>
 		</table>
 
@@ -72,15 +72,9 @@
 	</div>
 
 	<div class="graphs">
-		<div class="YPRError">
-			<p>YPR ERROR</p>
-		</div>
-		<div class="YPRGraph">
-			<p>YPR</p>
-		</div>
-		<div class="AngVelGraph">
-			<p>ANGULAR VELOCITY</p>
-		</div>
+		<canvas id="YPRErrorGraph"></canvas>
+		<canvas id="YPRGraph"></canvas>
+		<canvas id="AngVelGraph"></canvas>
 	</div>
 
 	<button class="StopButton">STOP</button>

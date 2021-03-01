@@ -1,3 +1,12 @@
+var script1 = document.createElement('script');
+script1.src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.js';
+script1.type = 'text/javascript';
+document.getElementsByTagName('head')[0].appendChild(script1);
+var script2 = document.createElement('script');
+script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js';
+script2.type = 'text/javascript';
+document.getElementsByTagName('head')[0].appendChild(script2);
+
 var dataMode = document.querySelector('.dataMode'),
     dataYaw = document.querySelector('.dataYaw'),
     dataPitch = document.querySelector('.dataPitch'),
@@ -52,7 +61,7 @@ shutdown.onclick = function (event) {
     }
 }
 stabilize.onclick = function (event) {
-  if (ready == true){
+  if (ready == true){           // Change to if mode = running
     console.log('Stabilize');
   }
 }
@@ -65,7 +74,7 @@ if (calibrate){
   spinup.onclick = function (event) {
       if (calibrated == true){
         alert('Hold Prudentia steady while the motors spin up. Click OK to begin spin up.');
-        ready = true;
+        ready = true;           //mode = running
         console.log('Spinup');
     }
   }
@@ -87,24 +96,24 @@ settingsNav.onclick = function (event) {
     window.location = "SettingsPage.html";
 }
 rtcNav.onclick = function (event) {
-  if (ready == true){
+  if (ready == true){               // mode = running
       console.log('RTC Navigation');
       window.location = "RTCPage.html";
   }
 }
 aiNav.onclick = function (event) {
-  if (ready == true){
+  if (ready == true){             // mode = running
       console.log('AI Navigation');
       window.location = "AIPage.html";
   }
 }
 searchNav.onclick = function (event) {
-  if (ready == true){
+  if (ready == true){         //mode = running
       console.log('Search Navigation');
       window.location = "SMPage.html";
   }
 }
-// LOGGING BUTTONS
+// LOGGING
 if (startlog){
     startlog.onclick = function (event) {
         console.log('Start Logging');
@@ -119,6 +128,18 @@ if (startlog){
         console.log('Download Log');
       }
   }
+//if mode = running
+var TableUpdateTime = 1000;
+
+function updateLogTable(){
+  document.getElementById('DataMode').innerHTML = Math.random().toFixed(2);
+  document.getElementById('DataYaw').innerHTML = Math.random().toFixed(2);
+  document.getElementById('DataPitch').innerHTML = Math.random().toFixed(2);
+  document.getElementById('DataRoll').innerHTML = Math.random().toFixed(2);
+  document.getElementById('DataSpeed').innerHTML = Math.random().toFixed(2);
+  setTimeout(updateLogTable,TableUpdateTime);
+}
+updateLogTable();
 
   // RTC BUTTONS
   if (yawl){
@@ -289,6 +310,117 @@ if (go){
         console.log('Target Yaw = ' + yawTarget);
         console.log('Target Pitch = ' + pitchTarget);
         console.log('Target Roll = ' + rollTarget);
+
+// AI Graphs
+        var GraphUpdateTime = 100; // in ms
+        var ElementsKept = 100;
+        var ElementsCounted = 0;
+
+        var YPRErrorGraph = $("#YPRErrorGraph");
+          YPRErrorGraph.height = 300;
+          YPRErrorGraph.width = 300;
+        var YPRGraph = $("#YPRGraph");
+        var AngVelGraph = $("#AngVelGraph");
+
+        var commonOptions = {
+          scales: {
+            xAxes: [{
+              type: 'time',
+              time: {
+                displayFormats: {
+                  millisecond: 'mm:ss:SSS'
+                }
+              }
+            }],
+            yAxes: [{
+              ticks: {
+                beginAtZero: true
+              }
+            }]
+          },
+          legend: {display: false},
+          tooltips:{enabled: false}
+        };
+
+        var YPRErrorChartInstant = new Chart(YPRErrorGraph,{
+          type: 'line',
+          data: {
+            datasets: [{
+              label: "YPR Error",
+              data: 0,
+            }]
+          },
+          options: Object.assign({}, commonOptions,{
+            title:{
+              display: true,
+              text: "YPR Error",
+              fontSize: 8
+            }
+          })
+        });
+        var YPRChartInstant = new Chart(YPRGraph,{
+          type: 'line',
+          data: {
+            datasets: [{
+              label: "YPR",
+              data: 0,
+            }]
+          },
+          options: Object.assign({}, commonOptions,{
+            title:{
+              display: true,
+              text: "YPR",
+              fontSize: 8
+            }
+          })
+        });
+        var AngVelChartInstant = new Chart(AngVelGraph,{
+          type: 'line',
+          data: {
+            datasets: [{
+              label: "Angular Velocity",
+              data: 0,
+            }]
+          },
+          options: Object.assign({}, commonOptions,{
+            title:{
+              display: true,
+              text: "Angular Velocity",
+              fontSize: 8
+            }
+          })
+        });
+
+        function addData(data) {
+          if(data){
+            YPRErrorChartInstant.data.labels.push(new Date());
+            YPRErrorChartInstant.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+            YPRChartInstant.data.labels.push(new Date());
+            YPRChartInstant.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+            AngVelChartInstant.data.labels.push(new Date());
+            AngVelChartInstant.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+            if(ElementsCounted > ElementsKept){
+              YPRErrorChartInstant.data.labels.shift();
+              YPRErrorChartInstant.data.datasets[0].data.shift();
+              YPRChartInstant.data.labels.shift();
+              YPRChartInstant.data.datasets[0].data.shift();
+              AngVelChartInstant.data.labels.shift();
+              AngVelChartInstant.data.datasets[0].data.shift();
+            }
+            else ElementsCounted++;
+            YPRErrorChartInstant.update();
+            YPRChartInstant.update();
+            AngVelChartInstant.update();
+          }
+        };
+
+        function updateAIGraphData(){
+          data=Math.random();
+          addData(data);
+          setTimeout(updateAIGraphData,GraphUpdateTime);
+        }
+        updateAIGraphData();
+
       }
       else if (yawTarget > 180 || yawTarget < -180){
         alert('Target Yaw must be between -180\u00B0 and +180\u00B0');
@@ -309,6 +441,90 @@ if (go){
 if (searchmode){
   searchmode.onclick = function (event) {
       console.log('Search Mode');
+      var GraphUpdateTime = 100; // in ms
+      var ElementsKept = 100;
+      var ElementsCounted = 0;
+
+      var YPRGraph = $("#YPRGraph");
+      var AngVelGraph = $("#AngVelGraph");
+
+      var commonOptions = {
+        scales: {
+          xAxes: [{
+            type: 'time',
+            time: {
+              displayFormats: {
+                millisecond: 'mm:ss:SSS'
+              }
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            }
+          }]
+        },
+        legend: {display: false},
+        tooltips:{enabled: false}
+      };
+
+      var YPRChartInstant = new Chart(YPRGraph,{
+        type: 'line',
+        data: {
+          datasets: [{
+            label: "YPR",
+            data: 0,
+          }]
+        },
+        options: Object.assign({}, commonOptions,{
+          title:{
+            display: true,
+            text: "YPR",
+            fontSize: 8
+          }
+        })
+      });
+      var AngVelChartInstant = new Chart(AngVelGraph,{
+        type: 'line',
+        data: {
+          datasets: [{
+            label: "Angular Velocity",
+            data: 0,
+          }]
+        },
+        options: Object.assign({}, commonOptions,{
+          title:{
+            display: true,
+            text: "Angular Velocity",
+            fontSize: 8
+          }
+        })
+      });
+
+      function addData(data) {
+        if(data){
+          YPRChartInstant.data.labels.push(new Date());
+          YPRChartInstant.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+          AngVelChartInstant.data.labels.push(new Date());
+          AngVelChartInstant.data.datasets.forEach((dataset) =>{dataset.data.push(data)});
+          if(ElementsCounted > ElementsKept){
+            YPRChartInstant.data.labels.shift();
+            YPRChartInstant.data.datasets[0].data.shift();
+            AngVelChartInstant.data.labels.shift();
+            AngVelChartInstant.data.datasets[0].data.shift();
+          }
+          else ElementsCounted++;
+          YPRChartInstant.update();
+          AngVelChartInstant.update();
+        }
+      };
+
+      function updateSMGraphData(){
+        data=Math.random();
+        addData(data);
+        setTimeout(updateSMGraphData,GraphUpdateTime);
+      }
+      updateSMGraphData();
   }
 }
 
