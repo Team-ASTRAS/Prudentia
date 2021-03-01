@@ -25,9 +25,10 @@ class SharedDataPackage:
     commandQueue = queue.Queue()
 
     state = State.standby
-    angularPosition = [0, 0, 0]
-    angularVelocity = [0, 0, 0]
-    angularVelocityMagnitude = 0
+
+    position = [0, 0, 0]
+    velocity = [0, 0, 0]
+    velocityMagnitude = 0
     target = [0, 0, 0]
 
     stopServer = None
@@ -35,9 +36,10 @@ class SharedDataPackage:
 
     def getDataJson(self):
         dataObject = {  "state" : self.state.name,
-                        "angularPosition" : self.angularPosition,
-                        "angularVelocity" : self.angularVelocity,
-                        "angularVelocityMagnitude" : self.angularVelocityMagnitude,
+                        "routine" : self.controlRoutine.name,
+                        "position" : self.position,
+                        "velocity" : self.velocity,
+                        "velocityMag" : self.velocityMagnitude,
                         "target" : self.target}
         return json.dumps(dataObject)
 

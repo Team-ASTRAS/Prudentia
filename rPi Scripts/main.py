@@ -7,16 +7,24 @@ from user import State
 import camera
 import imu
 #import motors
+import numpy as np
 import controlLaw
 from controlLaw import ControlRoutine
 
 log('Hello world from Prudentia!')
 log('Setting up..')
 
+
 ## GUI Servers Setup
 
 # Create a single DataPackage class instance
 sharedData = user.SharedDataPackage()
+
+sharedData.state = State.running
+sharedData.controlRoutine = ControlRoutine.attitudeInput
+sharedData.angularPosition = [0, 0, 0]
+sharedData.angularVelocity = [0, 0, 0]
+sharedData.qTarget = [0, 0, 0]
 
 ip = '127.0.0.1' #Local Machine
 
@@ -56,13 +64,8 @@ ControlLaw = controlLaw.ControlLawSingleton()
 
 Camera = camera.CameraSingleton()
 
-## Variable Initialization
 
-sharedData.state = State.running
-sharedData.controlRoutine = ControlRoutine.stabilize
-sharedData.angularPosition = [0, 0, 0]
-sharedData.angularVelocity = [0, 0, 0]
-sharedData.qTarget = [0, 0, 0]
+## Variable Initialization
 
 lastState = sharedData.state #Store a copy of last state to see mode transitions
 
@@ -113,8 +116,10 @@ while True:
 
     if (sharedData.state and State.standby) or (sharedData.state and State.running):
         #Set IMU data
-        pass#sharedData.angularPosition = Imu.position
-
+        ypr = controlLaw.quat2ypr(Imu.q)
+        sharedData.position = [ypr.y, ypr.p, ypr.r]
+        sharedData.velocity = Imu.w.tolist()
+        sharedData.velocityMagnitude = np.linalg.norm(Imu.w)
 
     if sharedData.state == State.standby:
         pass #Do nothing

@@ -129,17 +129,6 @@ if (startlog){
       }
   }
 //if mode = running
-var TableUpdateTime = 1000;
-
-function updateLogTable(){
-  document.getElementById('DataMode').innerHTML = Math.random().toFixed(2);
-  document.getElementById('DataYaw').innerHTML = Math.random().toFixed(2);
-  document.getElementById('DataPitch').innerHTML = Math.random().toFixed(2);
-  document.getElementById('DataRoll').innerHTML = Math.random().toFixed(2);
-  document.getElementById('DataSpeed').innerHTML = Math.random().toFixed(2);
-  setTimeout(updateLogTable,TableUpdateTime);
-}
-updateLogTable();
 
   // RTC BUTTONS
   if (yawl){
@@ -533,6 +522,18 @@ function setState(state){
     websocket.send(JSON.stringify(msg));
 }
 
+function updateLogTable(mode, routine, position, velocityMag) {
+    modeName = mode
+    if (mode == "running") {
+        modeName = modeName + " (" + routine + ")"
+    }
+    document.getElementById('DataMode').innerHTML = modeName;
+    document.getElementById('DataYaw').innerHTML = position[0].toFixed(2);
+    document.getElementById('DataPitch').innerHTML = position[1].toFixed(2);
+    document.getElementById('DataRoll').innerHTML = position[2].toFixed(2);
+    document.getElementById('DataSpeed').innerHTML = velocityMag.toFixed(2);
+}
+
 function start(websocketServerLocation){
     //Attempt connection
     websocket = new WebSocket(websocketServerLocation);
@@ -541,11 +542,8 @@ function start(websocketServerLocation){
     //This assumption can be changed later on if necessary
     websocket.onmessage = function (event) {
         data = JSON.parse(event.data);
-        dataMode.textContent = data["state"]
-        dataYaw.textContent = data["angularPosition"][0];
-        dataPitch.textContent = data["angularPosition"][1];
-        dataRoll.textContent = data["angularPosition"][2];
-        dataSpeed.textContent = data["angularVelocityMagnitude"];
+
+        updateLogTable(data["state"], data["routine"], data["position"], data["velocityMag"])
     };
 
     //If an error occurs, close socket. This will call websocket.onclose
