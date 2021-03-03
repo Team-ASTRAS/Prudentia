@@ -48,7 +48,7 @@ class ImuSingleton:
         output = bytearray()
         
         while True:
-            output += self.conn.read(34)
+            output += conn.read(34)
             sleep(0.001)
             if len(output) >= 34:
                 

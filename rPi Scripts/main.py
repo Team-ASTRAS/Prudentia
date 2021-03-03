@@ -6,7 +6,7 @@ import user
 from user import State
 import camera
 import imu
-import motors
+#import motors
 import numpy as np
 import controlLaw
 from controlLaw import ControlRoutine
@@ -42,12 +42,12 @@ time.sleep(1) #Give the html thread a moment to setup
 
 #Create IMU class and open a connection
 Imu = imu.ImuSingleton()
-conn = Imu.openConnection('/dev/ttyUSB0', 115200)
-assert conn is not None #Make sure the port opened correctly
+conn = Imu.openConnection('com4', 9600)
+#assert conn is not None #Make sure the port opened correctly
 
 #Start thread to read data asynchronously
-imuReadThread = Thread(target=Imu.asyncRead)
-#imuReadThread = Thread(target=Imu.emulateImu)
+#imuReadThread = Thread(target=Imu.asyncRead)
+imuReadThread = Thread(target=Imu.emulateImu)
 imuReadThread.start()
 time.sleep(1) #Give the imu thread a moment to setup
 
@@ -58,7 +58,7 @@ ControlLaw = controlLaw.ControlLawSingleton()
 
 ## Motor Setup
 
-Motors = motors.MotorsSingleton()
+#Motors = motors.MotorsSingleton()
 
 ## Camera Setup
 
@@ -132,7 +132,7 @@ while True:
             response = ControlLaw.routineStabilize(Imu.q, Imu.w)
 
             # Use response to actuate motors
-            Motors.setAllMotorRpm(response.motorAccel)
+            #Motors.setAllMotorRpm(response.motorAccel)
 
         elif sharedData.controlRoutine == ControlRoutine.attitudeInput:
             
@@ -143,9 +143,7 @@ while True:
             response = ControlLaw.routineAttitudeInput(Imu.q, Imu.w, qTarget)
             
             # Use response to actuate motors
-            Motors.setAllMotorRpm(response.motorAccel)
-            
-            print("Duty Cycles: %s" % Motors.dutys)
+            #Motors.setAllMotorRpm(response.motorAccel)
             
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search
