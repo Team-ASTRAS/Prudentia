@@ -6,14 +6,24 @@ import user
 from user import State
 import camera
 import imu
-#import motors
 import numpy as np
 import controlLaw
 from controlLaw import ControlRoutine
+from controlLaw import ypr2quat
+from controlLaw import quat2ypr
+
+developMode = True #This should be set to true when testing on windows.
+
+ip = '127.0.0.1' #Local Machine
+htmlPort = 8009
+websocketPort = 8010
+
+if developMode:
+    log("WARNING: You are in develop mode. Motor functionality is disabled in this mode. To exit develop mode, set 'developMode = False' in main.py")
+else:
+    import motors
 
 log('Hello world from Prudentia!')
-log('Setting up..')
-
 
 ## GUI Servers Setup
 
@@ -26,30 +36,41 @@ sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
 sharedData.qTarget = [0, 0, 0]
 
-ip = '127.0.0.1' #Local Machine
+
+log('Setting up GUI server. Accessible on LAN through \"%s:%s\"' % (ip, htmlPort))
+log('Data will be exchanged via websockets on LAN through \"%s:%s\"' % (ip, websocketPort))
 
 # Start threads to begin websocket server and html server
 # The websocket server is responsible for all data transfer between the GUI and Prudentia
-websocketThread = Thread(target=user.startWebsocketServer, args=(sharedData, ip, 8010))
+websocketThread = Thread(target=user.startWebsocketServer, args=(sharedData, ip, websocketPort))
 websocketThread.start()
 
 # The html server is responsible for delivering html content to the connecting user.
-htmlThread = Thread(target=user.startHtmlServer, args=(sharedData, ip, 8009))
+htmlThread = Thread(target=user.startHtmlServer, args=(sharedData, ip, htmlPort))
 htmlThread.start()
-time.sleep(1) #Give the html thread a moment to setup
+time.sleep(0.1) #Give the html thread a moment to setup
 
 ## IMU Serial Setup
 
 #Create IMU class and open a connection
 Imu = imu.ImuSingleton()
-conn = Imu.openConnection('com4', 9600)
-#assert conn is not None #Make sure the port opened correctly
 
+log("Opening connection with IMU.")
+
+conn = Imu.openConnection('/dev/ttyUSB0', 115200)
 #Start thread to read data asynchronously
-#imuReadThread = Thread(target=Imu.asyncRead)
-imuReadThread = Thread(target=Imu.emulateImu)
+if developMode: 
+    #If develop mode, run IMU emulation (random data)
+    log("Develop mode on; emulating IMU. Expect random data.")
+    imuReadThread = Thread(target=Imu.emulateImu)
+
+else: 
+    #Else, connect to the VN-200.
+    assert conn is not None #Make sure the port opened correctly.
+    imuReadThread = Thread(target=Imu.asyncRead)
+
 imuReadThread.start()
-time.sleep(1) #Give the imu thread a moment to setup
+time.sleep(0.1) #Give the imu thread a moment to setup
 
 
 ## Control Law Setup
@@ -58,7 +79,8 @@ ControlLaw = controlLaw.ControlLawSingleton()
 
 ## Motor Setup
 
-#Motors = motors.MotorsSingleton()
+if not developMode:
+    Motors = motors.MotorsSingleton()
 
 ## Camera Setup
 
@@ -70,7 +92,11 @@ Camera = camera.CameraSingleton()
 lastState = sharedData.state #Store a copy of last state to see mode transitions
 
 loopSpeed = 20 # Hz
+allowedTime = 1.0/loopSpeed # Convert Hz to s
 times = []
+
+startRuntime = time.time() #Track total runtime for timestamping
+loopNumber = 0 #Track the number of total loop iterations.
 
 def processCommands():
     while not sharedData.commandQueue.empty():
@@ -88,8 +114,11 @@ def processCommands():
             elif msgJSON["state"] == "running":
                 sharedData.state = State.running
 
+
 while True:
+    loopNumber += 1
     loopStart = time.time()
+
 
     #Check sharedData.commandQueue for any incoming commands
     processCommands()
@@ -116,11 +145,13 @@ while True:
 
     if (sharedData.state and State.standby) or (sharedData.state and State.running):
         #Set IMU data
-        ypr = controlLaw.quat2ypr(Imu.q)
-        sharedData.position = [ypr.y, ypr.p, ypr.r]
+        sharedData.quaternion = Imu.q.tolist()
+        ypr = quat2ypr(Imu.q)
+        sharedData.orientation = [ypr.y, ypr.p, ypr.r]
+
         sharedData.velocity = Imu.w.tolist()
         sharedData.velocityMagnitude = np.linalg.norm(Imu.w)
-
+        
     if sharedData.state == State.standby:
         pass #Do nothing
 
@@ -132,7 +163,8 @@ while True:
             response = ControlLaw.routineStabilize(Imu.q, Imu.w)
 
             # Use response to actuate motors
-            #Motors.setAllMotorRpm(response.motorAccel)
+            if not developMode:
+                Motors.setAllMotorRpm(response.motorAccel)
 
         elif sharedData.controlRoutine == ControlRoutine.attitudeInput:
             
@@ -142,8 +174,18 @@ while True:
             #Run control law with latest IMU data and qTarget
             response = ControlLaw.routineAttitudeInput(Imu.q, Imu.w, qTarget)
             
+            sharedData.quatTarget = qTarget.tolist()
+            sharedData.lqrMode = response.lqrMode.name
+            sharedData.qError = response.qError.tolist()
+            sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
+            sharedData.inertialTorque = response.inertialTorque.tolist()
+            sharedData.motorTorque = response.motorTorques.tolist()
+            sharedData.motorAccel = response.motorAccel.tolist()
+            
             # Use response to actuate motors
-            #Motors.setAllMotorRpm(response.motorAccel)
+            if not developMode:
+                Motors.setAllMotorRpm(response.motorAccel)
+
             
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search
@@ -157,31 +199,39 @@ while True:
 
 
     ## Timing
-    #TODO This loop system has a bit of overhead. Improve it. See 'logging' python module
 
     loopEnd = time.time()
     loopTime = loopEnd - loopStart
     times.append(loopTime)  # Record time
 
-    allowedTime = 1.0/loopSpeed # Convert Hz to s
 
-    if loopTime > allowedTime:
+    #5 * 0.05 = 0.25
+    runtime = time.time() - startRuntime
+    targetTime = loopNumber * allowedTime
+
+    if runtime > targetTime:
         log("Loop time exceeded allowance. Loop time: %s. Allowed time: %s" %
             (loopTime, allowedTime))
     else:
-        sleepTime = allowedTime - loopTime
+        
+        sleepTime = targetTime - runtime
         time.sleep(sleepTime) # Sleep for remaining loop time
 
+        #Report times
+        #Instead of reporting 20 times per second, lets report an average over a second.
+        if loopNumber % 20 == 0:
+            tavg = round(numpy.average(times), 6) # Get average
+            tmax = round(numpy.max(times), 6) # Get max
+            processingPercent = round(tavg/allowedTime*100, 2) # Get percent of time used
+            log("-" * 40)
 
-    #Report times
-    #Instead of reporting 20 times per second, lets report an average over a second.
-    if len(times) >= loopSpeed:
-        tavg = round(numpy.average(times), 4) # Get average
-        tmax = round(numpy.max(times), 4) # Get max
-        processingPercent = round(tavg/allowedTime*100, 1) # Get percent of time used
+            log("Loop Times for last second: AVG: [%s ms], MAX: [%s ms], Processing %%: [%s%%]" %
+                (tavg, tmax, processingPercent))
+        
+            runtime = time.time() - startRuntime
+            log("Total Runtime: %s (loop %s), Total Average Frequency: %s Hz" %
+                (round(runtime, 4), loopNumber, round(loopNumber/runtime, 4)))
 
-        log("Loop Times for last second: AVG: [%s ms], MAX: [%s ms], Processing %%: [%s%%]" %
-            (tavg, tmax, processingPercent))
+            times = [] # Clear array
 
-        times = [] # Clear array
-
+        

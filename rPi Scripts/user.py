@@ -25,11 +25,21 @@ class SharedDataPackage:
     commandQueue = queue.Queue()
 
     state = State.standby
+    controlRoutine = ""
 
-    position = [0, 0, 0]
+    quaternion = [0, 0, 0, 0]
+    orientation = [0, 0, 0]
     velocity = [0, 0, 0]
     velocityMagnitude = 0
+    
+    quatTarget = [0, 0, 0]
     target = [0, 0, 0]
+    lqrMode = ""
+    qError = [0, 0, 0, 0]
+    qErrorAdjusted = [0, 0, 0, 0]
+    inertialTorque = [0, 0, 0]
+    motorTorque = [0, 0, 0]
+    motorAccel = [0, 0, 0]
 
     stopServer = None
 
@@ -37,11 +47,18 @@ class SharedDataPackage:
     def getDataJson(self):
         dataObject = {  "state" : self.state.name,
                         "routine" : self.controlRoutine.name,
-                        "position" : self.position,
+
+                        "quaternion" : self.quaternion,
+                        "orientation" : self.orientation, #Euler Angle of quaternion
                         "velocity" : self.velocity,
                         "velocityMag" : self.velocityMagnitude,
+
                         "target" : self.target}
         return json.dumps(dataObject)
+
+    def saveJson(self):
+        with open('data.txt', 'w') as outfile:
+            json.dump(data, outfile)
 
 ## Websocket Server
 
@@ -103,7 +120,7 @@ def startHtmlServer(sharedDataRef, ip, port):
 
     guiDir = os.path.join(os.path.dirname(__file__), 'GUI Files')
     os.chdir(guiDir)
-    log("CWD:" + os.getcwd())
+    log("Loading Gui Files from directory: \"" + os.getcwd() + "\"") 
 
     handle = MyHttpRequestHandler
     sharedDataRef.htmlServer = socketserver.TCPServer((ip, port), handle)
