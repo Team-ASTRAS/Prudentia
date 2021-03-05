@@ -22,19 +22,6 @@ class ImuSingleton:
     #Packets start with identifier "FA 01 30 00"
     startBytes = bytearray([int('0xfa', 16), int('0x01', 16), int('0x30', 16), int('0x00', 16)])
 
-
-    yaw = [0] * 2
-    pitch = [0] * 2
-    roll = [0] * 2
-    
-    gyroX = [0] * 2
-    gyroY = [0] * 2
-    gyroZ = [0] * 2
-    
-    accX = [0] * 2
-    accY = [0] * 2
-    accZ = [0] * 2
-    
     def openConnection(self, port, baudrate):
         self.port = port
         self.baudrate = baudrate
@@ -128,9 +115,7 @@ class ImuSingleton:
             
             #print("Q: %s" % q)
             #print("W: %s" % w)
-                
-                
-
+            
 if __name__ == "__main__":
     Imu = ImuSingleton()
     conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
@@ -141,30 +126,3 @@ if __name__ == "__main__":
     while True:
         time.sleep(0.05)
         print("Q:%s, W:%s" % (Imu.q, Imu.w))
-        
-        
-=======
-                else:
-                    print("ERROR: splitOutput length is not greater than zero!")
-
-            print (time.time() - t0)
-            #Reset output
-            output = " "
-                
-
-
-Imu = ImuSingleton()
-conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
-#conn = Imu.openConnection('com13', 115200) # Windows USB
-assert conn is not None
-serialThread = Thread(target=Imu.asyncRead)
-serialThread.start()
-
-i = 0
-t0 = time.time()
-while i < 1000000:
-    i += 1
-    arr = Imu.getAverageData()
-    Imu.report()
-t = time.time() - t0
-print(t)

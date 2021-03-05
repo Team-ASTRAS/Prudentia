@@ -1,24 +1,6 @@
 from utilities import log
 from pyvesc import VESC
-import time
-import sys
-sys.path.insert(0, '/home/pi/Desktop/test/PyVESC/build/lib/pyvesc')
-import pyvesc
 
-vesc = pyvesc.VESC('/dev/ttyS0')
-
-vesc.set_duty_cycle(0)
-
-vesc.set_duty_cycle(0.05)
-time.sleep(1)
-
-vesc.set_duty_cycle(0)
-time.sleep(1)
-
-vesc.set_duty_cycle(-0.05)
-time.sleep(1)
-
-vesc.set_duty_cycle(0)
 
 class MotorsSingleton:
     
@@ -30,7 +12,7 @@ class MotorsSingleton:
     def __init__(self):
         for i in range(len(self.serialPorts)):
             self.vescs[i] = VESC(self.serialPorts[i])
-            print("Is VESC port %s open? : %s" % (self.serialPorts[i], self.vescs[i].serial_port.is_open))
+            log("Is VESC port %s open? : %s" % (self.serialPorts[i], self.vescs[i].serial_port.is_open))
 
     # This function expects an array of motor delta RPMs ex: [1000.2, -1820, 3000, -3000]
     def setAllMotorRpm(self, deltaRpmArray):
@@ -58,9 +40,7 @@ class MotorsSingleton:
             deltaDutyArray[i] = self.dutys[i]
         
         return deltaDutyArray
-            
 
     #This function converts desired rpm change to duty cycle change
     def getDutyFromRpm(self, deltaRpm):
         return (deltaRpm + 267.34) / 524.55 / 100.0
-    
