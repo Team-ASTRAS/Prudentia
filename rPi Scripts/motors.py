@@ -1,5 +1,24 @@
 from utilities import log
 from pyvesc import VESC
+import time
+import sys
+sys.path.insert(0, '/home/pi/Desktop/test/PyVESC/build/lib/pyvesc')
+import pyvesc
+
+vesc = pyvesc.VESC('/dev/ttyS0')
+
+vesc.set_duty_cycle(0)
+
+vesc.set_duty_cycle(0.05)
+time.sleep(1)
+
+vesc.set_duty_cycle(0)
+time.sleep(1)
+
+vesc.set_duty_cycle(-0.05)
+time.sleep(1)
+
+vesc.set_duty_cycle(0)
 
 class MotorsSingleton:
     
