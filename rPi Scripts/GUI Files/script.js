@@ -129,176 +129,6 @@ if (startlog){
       }
   }
 //if mode = running
-var TableUpdateTime = 1000;
-
-function updateLogTable(){
-  document.getElementById('DataMode').innerHTML = Math.random().toFixed(2);
-  document.getElementById('DataYaw').innerHTML = Math.random().toFixed(2);
-  document.getElementById('DataPitch').innerHTML = Math.random().toFixed(2);
-  document.getElementById('DataRoll').innerHTML = Math.random().toFixed(2);
-  document.getElementById('DataSpeed').innerHTML = Math.random().toFixed(2);
-  setTimeout(updateLogTable,TableUpdateTime);
-}
-updateLogTable();
-
-  // RTC BUTTONS
-  if (yawl){
-  yawl.onmousedown = function (event) {
-      yawl.style.background='red';
-      if(document.getElementById('Speed5').checked){
-        console.log('Yaw Left @ 5 deg/sec');
-      }
-      else if(document.getElementById('Speed10').checked){
-        console.log('Yaw Left @ 10 deg/sec');
-      }
-      else if(document.getElementById('Speed15').checked){
-        console.log('Yaw Left @ 15 deg/sec');
-      }
-      else if(document.getElementById('Speed30').checked){
-        console.log('Yaw Left @ 30 deg/sec');
-      }
-      else if(document.getElementById('Speed50').checked){
-        console.log('Yaw Left @ 50 deg/sec');
-      }
-      else{
-        console.log('Yaw Left @ 20 deg/sec');
-      }
-  }
-  yawl.onmouseup = function (event) {
-      yawl.style.background='grey';
-      console.log('Not Running')
-  }
-
-  yawr.onmousedown = function (event) {
-      yawr.style.background='red';
-      if(document.getElementById('Speed5').checked){
-        console.log('Yaw Right @ 5 deg/sec');
-      }
-      else if(document.getElementById('Speed10').checked){
-        console.log('Yaw Right @ 10 deg/sec');
-      }
-      else if(document.getElementById('Speed15').checked){
-        console.log('Yaw Right @ 15 deg/sec');
-      }
-      else if(document.getElementById('Speed30').checked){
-        console.log('Yaw Right @ 30 deg/sec');
-      }
-      else if(document.getElementById('Speed50').checked){
-        console.log('Yaw Right @ 50 deg/sec');
-      }
-      else{
-        console.log('Yaw Right @ 20 deg/sec');
-      }
-  }
-  yawr.onmouseup = function (event) {
-      yawr.style.background='grey';
-      console.log('Not Running')
-  }
-
-  pitchu.onmousedown = function (event) {
-      pitchu.style.background='blue';
-      if(document.getElementById('Speed5').checked){
-        console.log('Pitch Up @ 5 deg/sec');
-      }
-      else if(document.getElementById('Speed10').checked){
-        console.log('Pitch Up @ 10 deg/sec');
-      }
-      else if(document.getElementById('Speed15').checked){
-        console.log('Pitch Up @ 15 deg/sec');
-      }
-      else if(document.getElementById('Speed30').checked){
-        console.log('Pitch Up @ 30 deg/sec');
-      }
-      else if(document.getElementById('Speed50').checked){
-        console.log('Pitch Up @ 50 deg/sec');
-      }
-      else{
-        console.log('Pitch Up @ 20 deg/sec');
-      }
-  }
-  pitchu.onmouseup = function (event) {
-      pitchu.style.background='grey';
-      console.log('Not Running')
-  }
-
-  pitchd.onmousedown = function (event) {
-      pitchd.style.background='blue';
-      if(document.getElementById('Speed5').checked){
-        console.log('Pitch Down @ 5 deg/sec');
-      }
-      else if(document.getElementById('Speed10').checked){
-        console.log('Pitch Down @ 10 deg/sec');
-      }
-      else if(document.getElementById('Speed15').checked){
-        console.log('Pitch Down @ 15 deg/sec');
-      }
-      else if(document.getElementById('Speed30').checked){
-        console.log('Pitch Down @ 30 deg/sec');
-      }
-      else if(document.getElementById('Speed50').checked){
-        console.log('Pitch Down @ 50 deg/sec');
-      }
-      else{
-        console.log('Pitch Down @ 20 deg/sec');
-      }
-  }
-  pitchd.onmouseup = function (event) {
-      pitchd.style.background='grey';
-      console.log('Not Running')
-  }
-
-  rollcw.onmousedown = function (event) {
-      rollcw.style.background='green';
-      if(document.getElementById('Speed5').checked){
-        console.log('Roll CW @ 5 deg/sec');
-      }
-      else if(document.getElementById('Speed10').checked){
-        console.log('Roll CW @ 10 deg/sec');
-      }
-      else if(document.getElementById('Speed15').checked){
-        console.log('Roll CW @ 15 deg/sec');
-      }
-      else if(document.getElementById('Speed30').checked){
-        console.log('Roll CW @ 30 deg/sec');
-      }
-      else if(document.getElementById('Speed50').checked){
-        console.log('Roll CW @ 50 deg/sec');
-      }
-      else{
-        console.log('Roll CW @ 20 deg/sec');
-      }
-  }
-  rollcw.onmouseup = function (event) {
-      rollcw.style.background='grey';
-      console.log('Not Running')
-  }
-
-  rollccw.onmousedown = function (event) {
-      rollccw.style.background='green';
-      if(document.getElementById('Speed5').checked){
-        console.log('Roll CCW @ 5 deg/sec');
-      }
-      else if(document.getElementById('Speed10').checked){
-        console.log('Roll CCW @ 10 deg/sec');
-      }
-      else if(document.getElementById('Speed15').checked){
-        console.log('Roll CCW @ 15 deg/sec');
-      }
-      else if(document.getElementById('Speed30').checked){
-        console.log('Roll CCW @ 30 deg/sec');
-      }
-      else if(document.getElementById('Speed50').checked){
-        console.log('Roll CCW @ 50 deg/sec');
-      }
-      else{
-        console.log('Roll CCW @ 20 deg/sec');
-      }
-  }
-  rollccw.onmouseup = function (event) {
-      rollccw.style.background='grey';
-      console.log('Not Running')
-  }
-}
 
 // AI BUTTONS
 if (go){
@@ -312,13 +142,10 @@ if (go){
         console.log('Target Roll = ' + rollTarget);
 
 // AI Graphs
-        var GraphUpdateTime = 300; // in ms
         var ElementsKept = 50;
         var ElementsCounted = 0;
 
         var YPRErrorGraph = $("#YPRErrorGraph");
-          YPRErrorGraph.height = 300;
-          YPRErrorGraph.width = 300;
         var YPRGraph = $("#YPRGraph");
         var AngVelGraph = $("#AngVelGraph");
 
@@ -483,17 +310,16 @@ if (go){
         });
 
         function addData() {
-        //  if(data){
             YPRErrorChartInstant.data.labels.push(new Date());
-            YPRErrorChartInstant.data.datasets[0].data.push(Math.random()*10-4);
-            YPRErrorChartInstant.data.datasets[1].data.push(Math.random()*10-4);
-            YPRErrorChartInstant.data.datasets[2].data.push(Math.random()*10-4);
+            YPRErrorChartInstant.data.datasets[0].data.push(error[0]);
+            YPRErrorChartInstant.data.datasets[1].data.push(error[1]);
+            YPRErrorChartInstant.data.datasets[2].data.push(error[2]);
             YPRChartInstant.data.labels.push(new Date());
-            YPRChartInstant.data.datasets[0].data.push(Math.random()*10-4);
-            YPRChartInstant.data.datasets[1].data.push(Math.random()*10-4);
-            YPRChartInstant.data.datasets[2].data.push(Math.random()*10-4);
+            YPRChartInstant.data.datasets[0].data.push(position[0].toFixed(2));
+            YPRChartInstant.data.datasets[1].data.push(position[1].toFixed(2));
+            YPRChartInstant.data.datasets[2].data.push(position[2].toFixed(2));
             AngVelChartInstant.data.labels.push(new Date());
-            AngVelChartInstant.data.datasets[0].data.push(Math.random()*10-4);
+            AngVelChartInstant.data.datasets[0].data.push(velocityMag.toFixed(2));
             if(ElementsCounted > ElementsKept){
               YPRErrorChartInstant.data.labels.shift();
               YPRErrorChartInstant.data.datasets[0].data.shift();
@@ -511,13 +337,6 @@ if (go){
             YPRChartInstant.update();
             AngVelChartInstant.update();
           };
-      //  };
-
-        function updateAIGraphData(){
-          addData();
-          setTimeout(updateAIGraphData,GraphUpdateTime);
-        }
-        updateAIGraphData();
 
       }
       else if (yawTarget > 180 || yawTarget < -180){
@@ -533,13 +352,12 @@ if (go){
         alert('Target Yaw must be between -180\u00B0 and +180\u00B0 \nTarget Pitch must be between -19\u00B0 and +19\u00B0 \nTarget Roll must be between -180\u00B0 and +180\u00B0');
       }
   }
-}
+};
 
 // SM BUTTONS
 if (searchmode){
   searchmode.onclick = function (event) {
       console.log('Search Mode');
-      var GraphUpdateTime = 300; // in ms
       var ElementsKept = 50;
       var ElementsCounted = 0;
 
@@ -653,14 +471,13 @@ if (searchmode){
         })
       });
 
-      function addData() {
-      //  if(data){
+      function addData(position) {
           YPRChartInstant.data.labels.push(new Date());
-          YPRChartInstant.data.datasets[0].data.push(Math.random()*10-4);
-          YPRChartInstant.data.datasets[1].data.push(Math.random()*10-4);
-          YPRChartInstant.data.datasets[2].data.push(Math.random()*10-4);
+          YPRChartInstant.data.datasets[0].data.push(position[0].toFixed(2));
+          YPRChartInstant.data.datasets[1].data.push(position[1].toFixed(2));
+          YPRChartInstant.data.datasets[2].data.push(position[2].toFixed(2));
           AngVelChartInstant.data.labels.push(new Date());
-          AngVelChartInstant.data.datasets[0].data.push(Math.random()*10-4);
+          AngVelChartInstant.data.datasets[0].data.push(velocityMag.toFixed(2));
           if(ElementsCounted > ElementsKept){
             YPRChartInstant.data.labels.shift();
             YPRChartInstant.data.datasets[0].data.shift();
@@ -673,19 +490,24 @@ if (searchmode){
           YPRChartInstant.update();
           AngVelChartInstant.update();
         };
-      //};
-
-      function updateSMGraphData(){
-        addData();
-        setTimeout(updateSMGraphData,GraphUpdateTime);
-      }
-      updateSMGraphData();
   }
 }
 
 function setState(state){
     var msg = {"messageType":"setState", "state":state}
     websocket.send(JSON.stringify(msg));
+}
+
+function updateLogTable(mode, routine, position, velocityMag) {
+    modeName = mode
+    if (mode == "running") {
+        modeName = modeName + " (" + routine + ")"
+    }
+    document.getElementById('DataMode').innerHTML = modeName;
+    document.getElementById('DataYaw').innerHTML = position[0].toFixed(2);
+    document.getElementById('DataPitch').innerHTML = position[1].toFixed(2);
+    document.getElementById('DataRoll').innerHTML = position[2].toFixed(2);
+    document.getElementById('DataSpeed').innerHTML = velocityMag.toFixed(2);
 }
 
 function start(websocketServerLocation){
@@ -696,11 +518,8 @@ function start(websocketServerLocation){
     //This assumption can be changed later on if necessary
     websocket.onmessage = function (event) {
         data = JSON.parse(event.data);
-        dataMode.textContent = data["state"]
-        dataYaw.textContent = data["angularPosition"][0];
-        dataPitch.textContent = data["angularPosition"][1];
-        dataRoll.textContent = data["angularPosition"][2];
-        dataSpeed.textContent = data["angularVelocityMagnitude"];
+
+        updateLogTable(data["state"], data["routine"], data["position"], data["velocityMag"])
     };
 
     //If an error occurs, close socket. This will call websocket.onclose

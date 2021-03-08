@@ -9,10 +9,10 @@
 
 /* Shutdown, Stabilize, Calibrate */
 	.Shutdown{position: absolute;
-				font: Tahoma;
+				font: Helvetica;
 				top: 3%;
 				left: 1%;}
-	.Stabilize{font: 1.5vw Tahoma;
+	.Stabilize{font: 1.5vw Helvetica;
 				width: 10%;
 				height: 6%;
 				position: absolute;
@@ -24,13 +24,13 @@
 				border-radius: 5px;
 				text-align: center;
 				border: 2px solid #525252;}
-		.Calibrate{font: 1.5vw Tahoma;
+		.Calibrate{font: 1.5vw Helvetica;
 					width: 20%;
 					height: 6%;
 					position: absolute;
 					top: 40%;
 					left: 40%;}
-		.Spinup{font: 1.5vw Tahoma;
+		.Spinup{font: 1.5vw Helvetica;
 					width: 20%;
 					height: 6%;
 					position: absolute;
@@ -38,7 +38,7 @@
 					left: 40%;}
 
 /* Navigation Bar */
-	.HomeButton{font: 2vw Tahoma;
+	.HomeButton{font: 2vw Helvetica;
 					color: black;
 					border: 1px solid black;
 					background-color: #F4F4F4;
@@ -49,7 +49,7 @@
 					position: absolute;
 					top: 12.5%;
 					left: 0.5%;}
-	.InstructionButton{font: 2vw Tahoma;
+	.InstructionButton{font: 2vw Helvetica;
 					color: black;
 					border: 1px solid black;
 					background-color: #F4F4F4;
@@ -60,7 +60,7 @@
 					position: absolute;
 					top: 12.5%;
 					left: 16.5%;}
-	.SettingsButton{font: 2vw Tahoma;
+	.SettingsButton{font: 2vw Helvetica;
 					color: black;
 					border: 1px solid black;
 					background-color: #F4F4F4;
@@ -71,7 +71,7 @@
 					position: absolute;
 					top: 12.5%;
 					left: 33.5%;}
-	.RTCButton{font: 1.5vw Tahoma;
+	.RTCButton{font: 1.5vw Helvetica;
 					color: #777777;
 					border: 1px solid black;
 					background-color: #F4F4F4;
@@ -82,7 +82,7 @@
 					position: absolute;
 					top: 12.5%;
 					left: 49.5%;}
-	.AIButton{font: 1.95vw Tahoma;
+	.AIButton{font: 1.95vw Helvetica;
 					color: #777777;
 					border: 1px solid black;
 					background-color: #F4F4F4;
@@ -93,7 +93,7 @@
 					position: absolute;
 					top: 12.5%;
 					left: 66.5%;}
-	.SMButton{font: 2vw Tahoma;
+	.SMButton{font: 2vw Helvetica;
 					color: #777777;
 					border: 1px solid black;
 					background-color: #F4F4F4;
@@ -123,7 +123,7 @@
 				position: absolute;
 				left: 1%;
 				top: 20%;}
-	.LiveData{font: 2.1vw Tahoma;
+	.LiveData{font: 2.1vw Helvetica;
 			color: black;
 			text-align: center;
 			font-weight: 1000;
@@ -132,7 +132,7 @@
 			left: 1%;
 			top: 2%;
 			margin-top: 0%;}
-	.LogOpt{font: 2.1vw Tahoma;
+	.LogOpt{font: 2.1vw Helvetica;
 			color: black;
 			text-align: center;
 			font-weight: 1000;
@@ -146,19 +146,19 @@
 				left: 1%;
 				top: 9%;
 				width: 98%;}
-	.DataLabel{font: 2vw Tahoma;
+	.DataLabel{font: 2vw Helvetica;
 			color: #F7F7F7;
 			border: 1px solid black;
 			background-color: #6E6E6E;
 			text-align: center;
 			width: 20%;}
-	.Data{font: 2vw Tahoma;
+	.Data{font: 2vw Helvetica;
 			color: black;
 			border: 1px solid black;
 			background-color: #F7F7F7;
 			text-align: center;
 			width: 78%;}
-	.StartLog{font: 1.8vw Tahoma;
+	.StartLog{font: 1.8vw Helvetica;
 			color: #F7F7F7;
 			border: 1px solid black;
 			background-color: #6E6E6E;
@@ -169,7 +169,7 @@
 			position: absolute;
 			left: 1%;
 			top: 66%;}
-	.StopLog{font: 1.8vw Tahoma;
+	.StopLog{font: 1.8vw Helvetica;
 			color: #F7F7F7;
 			border: 1px solid black;
 			background-color: #6E6E6E;
@@ -180,7 +180,7 @@
 			position: absolute;
 			left: 1%;
 			top: 74%;}
-	.ClearLog{font: 1.8vw Tahoma;
+	.ClearLog{font: 1.8vw Helvetica;
 			color: #F7F7F7;
 			border: 1px solid black;
 			background-color: #6E6E6E;
@@ -191,7 +191,7 @@
 			position: absolute;
 			left: 1%;
 			top: 82%;}
-	.Save{font: 1.8vw Tahoma;
+	.Save{font: 1.8vw Helvetica;
 			color: #F7F7F7;
 			border: 1px solid black;
 			background-color: #1C116B;
@@ -204,55 +204,55 @@
 			top: 90%;}
 
 /* Home Page */
-	.welcomemsg1{font: 1.5vw Tahoma;
+	.welcomemsg1{font: 1.5vw Helvetica;
 				color: white;
 				text-align: center;
 				padding-top: 5%;}
-	.welcomemsg2{font: 1.5vw Tahoma;
+	.welcomemsg2{font: 1.5vw Helvetica;
 				color: white;
 				text-align: center;}
 
 /* Instructions Page */
-	.heading1{font: 2.4vw Tahoma;
+	.heading1{font: 2.4vw Helvetica;
 			color: white;
 			text-align: left;
 			position: absolute;
 			left: 5%;
 			top: 17%;}
-	.Intext1{font: 1.5vw Tahoma;
+	.Intext1{font: 1.5vw Helvetica;
 			color: white;
 			text-align: left;
 			position: absolute;
 			left: 10%;
 			top: 23.5%;
 			right: 5%;}
-	.heading2{font: 2.4vw Tahoma;
+	.heading2{font: 2.4vw Helvetica;
 					color: white;
 					text-align: left;
 					position: absolute;
 					left: 5%;
 					top: 33%}
-	.Intext2{font: 1.5vw Tahoma;
+	.Intext2{font: 1.5vw Helvetica;
 				color: white;
 				text-align: left;
 				position: absolute;
 				left: 10%;
 				top: 39.5%;
 				right: 5%}
-	.heading3{font: 2.4vw Tahoma;
+	.heading3{font: 2.4vw Helvetica;
 						color: white;
 						text-align: left;
 						position: absolute;
 						left: 5%;
 						top: 49%;}
-	.Intext3{font: 1.5vw Tahoma;
+	.Intext3{font: 1.5vw Helvetica;
 					color: white;
 					text-align: left;
 					position: absolute;
 					left: 10%;
 					top: 55.5%;
 					right: 5%;}
-	.warningmsg{font: 1.4vw Tahoma;
+	.warningmsg{font: 1.4vw Helvetica;
 			font-style: italic;
 			color: black;
 			text-align: left;
@@ -347,21 +347,21 @@
 						left: 74%;
 						top: 48%;}
 /* Attitude Input Page */
-.Yawlimit{font: 1.5vw Tahoma;
+.Yawlimit{font: 1.5vw Helvetica;
 		color: white;
 		width: 12%;
 		text-align: center;
 		position: absolute;
 		left: 25%;
 		top: 20%;}
-.Pitchlimit{font: 1.5vw Tahoma;
+.Pitchlimit{font: 1.5vw Helvetica;
 		color: white;
 		width: 12%;
 		text-align: center;
 		position: absolute;
 		left: 45%;
 		top: 20%;}
-.Rolllimit{font: 1.5vw Tahoma;
+.Rolllimit{font: 1.5vw Helvetica;
 		color: white;
 		width: 12%;
 		text-align: center;
@@ -371,7 +371,7 @@
 .YAWin{position: absolute;
 		left: 25%;
 		top: 27%;
-		font: 1.5vw Tahoma;
+		font: 1.5vw Helvetica;
 		color: #F7F7F7;
 		width: 12%;
 		background-image: radial-gradient(at top,#97BBF0,#3069BF),
@@ -382,7 +382,7 @@
 .PITCHin{position: absolute;
 		left: 45%;
 		top: 27%;
-		font: 1.5vw Tahoma;
+		font: 1.5vw Helvetica;
 		color: #F7F7F7;
 		width: 12%;
 		background-image: radial-gradient(at top,#97BBF0,#3069BF),
@@ -393,7 +393,7 @@
 .ROLLin{position: absolute;
 		left: 65%;
 		top: 27%;
-		font: 1.5vw Tahoma;
+		font: 1.5vw Helvetica;
 		color: #F7F7F7;
 		width: 12%;
 		background-image: radial-gradient(at top,#97BBF0,#3069BF),
@@ -404,7 +404,7 @@
 .GO{position: absolute;
 		left: 85%;
 		top: 27%;
-		font: 1.5vw Tahoma;
+		font: 1.5vw Helvetica;
 		color: #F7F7F7;
 		width: 12%;
 		background-image: radial-gradient(at top,#97BBF0,#3069BF),
@@ -412,21 +412,21 @@
 		border-radius: 10px;
 		text-align: center;
 		border: 5px solid #2A60B0;}
-.Yawtitle{font: 1.5vw Tahoma;
+.Yawtitle{font: 1.5vw Helvetica;
 		color: white;
 		width: 12%;
 		text-align: center;
 		position: absolute;
 		left: 25%;
 		top: 30%;}
-.Pitchtitle{font: 1.5vw Tahoma;
+.Pitchtitle{font: 1.5vw Helvetica;
 		color: white;
 		width: 12%;
 		text-align: center;
 		position: absolute;
 		left: 45%;
 		top: 30%;}
-.Rolltitle{font: 1.5vw Tahoma;
+.Rolltitle{font: 1.5vw Helvetica;
 		color: white;
 		width: 12%;
 		text-align: center;
@@ -464,7 +464,7 @@
 	.SearchButton{position: absolute;
 			left: 55%;
 			top: 27%;
-			font: 1.5vw Tahoma;
+			font: 1.5vw Helvetica;
 			color: #F7F7F7;
 			width: 12%;
 			background-image: radial-gradient(at top,#97BBF0,#3069BF),
@@ -472,7 +472,7 @@
 			border-radius: 10px;
 			text-align: center;
 			border: 5px solid #2A60B0;}
-	.CameraView{font: 1.5vw Tahoma;
+	.CameraView{font: 1.5vw Helvetica;
 				color: white;
 				background-color: #D1D1D1;
 				border: 10px solid #DEDEDE;
@@ -483,7 +483,7 @@
 				left: 22%;
 				top: 40%;
 				text-align: center;}
-	.YPRGraph{font: 1.5vw Tahoma;
+	.YPRGraph{font: 1.5vw Helvetica;
 				color: white;
 				background-color: #D1D1D1;
 				border: 10px solid #DEDEDE;
@@ -494,7 +494,7 @@
 				left: 48%;
 				top: 40%;
 				text-align: center;}
-	.AngVelGraph{font: 1.5vw Tahoma;
+	.AngVelGraph{font: 1.5vw Helvetica;
 				color: white;
 				background-color: #D1D1D1;
 				border: 10px solid #DEDEDE;
