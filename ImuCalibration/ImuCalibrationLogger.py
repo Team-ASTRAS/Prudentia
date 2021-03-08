@@ -9,9 +9,11 @@ filePrefix = 'imu'
 baudrate = 115200 
 #50Hz
 
+startTime = time.time()
+
 def readImuAsync(conn, i):
     while True:
-        time.sleep(1)
+        time.sleep(0.01)
         if conn is None:
             print("Connection is none! Breaking loop.")
             break
@@ -20,7 +22,7 @@ def readImuAsync(conn, i):
             output = conn.readline().decode('ascii')
             while output != "":
                 
-                time.sleep(0.001)
+                time.sleep(0.0001)
                 #Print to console
                 print("Reading IMU on port [%s]. Incoming Data: %s" % ("ttyUSB" + str(i), output))
                 
