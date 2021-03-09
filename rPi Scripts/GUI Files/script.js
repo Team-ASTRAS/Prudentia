@@ -95,12 +95,6 @@ settingsNav.onclick = function (event) {
     console.log('Settings Navigation');
     window.location = "SettingsPage.html";
 }
-rtcNav.onclick = function (event) {
-  if (ready == true){               // mode = running
-      console.log('RTC Navigation');
-      window.location = "RTCPage.html";
-  }
-}
 aiNav.onclick = function (event) {
   if (ready == true){             // mode = running
       console.log('AI Navigation');
@@ -137,207 +131,9 @@ if (go){
       pitchTarget = document.getElementById("PitchTarget").value;
       rollTarget = document.getElementById("RollTarget").value;
       if (yawTarget <= 180 && yawTarget >= -180 && pitchTarget <= 19 && pitchTarget >= -19 && rollTarget <= 180 && rollTarget >= -180){
-        console.log('Target Yaw = ' + yawTarget);
+        console.log('Target Yaw = ' + yawTarget); // Send Target to Python Script
         console.log('Target Pitch = ' + pitchTarget);
         console.log('Target Roll = ' + rollTarget);
-
-// AI Graphs
-        var ElementsKept = 50;
-        var ElementsCounted = 0;
-
-        var YPRErrorGraph = $("#YPRErrorGraph");
-        var YPRGraph = $("#YPRGraph");
-        var AngVelGraph = $("#AngVelGraph");
-
-        var commonOptions = {
-          responsive: true,
-          maintainAspectRatio: false,
-          legend: {display: false},
-          tooltips:{enabled: false},
-          elements: {
-                    point:{
-                        radius: 0
-                    }
-                }
-        };
-
-        var YPRErrorChartInstant = new Chart(YPRErrorGraph,{
-          type: 'line',
-          data: {
-            datasets: [{
-              label: "Yaw Error",
-              data: 0,
-              borderColor: ['rgb(255,0,0)'],
-              borderWidth: 1,
-              fill: false},
-            {label: "Pitch Error",
-              data: 0,
-              borderColor: ['rgb(0,255,0)'],
-              borderWidth: 1,
-              fill: false},
-            {label: "Roll Error",
-              data: 0,
-              borderColor: ['rgb(0,0,255)'],
-              borderWidth: 1,
-              fill: false}
-          ]
-          },
-          options: Object.assign({}, commonOptions,{
-            title:{
-              display: true,
-              text: "YPR Error",
-              fontSize: 18
-            },
-            scales: {
-              xAxes: [{
-                type: 'time',
-                scaleLabel: {
-                  display: true,
-                  labelString: 'time (min:sec)',
-                },
-                time: {
-                  displayFormats: {
-                    second: 'mm:ss'
-                  }
-                }
-              }],
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Degrees'
-                }
-              }]
-            }
-        })
-      });
-
-        var YPRChartInstant = new Chart(YPRGraph,{
-          type: 'line',
-          data: {
-            datasets: [{
-              label: "Yaw",
-              data: 0,
-              borderColor: ['rgb(255,0,0)'],
-              borderWidth: 1,
-              fill: false},
-            {label: "Pitch",
-              data: 0,
-              borderColor: ['rgb(0,255,0)'],
-              borderWidth: 1,
-              fill: false},
-            {label: "Roll",
-              data: 0,
-              borderColor: ['rgb(0,0,255)'],
-              borderWidth: 1,
-              fill: false}
-          ]
-          },
-          options: Object.assign({}, commonOptions,{
-            title:{
-              display: true,
-              text: "YPR",
-              fontSize: 18
-            },
-            scales: {
-              xAxes: [{
-                type: 'time',
-                scaleLabel: {
-                  display: true,
-                  labelString: 'time (min:sec)',
-                },
-                time: {
-                  displayFormats: {
-                    second: 'mm:ss'
-                  }
-                }
-              }],
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Degrees'
-                }
-              }]
-            }
-          })
-        });
-        var AngVelChartInstant = new Chart(AngVelGraph,{
-          type: 'line',
-          data: {
-            datasets: [{
-              label: "Angular Velocity",
-              data: 0,
-              borderColor: ['rgb(0,255,0)'],
-              borderWidth: 1,
-              fill: false
-            }]
-          },
-          options: Object.assign({}, commonOptions,{
-            title:{
-              display: true,
-              text: "Angular Velocity",
-              fontSize: 18
-            },
-            scales: {
-              xAxes: [{
-                type: 'time',
-                scaleLabel: {
-                  display: true,
-                  labelString: 'time (min:sec)',
-                },
-                time: {
-                  displayFormats: {
-                    second: 'mm:ss'
-                  }
-                }
-              }],
-              yAxes: [{
-                ticks: {
-                  beginAtZero: true
-                },
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Degrees/Sec'
-                }
-              }]
-            }
-          })
-        });
-
-        function addData() {
-            YPRErrorChartInstant.data.labels.push(new Date());
-            YPRErrorChartInstant.data.datasets[0].data.push(error[0]);
-            YPRErrorChartInstant.data.datasets[1].data.push(error[1]);
-            YPRErrorChartInstant.data.datasets[2].data.push(error[2]);
-            YPRChartInstant.data.labels.push(new Date());
-            YPRChartInstant.data.datasets[0].data.push(position[0].toFixed(2));
-            YPRChartInstant.data.datasets[1].data.push(position[1].toFixed(2));
-            YPRChartInstant.data.datasets[2].data.push(position[2].toFixed(2));
-            AngVelChartInstant.data.labels.push(new Date());
-            AngVelChartInstant.data.datasets[0].data.push(velocityMag.toFixed(2));
-            if(ElementsCounted > ElementsKept){
-              YPRErrorChartInstant.data.labels.shift();
-              YPRErrorChartInstant.data.datasets[0].data.shift();
-              YPRErrorChartInstant.data.datasets[1].data.shift();
-              YPRErrorChartInstant.data.datasets[2].data.shift();
-              YPRChartInstant.data.labels.shift();
-              YPRChartInstant.data.datasets[0].data.shift();
-              YPRChartInstant.data.datasets[1].data.shift();
-              YPRChartInstant.data.datasets[2].data.shift();
-              AngVelChartInstant.data.labels.shift();
-              AngVelChartInstant.data.datasets[0].data.shift();
-            }
-            else ElementsCounted++;
-            YPRErrorChartInstant.update();
-            YPRChartInstant.update();
-            AngVelChartInstant.update();
-          };
-
       }
       else if (yawTarget > 180 || yawTarget < -180){
         alert('Target Yaw must be between -180\u00B0 and +180\u00B0');
@@ -357,40 +153,149 @@ if (go){
 // SM BUTTONS
 if (searchmode){
   searchmode.onclick = function (event) {
-      console.log('Search Mode');
-      var ElementsKept = 50;
-      var ElementsCounted = 0;
+      console.log('Search Mode'); // Send mode to python
+  }
+};
 
-      var YPRGraph = $("#YPRGraph");
-      var AngVelGraph = $("#AngVelGraph");
+// GRAPHS
+function updateGraphs(mode, routine, position, velocityMag, error) {
+    var ElementsKept = 50;
+    var ElementsCounted = 0;
+    var commonOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      legend: {display: false},
+      tooltips:{enabled: false},
+      elements: {
+                point:{
+                    radius: 0
+                }
+            }
+    };
+    var YPRGraph = $("#YPRGraph");
+    var AngVelGraph = $("#AngVelGraph");
 
-      var commonOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        legend: {display: false},
-        tooltips:{enabled: false},
-        elements: {
-                  point:{
-                      radius: 0
-                  }
+    var YPRChartInstant = new Chart(YPRGraph,{
+      type: 'line',
+      data: {
+        datasets: [{
+          label: "Yaw",
+          data: 0,
+          borderColor: ['rgb(255,0,0)'],
+          borderWidth: 1,
+          fill: false},
+        {label: "Pitch",
+          data: 0,
+          borderColor: ['rgb(0,255,0)'],
+          borderWidth: 1,
+          fill: false},
+        {label: "Roll",
+          data: 0,
+          borderColor: ['rgb(0,0,255)'],
+          borderWidth: 1,
+          fill: false}
+      ]
+      },
+      options: Object.assign({}, commonOptions,{
+        title:{
+          display: true,
+          text: "YPR",
+          fontSize: 18
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            scaleLabel: {
+              display: true,
+              labelString: 'time (min:sec)',
+            },
+            time: {
+              displayFormats: {
+                second: 'mm:ss'
               }
-      };
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Degrees'
+            }
+          }]
+        }
+      })
+    });
 
-      var YPRChartInstant = new Chart(YPRGraph,{
+    var AngVelChartInstant = new Chart(AngVelGraph,{
+      type: 'line',
+      data: {
+        datasets: [{
+          label: "Angular Velocity",
+          data: 0,
+          borderColor: ['rgb(0,255,0)'],
+          borderWidth: 1,
+          fill: false
+        }]
+      },
+      options: Object.assign({}, commonOptions,{
+        title:{
+          display: true,
+          text: "Angular Velocity",
+          fontSize: 18
+        },
+        scales: {
+          xAxes: [{
+            type: 'time',
+            scaleLabel: {
+              display: true,
+              labelString: 'time (min:sec)',
+            },
+            time: {
+              displayFormats: {
+                second: 'mm:ss'
+              }
+            }
+          }],
+          yAxes: [{
+            ticks: {
+              beginAtZero: true
+            },
+            scaleLabel: {
+              display: true,
+              labelString: 'Degrees/Sec'
+            }
+          }]
+        }
+      })
+    });
+
+    YPRChartInstant.data.labels.push(new Date());
+    YPRChartInstant.data.datasets[0].data.push(position[0].toFixed(2));
+    YPRChartInstant.data.datasets[1].data.push(position[1].toFixed(2));
+    YPRChartInstant.data.datasets[2].data.push(position[2].toFixed(2));
+    AngVelChartInstant.data.labels.push(new Date());
+    AngVelChartInstant.data.datasets[0].data.push(velocityMag.toFixed(2));
+
+    if (routine = "AttitudeInput"){
+      var YPRErrorGraph = $("#YPRErrorGraph");
+
+      var YPRErrorChartInstant = new Chart(YPRErrorGraph,{
         type: 'line',
         data: {
           datasets: [{
-            label: "Yaw",
+            label: "Yaw Error",
             data: 0,
             borderColor: ['rgb(255,0,0)'],
             borderWidth: 1,
             fill: false},
-          {label: "Pitch",
+          {label: "Pitch Error",
             data: 0,
             borderColor: ['rgb(0,255,0)'],
             borderWidth: 1,
             fill: false},
-          {label: "Roll",
+          {label: "Roll Error",
             data: 0,
             borderColor: ['rgb(0,0,255)'],
             borderWidth: 1,
@@ -400,7 +305,7 @@ if (searchmode){
         options: Object.assign({}, commonOptions,{
           title:{
             display: true,
-            text: "YPR",
+            text: "YPR Error",
             fontSize: 18
           },
           scales: {
@@ -426,77 +331,50 @@ if (searchmode){
               }
             }]
           }
-        })
-      });
-      var AngVelChartInstant = new Chart(AngVelGraph,{
-        type: 'line',
-        data: {
-          datasets: [{
-            label: "Angular Velocity",
-            data: 0,
-            borderColor: ['rgb(0,255,0)'],
-            borderWidth: 1,
-            fill: false
-          }]
-        },
-        options: Object.assign({}, commonOptions,{
-          title:{
-            display: true,
-            text: "Angular Velocity",
-            fontSize: 18
-          },
-          scales: {
-            xAxes: [{
-              type: 'time',
-              scaleLabel: {
-                display: true,
-                labelString: 'time (min:sec)',
-              },
-              time: {
-                displayFormats: {
-                  second: 'mm:ss'
-                }
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              },
-              scaleLabel: {
-                display: true,
-                labelString: 'Degrees/Sec'
-              }
-            }]
-          }
-        })
-      });
+      })
+    });
 
-      function addData(position) {
-          YPRChartInstant.data.labels.push(new Date());
-          YPRChartInstant.data.datasets[0].data.push(position[0].toFixed(2));
-          YPRChartInstant.data.datasets[1].data.push(position[1].toFixed(2));
-          YPRChartInstant.data.datasets[2].data.push(position[2].toFixed(2));
-          AngVelChartInstant.data.labels.push(new Date());
-          AngVelChartInstant.data.datasets[0].data.push(velocityMag.toFixed(2));
-          if(ElementsCounted > ElementsKept){
-            YPRChartInstant.data.labels.shift();
-            YPRChartInstant.data.datasets[0].data.shift();
-            YPRChartInstant.data.datasets[1].data.shift();
-            YPRChartInstant.data.datasets[2].data.shift();
-            AngVelChartInstant.data.labels.shift();
-            AngVelChartInstant.data.datasets[0].data.shift();
-          }
-          else ElementsCounted++;
-          YPRChartInstant.update();
-          AngVelChartInstant.update();
-        };
-  }
-}
+      YPRErrorChartInstant.data.labels.push(new Date());
+      YPRErrorChartInstant.data.datasets[0].data.push(error[0]);
+      YPRErrorChartInstant.data.datasets[1].data.push(error[1]);
+      YPRErrorChartInstant.data.datasets[2].data.push(error[2]);
+      if(ElementsCounted > ElementsKept){
+          YPRErrorChartInstant.data.labels.shift();
+          YPRErrorChartInstant.data.datasets[0].data.shift();
+          YPRErrorChartInstant.data.datasets[1].data.shift();
+          YPRErrorChartInstant.data.datasets[2].data.shift();
+          YPRChartInstant.data.labels.shift();
+          YPRChartInstant.data.datasets[0].data.shift();
+          YPRChartInstant.data.datasets[1].data.shift();
+          YPRChartInstant.data.datasets[2].data.shift();
+          AngVelChartInstant.data.labels.shift();
+          AngVelChartInstant.data.datasets[0].data.shift();
+        }
+        else ElementsCounted++;
+        YPRErrorChartInstant.update();
+        YPRChartInstant.update();
+        AngVelChartInstant.update();
+      }
+
+    else if (routine = "SearchMode"){
+      if(ElementsCounted > ElementsKept){
+          YPRChartInstant.data.labels.shift();
+          YPRChartInstant.data.datasets[0].data.shift();
+          YPRChartInstant.data.datasets[1].data.shift();
+          YPRChartInstant.data.datasets[2].data.shift();
+          AngVelChartInstant.data.labels.shift();
+          AngVelChartInstant.data.datasets[0].data.shift();
+      }
+      else ElementsCounted++;
+      YPRChartInstant.update();
+      AngVelChartInstant.update();
+    }
+};
 
 function setState(state){
     var msg = {"messageType":"setState", "state":state}
     websocket.send(JSON.stringify(msg));
-}
+};
 
 function updateLogTable(mode, routine, position, velocityMag) {
     modeName = mode
@@ -508,7 +386,7 @@ function updateLogTable(mode, routine, position, velocityMag) {
     document.getElementById('DataPitch').innerHTML = position[1].toFixed(2);
     document.getElementById('DataRoll').innerHTML = position[2].toFixed(2);
     document.getElementById('DataSpeed').innerHTML = velocityMag.toFixed(2);
-}
+};
 
 function start(websocketServerLocation){
     //Attempt connection
@@ -520,6 +398,7 @@ function start(websocketServerLocation){
         data = JSON.parse(event.data);
 
         updateLogTable(data["state"], data["routine"], data["position"], data["velocityMag"])
+        updateGraphs(data["state"], data["routine"], data["position"], data["velocityMag"], data["error"])
     };
 
     //If an error occurs, close socket. This will call websocket.onclose
@@ -534,8 +413,7 @@ function start(websocketServerLocation){
         console.log("Websocket closed: ", event.reason, "Reconnecting in ", retryTime, " ms.")
         setTimeout(function(){start(websocketServerLocation)}, retryTime);
     }
-}
-
+};
 
 function refreshData(){
     if (websocket.readyState === websocket.OPEN){
@@ -546,4 +424,4 @@ function refreshData(){
     }
     //Repeat this function again later
     setTimeout(refreshData, dataUpdate);
-}
+};
