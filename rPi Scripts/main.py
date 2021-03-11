@@ -124,7 +124,7 @@ def processCommands():
             elif msgJSON["state"] == "running":
                 sharedData.state = State.running
 
-
+        # Routine change was issued
         if msgJSON["messageType"] == "setRoutine":
 
             if   msgJSON["routine"] == "stabilize":
@@ -135,6 +135,11 @@ def processCommands():
 
             elif msgJSON["routine"] == "searchMode":
                 sharedData.controlRoutine = ControlRoutine.search
+
+        # Target change was issued
+        if msgJSON["messageType"] == "setTarget":
+
+            sharedData.target = msgJSON["target"]
 
 while True:
     loopNumber += 1
