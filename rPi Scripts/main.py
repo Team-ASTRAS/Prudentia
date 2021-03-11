@@ -191,6 +191,8 @@ while True:
             sharedData.quatTarget = qTarget.tolist()
             sharedData.lqrMode = response.lqrMode.name
             sharedData.qError = response.qError.tolist()
+            ypr = quat2ypr(response.qError)
+            sharedData.eulerError = [ypr.y, ypr.p, ypr.r]
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
@@ -213,6 +215,8 @@ while True:
             sharedData.quatTarget = qTarget.tolist()
             sharedData.lqrMode = response.lqrMode.name
             sharedData.qError = response.qError.tolist()
+            ypr = quat2ypr(response.qError)
+            sharedData.eulerError = [ypr.y, ypr.p, ypr.r]
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()

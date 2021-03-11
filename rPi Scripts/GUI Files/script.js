@@ -158,7 +158,7 @@ if (searchmode){
 };
 
 // GRAPHS
-function updateGraphs(mode, routine, position, velocityMag, error) {
+function updateGraphs(mode, routine, orientation, velocityMag, eulerError) {
     var ElementsKept = 50;
     var ElementsCounted = 0;
     var commonOptions = {
@@ -272,9 +272,9 @@ function updateGraphs(mode, routine, position, velocityMag, error) {
     });
 
     YPRChartInstant.data.labels.push(new Date());
-    YPRChartInstant.data.datasets[0].data.push(position[0].toFixed(2));
-    YPRChartInstant.data.datasets[1].data.push(position[1].toFixed(2));
-    YPRChartInstant.data.datasets[2].data.push(position[2].toFixed(2));
+    YPRChartInstant.data.datasets[0].data.push(orientation[0].toFixed(2));
+    YPRChartInstant.data.datasets[1].data.push(orientation[1].toFixed(2));
+    YPRChartInstant.data.datasets[2].data.push(orientation[2].toFixed(2));
     AngVelChartInstant.data.labels.push(new Date());
     AngVelChartInstant.data.datasets[0].data.push(velocityMag.toFixed(2));
 
@@ -335,9 +335,9 @@ function updateGraphs(mode, routine, position, velocityMag, error) {
     });
 
       YPRErrorChartInstant.data.labels.push(new Date());
-      YPRErrorChartInstant.data.datasets[0].data.push(error[0]);
-      YPRErrorChartInstant.data.datasets[1].data.push(error[1]);
-      YPRErrorChartInstant.data.datasets[2].data.push(error[2]);
+      YPRErrorChartInstant.data.datasets[0].data.push(eulerError[0]);
+      YPRErrorChartInstant.data.datasets[1].data.push(eulerError[1]);
+      YPRErrorChartInstant.data.datasets[2].data.push(eulerError[2]);
       if(ElementsCounted > ElementsKept){
           YPRErrorChartInstant.data.labels.shift();
           YPRErrorChartInstant.data.datasets[0].data.shift();
@@ -376,15 +376,15 @@ function setState(state){
     websocket.send(JSON.stringify(msg));
 };
 
-function updateLogTable(mode, routine, position, velocityMag) {
+function updateLogTable(mode, routine, orientation, velocityMag) {
     modeName = mode
     if (mode == "running") {
         modeName = modeName + " (" + routine + ")"
     }
     document.getElementById('DataMode').innerHTML = modeName;
-    document.getElementById('DataYaw').innerHTML = position[0].toFixed(2);
-    document.getElementById('DataPitch').innerHTML = position[1].toFixed(2);
-    document.getElementById('DataRoll').innerHTML = position[2].toFixed(2);
+    document.getElementById('DataYaw').innerHTML = orientation[0].toFixed(2);
+    document.getElementById('DataPitch').innerHTML = orientation[1].toFixed(2);
+    document.getElementById('DataRoll').innerHTML = orientation[2].toFixed(2);
     document.getElementById('DataSpeed').innerHTML = velocityMag.toFixed(2);
 };
 
@@ -393,15 +393,15 @@ function setRoutine(routine) {
     websocket.send(JSON.stringify(msg));
 }
 
-function updateLogTable(mode, routine, position, velocityMag) {
+function updateLogTable(mode, routine, orientation, velocityMag) {
     modeName = mode
     if (mode == "running") {
         modeName = modeName + " (" + routine + ")"
     }
     document.getElementById('DataMode').innerHTML = modeName;
-    document.getElementById('DataYaw').innerHTML = position[0].toFixed(2);
-    document.getElementById('DataPitch').innerHTML = position[1].toFixed(2);
-    document.getElementById('DataRoll').innerHTML = position[2].toFixed(2);
+    document.getElementById('DataYaw').innerHTML = orientation[0].toFixed(2);
+    document.getElementById('DataPitch').innerHTML = orientation[1].toFixed(2);
+    document.getElementById('DataRoll').innerHTML = orientation[2].toFixed(2);
     document.getElementById('DataSpeed').innerHTML = velocityMag.toFixed(2);
 }
 
@@ -414,9 +414,9 @@ function start(websocketServerLocation){
     websocket.onmessage = function (event) {
         data = JSON.parse(event.data);
 
-        updateLogTable(data["state"], data["routine"], data["position"], data["velocityMag"])
+        updateLogTable(data["state"], data["routine"], data["orientation"], data["velocityMag"])
 		
-        updateGraphs(data["state"], data["routine"], data["position"], data["velocityMag"], data["error"])
+        updateGraphs(data["state"], data["routine"], data["orientation"], data["velocityMag"], data["eulerError"])
 		
     };
 

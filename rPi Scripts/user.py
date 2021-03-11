@@ -38,6 +38,7 @@ class SharedDataPackage:
     target = [0, 0, 0]
     lqrMode = ""
     qError = [0, 0, 0, 0]
+    eulerError = [0, 0, 0]
     qErrorAdjusted = [0, 0, 0, 0]
     inertialTorque = [0, 0, 0]
     motorTorque = [0, 0, 0, 0]
@@ -63,6 +64,7 @@ class SharedDataPackage:
                         "target" : self.target,                 #User defined target in YPR
                         "lqrMode" : self.lqrMode,               #Current control law mode (nominal, yaw sweep, etc)
                         "qError" : self.qError,                 #Error between target and quaternion
+                        "eulerError" : self.eulerError,         #Euler Angle version of qError
                         "qErrorAdjusted" : self.qErrorAdjusted, #Error after corrective adjustment
                         "inertialTorque" : self.inertialTorque, #3 axis inertial torque output from control law
                         "motorTorque" : self.motorTorque,       #Torque requested for each motor
