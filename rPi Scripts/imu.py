@@ -13,7 +13,8 @@ class ImuSingleton:
     port = ''
     baudrate = 0
     conn = None
-        
+    packetLength = 30    
+
     #Imu data fields. These are updated by self.asyncRead() on another thread
     
     q = np.array([0, 0, 0, 1], dtype=float)
@@ -50,33 +51,31 @@ class ImuSingleton:
         output = bytearray()
         
         while True:
-            output += self.conn.read(34)
+            output += self.conn.read(30)
             sleep(0.001)
-            if len(output) >= 34:
+            if len(output) >= self.packetLength:
                 
                 index = output.find(self.startBytes)
                 
-                if index != -1 and index + 34 <= len(output):
+                if index != -1 and index + self.packetLength <= len(output):
                     
                     if index != 0:
                         del output[0:index]
                         index = 0
                         
-                    if len(output) >= 34:
-                        self.processPacket(output[0:34])
+                    if len(output) >= self.packetLength:
+                        self.processPacket(output[0:self.packetLength])
                         #print("All data (%s): %s" % (len(output), output))
                         #print("Packet data (%s): %s" % (len(packet), packet))
-                        del output[0:34]
+                        del output[0:self.packetLength]
                     
     def processPacket(self, packet):
         i = 4
-        self.q[0] = struct.unpack('f', packet[i:i+4])[0]
+        self.a[0] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
-        self.q[1] = struct.unpack('f', packet[i:i+4])[0]
+        self.a[1] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
-        self.q[2] = struct.unpack('f', packet[i:i+4])[0]
-        i+=4
-        self.q[3] = struct.unpack('f', packet[i:i+4])[0]
+        self.a[2] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
         self.w[0] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
