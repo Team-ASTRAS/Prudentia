@@ -522,6 +522,11 @@ function setState(state){
     websocket.send(JSON.stringify(msg));
 }
 
+function setRoutine(routine) {
+    var msg = { "messageType": "setRoutine", "routine": routine }
+    websocket.send(JSON.stringify(msg));
+}
+
 function updateLogTable(mode, routine, position, velocityMag) {
     modeName = mode
     if (mode == "running") {

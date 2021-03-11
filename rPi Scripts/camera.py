@@ -48,14 +48,14 @@ class CameraSingleton:
             # not a great assumption but it'll work!
         x_pixels = int(270-int(loc_x+(w/2)))
         FOV_X = 62.6 # deg
-        if x_pixels > 0
+        if x_pixels > 0:
             theta_x = -(x_pixels*(31.3/270)) # assumes to the left is negative
         else:
             theta_x = (x_pixels*(31.3/270)) # assumes to the right is positive
         
         y_pixels = int(250-int(loc_y+(h/2)))
         FOV_y = 48.8 # deg
-        if y_pixels > 0
+        if y_pixels > 0:
             theta_y = -(y_pixels*(24.4/250)) # assumes up is positive
         else:
             theta_y = (y_pixels*(24.4/250)) # assumes down in negative

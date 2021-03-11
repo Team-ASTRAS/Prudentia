@@ -4,7 +4,6 @@ from threading import Thread
 from utilities import log
 import user
 from user import State
-import camera
 import imu
 import numpy as np
 import controlLaw
@@ -12,14 +11,24 @@ from controlLaw import ControlRoutine
 from controlLaw import ypr2quat
 from controlLaw import quat2ypr
 
-developMode = True #This should be set to true when testing on windows.
+developMode = True 
+#This should be set to True when testing on windows. When set to True, the IMU is emulated and
+#motor functionality is disabled.
 
-ip = '127.0.0.1' #Local Machine
+internalWebsocket = True 
+#This should be set to True when testing on the same machine the script is running on. When set
+#to True, the websocket is exposed at the address 'localhost'. Otherwise, static ip is used.
+
 htmlPort = 8009
 websocketPort = 8010
 
+if internalWebsocket:
+    ip = '127.0.0.1' #Local Machine
+else:
+    ip = '172.30.0.20' #Static external IP
+
 if developMode:
-    log("WARNING: You are in develop mode. Motor functionality is disabled in this mode. To exit develop mode, set 'developMode = False' in main.py")
+    log("WARNING: You are in develop mode. Motor and camera functionality is disabled in this mode. To exit develop mode, set 'developMode = False' in main.py")
 else:
     import motors
 
@@ -61,7 +70,7 @@ conn = Imu.openConnection('/dev/ttyUSB0', 115200)
 #Start thread to read data asynchronously
 if developMode: 
     #If develop mode, run IMU emulation (random data)
-    log("Develop mode on; emulating IMU. Expect random data.")
+    log("Develop mode on; emulating IMU. Expect random gyro and accel data.")
     imuReadThread = Thread(target=Imu.emulateImu)
 
 else: 
@@ -84,8 +93,9 @@ if not developMode:
 
 ## Camera Setup
 
-Camera = camera.CameraSingleton()
-
+if not developMode:
+    import camera
+    Camera = camera.CameraSingleton()
 
 ## Variable Initialization
 
@@ -114,6 +124,17 @@ def processCommands():
             elif msgJSON["state"] == "running":
                 sharedData.state = State.running
 
+
+        if msgJSON["messageType"] == "setRoutine":
+
+            if   msgJSON["routine"] == "stabilize":
+                sharedData.controlRoutine = ControlRoutine.stabilize
+
+            elif msgJSON["routine"] == "attitudeInput":
+                sharedData.controlRoutine = ControlRoutine.attitudeInput
+
+            elif msgJSON["routine"] == "searchMode":
+                sharedData.controlRoutine = ControlRoutine.search
 
 while True:
     loopNumber += 1
@@ -151,6 +172,11 @@ while True:
 
         sharedData.velocity = Imu.w.tolist()
         sharedData.velocityMagnitude = np.linalg.norm(Imu.w)
+
+        sharedData.acceleration = Imu.a.tolist()
+
+        #Set timestamp
+        sharedData.timestamp = time.time()
         
     if sharedData.state == State.standby:
         pass #Do nothing
@@ -161,10 +187,20 @@ while True:
             
             #Run control law with latest IMU data. Stabilize based on current yaw, with zero roll and pitch.
             response = ControlLaw.routineStabilize(Imu.q, Imu.w)
-
+            
+            sharedData.quatTarget = qTarget.tolist()
+            sharedData.lqrMode = response.lqrMode.name
+            sharedData.qError = response.qError.tolist()
+            sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
+            sharedData.inertialTorque = response.inertialTorque.tolist()
+            sharedData.motorTorque = response.motorTorques.tolist()
+            sharedData.motorAccel = response.motorAccel.tolist()
+            
             # Use response to actuate motors
             if not developMode:
                 Motors.setAllMotorRpm(response.motorAccel)
+                sharedData.currentDC = Motors.currentDC
+                sharedData.targetDC = Motors.targetDC
 
         elif sharedData.controlRoutine == ControlRoutine.attitudeInput:
             
@@ -185,7 +221,8 @@ while True:
             # Use response to actuate motors
             if not developMode:
                 Motors.setAllMotorRpm(response.motorAccel)
-
+                sharedData.currentDC = Motors.currentDC
+                sharedData.targetDC = Motors.targetDC
             
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search

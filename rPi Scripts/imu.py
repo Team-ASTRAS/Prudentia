@@ -18,6 +18,7 @@ class ImuSingleton:
     
     q = np.array([0, 0, 0, 1], dtype=float)
     w = np.array([0, 0, 0], dtype=float)
+    a = np.array([0, 0, 0], dtype=float)
     
     #Packets start with identifier "FA 01 30 00"
     startBytes = bytearray([int('0xfa', 16), int('0x01', 16), int('0x30', 16), int('0x00', 16)])

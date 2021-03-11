@@ -7,6 +7,7 @@ import json
 import queue
 import functools
 import os
+import time
 from enum import Enum, unique
 from utilities import log
 
@@ -31,29 +32,48 @@ class SharedDataPackage:
     orientation = [0, 0, 0]
     velocity = [0, 0, 0]
     velocityMagnitude = 0
+    acceleration = [0, 0, 0]
     
-    quatTarget = [0, 0, 0]
+    quatTarget = [0, 0, 0, 0]
     target = [0, 0, 0]
     lqrMode = ""
     qError = [0, 0, 0, 0]
     qErrorAdjusted = [0, 0, 0, 0]
     inertialTorque = [0, 0, 0]
-    motorTorque = [0, 0, 0]
-    motorAccel = [0, 0, 0]
+    motorTorque = [0, 0, 0, 0]
+    motorAccel = [0, 0, 0, 0]
+
+    currentDC = [0, 0, 0, 0]
+    targetDC = [0, 0, 0, 0]
 
     stopServer = None
 
+    timestamp = time.time()
 
     def getDataJson(self):
-        dataObject = {  "state" : self.state.name,
-                        "routine" : self.controlRoutine.name,
+        dataObject = {  "state" : self.state.name,              #Current state (running, standby, etc)
+                        "routine" : self.controlRoutine.name,   #Control Routine (stabilize, AI, search)
 
-                        "quaternion" : self.quaternion,
-                        "orientation" : self.orientation, #Euler Angle of quaternion
-                        "velocity" : self.velocity,
-                        "velocityMag" : self.velocityMagnitude,
+                        "quaternion" : self.quaternion,         #qhat q4
+                        "orientation" : self.orientation,       #Euler Angle of quaternion
+                        "velocity" : self.velocity,             #w in rad/s (IMU Gyros)
+                        "velocityMag" : self.velocityMagnitude, #mag of w
+                        "acceleration" : self.acceleration,     #a in m/s^2 (IMU Accels)
 
-                        "target" : self.target}
+                        "target" : self.target,                 #User defined target in YPR
+                        "lqrMode" : self.lqrMode,               #Current control law mode (nominal, yaw sweep, etc)
+                        "qError" : self.qError,                 #Error between target and quaternion
+                        "qErrorAdjusted" : self.qErrorAdjusted, #Error after corrective adjustment
+                        "inertialTorque" : self.inertialTorque, #3 axis inertial torque output from control law
+                        "motorTorque" : self.motorTorque,       #Torque requested for each motor
+                        "motorAccel" : self.motorAccel,         #Acceleration requested for each motor
+                        
+                        "currentDC" : self.currentDC,           #Current Duty Cycle of the motors
+                        "targetDC" : self.targetDC,             #Target Duty Cycle of the motors
+
+                        "timestamp" : self.timestamp
+                        }             
+
         return json.dumps(dataObject)
 
     def saveJson(self):
