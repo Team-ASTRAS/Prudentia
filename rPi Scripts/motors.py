@@ -1,44 +1,46 @@
 from utilities import log
+from pyvesc import VESC
+
 
 class MotorsSingleton:
+    
+    #Define serial ports
+    serialPorts = ['/dev/ttyS0', '/dev/ttyAMA1', '/dev/ttyAMA2', '/dev/ttyAMA3']
+    vescs = [None, None, None, None]
+    dutys = [0, 0, 0, 0]
+    
+    def __init__(self):
+        for i in range(len(self.serialPorts)):
+            self.vescs[i] = VESC(self.serialPorts[i])
+            log("Is VESC port %s open? : %s" % (self.serialPorts[i], self.vescs[i].serial_port.is_open))
 
-    pinMotor1 = 0
-    pinMotor2 = 0
-    pinMotor3 = 0
-    pinMotor4 = 0
-
-    # This function expects an array of motor RPMs ex: [1000.2, -1820, 3000, -3000]
-    def setAllMotorRpm(self, motorArray):
-        if len(motorArray) != 4:
+    # This function expects an array of motor delta RPMs ex: [1000.2, -1820, 3000, -3000]
+    def setAllMotorRpm(self, deltaRpmArray):
+        if len(deltaRpmArray) != 4:
             log("Error! setAllMotorRP expected argument of length 4, got %s instead" % len(motorArray))
             return
+        
+        deltaDutyArray = [0]*4
+        
+        for i in range(len(self.vescs)):
+            
+            deltaDutyArray[i] = self.getDutyFromRpm(deltaRpmArray[i])
+        
+            newDuty = self.dutys[i] + deltaDutyArray[i]
+            if newDuty > 0.8:
+                pass
+                #log("WARNING - Motor %s may be oversatured. New duty cycle request ignored: Over 80%% limit(%s%%)." % (i, round(newDuty*100, 2)))
+            elif newDuty < 0.1:
+                #log("CAUTION - Duty cycle low(%s)" % newDuty)
+                self.dutys[i] = newDuty
+            else:
+                self.dutys[i] = newDuty
+                
+            self.vescs[i].set_duty_cycle(self.dutys[i])
+            deltaDutyArray[i] = self.dutys[i]
+        
+        return deltaDutyArray
 
-
-    #This function expects an integer motor (0, 1, 2, 3)
-    def setMotorRpm(self, motor, rpm):
-        pinMotor = 0
-        if motor == 1:
-            pinMotor = self.pinMotor1
-        elif motor == 2:
-            pinMotor = self.pinMotor2
-        elif motor == 3:
-            pinMotor = self.pinMotor3
-        elif motor == 4:
-            pinMotor = self.pinMotor4
-        else:
-            log("Error! Motor selection was outside range of 0 to 3")
-            return
-
-        duty = self.getDutyFromRPM(rpm)
-
-        self.setPWM(pinMotor, duty)
-
-    #This function converts desired rpm to duty cycle
-    def getDutyFromRPM(self, rpm):
-        # Return duty cycle needed to meet input rpm
-        pass
-
-    #This function sets a PWM pin to a specific duty cycle
-    def setPWM(self, pin, duty):
-        # Set pinout to designated duty cycle
-        pass
+    #This function converts desired rpm change to duty cycle change
+    def getDutyFromRpm(self, deltaRpm):
+        return (deltaRpm + 267.34) / 524.55 / 100.0

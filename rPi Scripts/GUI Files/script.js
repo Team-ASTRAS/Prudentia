@@ -388,6 +388,23 @@ function updateLogTable(mode, routine, position, velocityMag) {
     document.getElementById('DataSpeed').innerHTML = velocityMag.toFixed(2);
 };
 
+function setRoutine(routine) {
+    var msg = { "messageType": "setRoutine", "routine": routine }
+    websocket.send(JSON.stringify(msg));
+}
+
+function updateLogTable(mode, routine, position, velocityMag) {
+    modeName = mode
+    if (mode == "running") {
+        modeName = modeName + " (" + routine + ")"
+    }
+    document.getElementById('DataMode').innerHTML = modeName;
+    document.getElementById('DataYaw').innerHTML = position[0].toFixed(2);
+    document.getElementById('DataPitch').innerHTML = position[1].toFixed(2);
+    document.getElementById('DataRoll').innerHTML = position[2].toFixed(2);
+    document.getElementById('DataSpeed').innerHTML = velocityMag.toFixed(2);
+}
+
 function start(websocketServerLocation){
     //Attempt connection
     websocket = new WebSocket(websocketServerLocation);
@@ -398,7 +415,9 @@ function start(websocketServerLocation){
         data = JSON.parse(event.data);
 
         updateLogTable(data["state"], data["routine"], data["position"], data["velocityMag"])
+		
         updateGraphs(data["state"], data["routine"], data["position"], data["velocityMag"], data["error"])
+		
     };
 
     //If an error occurs, close socket. This will call websocket.onclose
