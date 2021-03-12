@@ -11,11 +11,11 @@ from controlLaw import ControlRoutine
 from controlLaw import ypr2quat
 from controlLaw import quat2ypr
 
-developMode = True 
+developMode = True
 #This should be set to True when testing on windows. When set to True, the IMU is emulated and
 #motor functionality is disabled.
 
-internalWebsocket = True 
+internalWebsocket = True
 #This should be set to True when testing on the same machine the script is running on. When set
 #to True, the websocket is exposed at the address 'localhost'. Otherwise, static ip is used.
 
@@ -68,12 +68,12 @@ log("Opening connection with IMU.")
 
 conn = Imu.openConnection('/dev/ttyUSB0', 115200)
 #Start thread to read data asynchronously
-if developMode: 
+if developMode:
     #If develop mode, run IMU emulation (random data)
     log("Develop mode on; emulating IMU. Expect random gyro and accel data.")
     imuReadThread = Thread(target=Imu.emulateImu)
 
-else: 
+else:
     #Else, connect to the VN-200.
     assert conn is not None #Make sure the port opened correctly.
     imuReadThread = Thread(target=Imu.asyncRead)
@@ -182,17 +182,17 @@ while True:
 
         #Set timestamp
         sharedData.timestamp = time.time()
-        
+
     if sharedData.state == State.standby:
         pass #Do nothing
 
     elif sharedData.state == State.running:
         #Motors can now be run (No motor code should run outside this statement!)
         if sharedData.controlRoutine == ControlRoutine.stabilize:
-            
+
             #Run control law with latest IMU data. Stabilize based on current yaw, with zero roll and pitch.
             response = ControlLaw.routineStabilize(Imu.q, Imu.w)
-            
+
             sharedData.quatTarget = qTarget.tolist()
             sharedData.lqrMode = response.lqrMode.name
             sharedData.qError = response.qError.tolist()
@@ -202,7 +202,7 @@ while True:
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
             sharedData.motorAccel = response.motorAccel.tolist()
-            
+
             # Use response to actuate motors
             if not developMode:
                 Motors.setAllMotorRpm(response.motorAccel)
@@ -210,13 +210,13 @@ while True:
                 sharedData.targetDC = Motors.targetDC
 
         elif sharedData.controlRoutine == ControlRoutine.attitudeInput:
-            
+
             #Unpack qTarget from shared data.
             qTarget = controlLaw.ypr2quat(sharedData.qTarget[0], sharedData.qTarget[1], sharedData.qTarget[2])
-            
+
             #Run control law with latest IMU data and qTarget
             response = ControlLaw.routineAttitudeInput(Imu.q, Imu.w, qTarget)
-            
+
             sharedData.quatTarget = qTarget.tolist()
             sharedData.lqrMode = response.lqrMode.name
             sharedData.qError = response.qError.tolist()
@@ -226,13 +226,13 @@ while True:
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
             sharedData.motorAccel = response.motorAccel.tolist()
-            
+
             # Use response to actuate motors
             if not developMode:
                 Motors.setAllMotorRpm(response.motorAccel)
                 sharedData.currentDC = Motors.currentDC
                 sharedData.targetDC = Motors.targetDC
-            
+
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search
             # Set ControlLaw Data
@@ -259,7 +259,7 @@ while True:
         log("Loop time exceeded allowance. Loop time: %s. Allowed time: %s" %
             (loopTime, allowedTime))
     else:
-        
+
         sleepTime = targetTime - runtime
         time.sleep(sleepTime) # Sleep for remaining loop time
 
@@ -273,11 +273,9 @@ while True:
 
             log("Loop Times for last second: AVG: [%s ms], MAX: [%s ms], Processing %%: [%s%%]" %
                 (tavg, tmax, processingPercent))
-        
+
             runtime = time.time() - startRuntime
             log("Total Runtime: %s (loop %s), Total Average Frequency: %s Hz" %
                 (round(runtime, 4), loopNumber, round(loopNumber/runtime, 4)))
 
             times = [] # Clear array
-
-        
