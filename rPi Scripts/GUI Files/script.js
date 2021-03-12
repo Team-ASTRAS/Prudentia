@@ -7,11 +7,12 @@ script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundl
 script2.type = 'text/javascript';
 document.getElementsByTagName('head')[0].appendChild(script2);
 
-var dataMode = document.querySelector('.dataMode'),
-    dataYaw = document.querySelector('.dataYaw'),
-    dataPitch = document.querySelector('.dataPitch'),
-    dataRoll = document.querySelector('.dataRoll'),
-    dataSpeed = document.querySelector('.dataSpeed'),
+var dataMode = document.querySelector('.DataMode'),
+    dataRoutine = document.querySelector('.DataRoutine'),
+    dataYaw = document.querySelector('.DataYaw'),
+    dataPitch = document.querySelector('.DataPitch'),
+    dataRoll = document.querySelector('.DataRoll'),
+    dataSpeed = document.querySelector('.DataSpeed'),
     calibrated, // Variable should come from IMU instead of button press
     ready, // Variable should come from IMU/Motors instead of button press
 
@@ -400,11 +401,8 @@ function setRoutine(routine) {
 }
 
 function updateLogTable(mode, routine, orientation, velocityMag) {
-    modeName = mode
-    if (mode == "running") {
-        modeName = modeName + " (" + routine + ")"
-    }
-    document.getElementById('DataMode').innerHTML = modeName;
+    document.getElementById('DataMode').innerHTML = mode;
+    document.getElementById('DataRoutine').innerHTML = routine;
     document.getElementById('DataYaw').innerHTML = orientation[0].toFixed(2);
     document.getElementById('DataPitch').innerHTML = orientation[1].toFixed(2);
     document.getElementById('DataRoll').innerHTML = orientation[2].toFixed(2);
