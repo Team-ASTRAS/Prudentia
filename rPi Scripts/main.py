@@ -40,7 +40,7 @@ log('Hello world from Prudentia!')
 sharedData = user.SharedDataPackage()
 
 sharedData.state = State.running
-sharedData.controlRoutine = ControlRoutine.attitudeInput
+sharedData.controlRoutine = ControlRoutine.search
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
 sharedData.qTarget = [0, 0, 0]

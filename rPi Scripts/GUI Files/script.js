@@ -49,7 +49,7 @@ var dataMode = document.querySelector('.dataMode'),
 ip = "ws://127.0.0.1:8010/";
 start(ip);
 
-dataUpdate =  1000;
+dataUpdate =  100;
 refreshData() //This function is called recursively
 
 // Button callbacks
@@ -282,7 +282,7 @@ function GraphInitialization() {
     })
   });
 
-  if (routine = "AttitudeInput"){
+  if (routine == "AttitudeInput"){
     YPRErrorGraph = $("#YPRErrorGraph");
 
     YPRErrorChartInstant = new Chart(YPRErrorGraph,{
@@ -341,8 +341,8 @@ function GraphInitialization() {
 
 
 };
-function updateGraphs(mode, routine, orientation, velocityMag, eulerError) {
-  if (Initialized = true) {
+function updateGraphs(routine, orientation, velocityMag, eulerError) {
+  if (Initialized == true) {
     YPRChartInstant.data.labels.push(new Date());
     YPRChartInstant.data.datasets[0].data.push(orientation[0].toFixed(2));
     YPRChartInstant.data.datasets[1].data.push(orientation[1].toFixed(2));
@@ -350,7 +350,7 @@ function updateGraphs(mode, routine, orientation, velocityMag, eulerError) {
     AngVelChartInstant.data.labels.push(new Date());
     AngVelChartInstant.data.datasets[0].data.push(velocityMag.toFixed(2));
 
-    if (routine = "AttitudeInput"){
+    if (routine == "attitudeInput"){
       YPRErrorChartInstant.data.labels.push(new Date());
       YPRErrorChartInstant.data.datasets[0].data.push(eulerError[0]);
       YPRErrorChartInstant.data.datasets[1].data.push(eulerError[1]);
@@ -373,7 +373,7 @@ function updateGraphs(mode, routine, orientation, velocityMag, eulerError) {
         AngVelChartInstant.update();
       }
 
-      else if (routine = "Search"){
+      else if (routine == "search"){
         if(ElementsCounted > ElementsKept){
             YPRChartInstant.data.labels.shift();
             YPRChartInstant.data.datasets[0].data.shift();
@@ -422,7 +422,7 @@ function start(websocketServerLocation){
 
         updateLogTable(data["state"], data["routine"], data["orientation"], data["velocityMag"])
 
-        updateGraphs(data["state"], data["routine"], data["orientation"], data["velocityMag"], data["eulerError"])
+        updateGraphs(data["routine"], data["orientation"], data["velocityMag"], data["eulerError"])
 
     };
 
