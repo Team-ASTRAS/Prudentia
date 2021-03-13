@@ -3,7 +3,7 @@ import numpy as np
 from scipy import linalg
 import time
 from utilities import log
-
+from math import cos, sin
 @unique
 class ControlRoutine(Enum):
     stabilize = 1 #Stabilize angular position
@@ -31,7 +31,7 @@ class routineReport:
 
 #Returns the quaternion error between the target and observed quaternions.
 def getQuatError(qObserved, qTarget):
-    return quatMultiply(qObserved, qTarget)
+    return quatMultiplyFlipped(qObserved, qTarget)
 
 #This is currently unused 2/23/2021. We shpuld always have a unit quaternion.
 def normalizeQuat(self, quat):
@@ -42,6 +42,15 @@ def normalizeQuat(self, quat):
 
 #Multiplies quaternion q1 (LHS) by q2 (RHS)
 def quatMultiply(q1, q2):
+    qExpanded = np.array([[ q1[3],  q1[2], -q1[1],  q1[0]],
+                          [-q1[2],  q1[3],  q1[0],  q1[1]],
+                          [ q1[1], -q1[0],  q1[3],  q1[2]], 
+                          [-q1[0], -q1[1], -q1[2],  q1[3]]])
+
+    return np.dot(qExpanded, q2)
+
+#Multiplies quaternion q1 (LHS) by q2 (RHS). Flips qhat of q2, used to find qError.
+def quatMultiplyFlipped(q1, q2):
     qExpanded = np.array([[ q1[3],  q1[2], -q1[1],  q1[0]],
                           [-q1[2],  q1[3],  q1[0],  q1[1]],
                           [ q1[1], -q1[0],  q1[3],  q1[2]], 
@@ -73,7 +82,17 @@ def quat2ypr(q):
     return result
 
 def ypr2str(ypr):
-    return "[%s, %s, %s]" % (round(ypr.y, 4), round(ypr.p), round(ypr.r)) 
+    return "[%.4f, %.4f, %.4f]" % (ypr.y, ypr.p, ypr.r)
+
+def w2str(arr):
+    str = "["
+    return "[%.4f, %.4f, %.4f]" % (arr[0], arr[1], arr[2])
+
+#Returns a quaternion based on a normalized euler axis and angle. Expects units in radians.
+def eulerAxis2quat(axis, angle):
+        qHat = axis * sin(angle / 2)
+        qReal = cos(angle / 2)
+        return np.append(qHat, qReal)
 
 class ControlLawSingleton:
 

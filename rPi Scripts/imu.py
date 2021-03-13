@@ -1,10 +1,11 @@
 import time
 import struct
 import numpy as np
-from math import sqrt
+from math import sqrt, cos, sin
 from time import sleep
 
 import serial
+from controlLaw import eulerAxis2quat, quatMultiply, ypr2str, quat2ypr, w2str
 from threading import Thread
 from random import uniform
 class ImuSingleton:
@@ -14,9 +15,9 @@ class ImuSingleton:
     baudrate = 0
     conn = None
     packetLength = 30    
-
+    updateFrequency = 50 #Hz
+        
     #Imu data fields. These are updated by self.asyncRead() on another thread
-    
     q = np.array([0, 0, 0, 1], dtype=float)
     w = np.array([0, 0, 0], dtype=float)
     a = np.array([0, 0, 0], dtype=float)
@@ -71,19 +72,46 @@ class ImuSingleton:
                     
     def processPacket(self, packet):
         i = 4
-        self.a[0] = struct.unpack('f', packet[i:i+4])[0]
-        i+=4
         self.a[1] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
         self.a[2] = struct.unpack('f', packet[i:i+4])[0]
+        i+=4
+        self.a[3] = struct.unpack('f', packet[i:i+4])[0]
+
         i+=4
         self.w[0] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
         self.w[1] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
         self.w[2] = struct.unpack('f', packet[i:i+4])[0]
-        
+
+        self.propogateQuaternion()
+
+    def propogateQuaternion(self):
+        w = np.deg2rad(self.w) / self.updateFrequency
+        wMag = np.linalg.norm(w)
+        wAxis = w / wMag
+
+        if(wMag < 0.01):
+            pass #TODO Recalibrate P, R
+
+        deltaQ = eulerAxis2quat(wAxis, wMag)
+        self.q = quatMultiply(self.q, deltaQ)
+    
+    def setCalibration(self):
+        print("Calibrating! Accels: %s" % self.a)
+
     def emulateImu(self):
+        while True:
+            sleep(0.02)
+
+            self.w = 100 * np.array([uniform(-0.1,0.1), uniform(-0.1,0.1), uniform(-0.1,0.1)])
+                    
+            self.propogateQuaternion()
+            print("Propogation Data: %s      w: %s" % (ypr2str(quat2ypr(Imu.q)), w2str(self.w)))
+            
+                
+    def getRandomQuat(self):
         
         #Produces a unit quaternion with uniform random rotation
         x = y = z  =  u = v = w  =  s = float(0)
@@ -109,20 +137,31 @@ class ImuSingleton:
                 
             self.q = np.array([x, y, s*u, s*v])
                     
-            self.w = np.array([uniform(-0.1,0.1), uniform(-0.1,0.1), uniform(-0.1,0.1)])
-                    
             sleep(0.005)
             
             #print("Q: %s" % q)
             #print("W: %s" % w)
             
+            return np.array([x, y, s*u, s*v])
+
 if __name__ == "__main__":
+
+    np.set_printoptions(precision=4)
+
     Imu = ImuSingleton()
     conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
     #conn = Imu.openConnection('com13', 115200) # Windows USB
-    assert conn is not None
-    serialThread = Thread(target=Imu.asyncRead)
+    #assert conn is not None
+
+    Imu.q = Imu.getRandomQuat()
+
+    Imu.w = np.array([0.0, 0.0, 0.1], dtype=float)
+
+
+    serialThread = Thread(target=Imu.emulateImu)
     serialThread.start()
-    while True:
-        time.sleep(0.05)
-        print("Q:%s, W:%s" % (Imu.q, Imu.w))
+    serialThread.join()
+    #while True:
+        #time.sleep(0.05)
+        #print("Q:%s, W:%s" % (Imu.q, Imu.w))
+        
