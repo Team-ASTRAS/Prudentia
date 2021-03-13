@@ -7,9 +7,7 @@ from user import State
 import imu
 import numpy as np
 import controlLaw
-from controlLaw import ControlRoutine
-from controlLaw import ypr2quat
-from controlLaw import quat2ypr
+from controlLaw import ControlRoutine, ypr2quat, quat2ypr
 
 developMode = True 
 #This should be set to True when testing on windows. When set to True, the IMU is emulated and

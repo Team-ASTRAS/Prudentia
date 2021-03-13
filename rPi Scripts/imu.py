@@ -144,6 +144,15 @@ class ImuSingleton:
             
             return np.array([x, y, s*u, s*v])
 
+    def setRollPitchFromAccels(self):
+        # self.a is a np.array with three elements: gravitation accel in the body frame
+        # for each axis. This points to gravity when Prudentia is not moving.
+        # This function will only be called if we aren't moving, so don't worry
+        # about checking that. 
+        
+        # Use self.a to set self.p and self.r
+        pass
+
 if __name__ == "__main__":
 
     np.set_printoptions(precision=4)
