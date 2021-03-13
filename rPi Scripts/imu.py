@@ -8,6 +8,7 @@ import serial
 from controlLaw import eulerAxis2quat, quatMultiply, ypr2str, quat2ypr, w2str
 from threading import Thread
 from random import uniform
+
 class ImuSingleton:
 
     #Serial connection attributes
@@ -109,8 +110,7 @@ class ImuSingleton:
                     
             self.propogateQuaternion()
             print("Propogation Data: %s      w: %s" % (ypr2str(quat2ypr(Imu.q)), w2str(self.w)))
-            
-                
+                   
     def getRandomQuat(self):
         
         #Produces a unit quaternion with uniform random rotation
@@ -150,26 +150,40 @@ class ImuSingleton:
         # This function will only be called if we aren't moving, so don't worry
         # about checking that. 
         
-        # Use self.a to set self.p and self.r
-        pass
+        # Use self.a to return pitch and roll
+        a_x = self.a[0]
+        a_y = self.a[1]
+        a_z = self.a[2]
+        pitch = a_x/sqrt(a_y*a_y+a_z*a_z) 
+        roll = a_y/sqrt(a_x*a_x+a_z*a_z)
+        results = {}
+        results['p'] = np.arctan2(-a_x,sqrt(a_y*a_y+a_z*a_z))
+        results['r'] = np.arctan2(a_y,sqrt(a_x*a_x+a_z*a_z))
+        return results
 
 if __name__ == "__main__":
 
     np.set_printoptions(precision=4)
 
     Imu = ImuSingleton()
-    conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
+    Imu.a = np.array([0,0,-9.81])
+    x = Imu.getRandomQuat  
+    results = Imu.setRollPitchFromAccels()
+    print("Roll: %s, Pitch: %s" % (results['r']*180/3.1415, results['p']*180/3.1415))
+
+
+    #conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
     #conn = Imu.openConnection('com13', 115200) # Windows USB
     #assert conn is not None
 
-    Imu.q = Imu.getRandomQuat()
+    #Imu.q = Imu.getRandomQuat()
 
-    Imu.w = np.array([0.0, 0.0, 0.1], dtype=float)
+    #Imu.w = np.array([0.0, 0.0, 0.1], dtype=float)
 
 
-    serialThread = Thread(target=Imu.emulateImu)
-    serialThread.start()
-    serialThread.join()
+    #serialThread = Thread(target=Imu.emulateImu)
+    #serialThread.start()
+    #serialThread.join()
     #while True:
         #time.sleep(0.05)
         #print("Q:%s, W:%s" % (Imu.q, Imu.w))
