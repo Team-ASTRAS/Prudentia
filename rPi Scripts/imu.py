@@ -9,6 +9,9 @@ from controlLaw import eulerAxis2quat, quatMultiply, ypr2str, quat2ypr, w2str
 from threading import Thread
 from random import uniform
 
+#$VNWRG,75,1,16,04,000C*XX
+#^Binary Output Group Command^
+
 class ImuSingleton:
 
     #Serial connection attributes
@@ -23,8 +26,8 @@ class ImuSingleton:
     w = np.array([0, 0, 0], dtype=float)
     a = np.array([0, 0, 0], dtype=float)
     
-    #Packets start with identifier "FA 01 30 00"
-    startBytes = bytearray([int('0xfa', 16), int('0x01', 16), int('0x30', 16), int('0x00', 16)])
+    #Packets start with identifier "FA 04 0C 00"
+    startBytes = bytearray([int('0xfa', 16), int('0x04', 16), int('0x0C', 16), int('0x00', 16)])
 
     def openConnection(self, port, baudrate):
         self.port = port
@@ -66,18 +69,21 @@ class ImuSingleton:
                         index = 0
                         
                     if len(output) >= self.packetLength:
-                        self.processPacket(output[0:self.packetLength])
-                        #print("All data (%s): %s" % (len(output), output))
+                        packet = output[0:self.packetLength]
                         #print("Packet data (%s): %s" % (len(packet), packet))
+                        #print("All data (%s): %s" % (len(output), output))
+                        self.processPacket(packet)
                         del output[0:self.packetLength]
                     
     def processPacket(self, packet):
         i = 4
+        self.a[0] = struct.unpack('f', packet[i:i+4])[0]
+        i+=4
         self.a[1] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
         self.a[2] = struct.unpack('f', packet[i:i+4])[0]
-        i+=4
-        self.a[3] = struct.unpack('f', packet[i:i+4])[0]
+
+        #print("Acceleration Data: %s" % self.a) 
 
         i+=4
         self.w[0] = struct.unpack('f', packet[i:i+4])[0]
@@ -109,7 +115,7 @@ class ImuSingleton:
             self.w = 100 * np.array([uniform(-0.1,0.1), uniform(-0.1,0.1), uniform(-0.1,0.1)])
                     
             self.propogateQuaternion()
-            print("Propogation Data: %s      w: %s" % (ypr2str(quat2ypr(Imu.q)), w2str(self.w)))
+            #print("Propogation Data: %s      w: %s" % (ypr2str(quat2ypr(Imu.q)), w2str(self.w)))
                    
     def getRandomQuat(self):
         
@@ -144,7 +150,7 @@ class ImuSingleton:
             
             return np.array([x, y, s*u, s*v])
 
-    def setRollPitchFromAccels(self):
+    def getRollPitch(self):
         # self.a is a np.array with three elements: gravitation accel in the body frame
         # for each axis. This points to gravity when Prudentia is not moving.
         # This function will only be called if we aren't moving, so don't worry
@@ -155,10 +161,10 @@ class ImuSingleton:
         a_y = self.a[1]
         a_z = self.a[2]
         pitch = a_x/sqrt(a_y*a_y+a_z*a_z) 
-        roll = a_y/sqrt(a_x*a_x+a_z*a_z)
+        roll = -a_y/sqrt(a_x*a_x+a_z*a_z)
         results = {}
-        results['p'] = np.arctan2(-a_x,sqrt(a_y*a_y+a_z*a_z))
-        results['r'] = np.arctan2(a_y,sqrt(a_x*a_x+a_z*a_z))
+        results['p'] = np.arctan2(a_x,sqrt(a_y*a_y+a_z*a_z)) #only 0 to 90 rn, needs to be updated
+        results['r'] = np.arctan2(-a_y,-a_z)
         return results
 
 if __name__ == "__main__":
@@ -166,25 +172,16 @@ if __name__ == "__main__":
     np.set_printoptions(precision=4)
 
     Imu = ImuSingleton()
-    Imu.a = np.array([0,0,-9.81])
-    x = Imu.getRandomQuat  
-    results = Imu.setRollPitchFromAccels()
-    print("Roll: %s, Pitch: %s" % (results['r']*180/3.1415, results['p']*180/3.1415))
-
-
     #conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
-    #conn = Imu.openConnection('com13', 115200) # Windows USB
-    #assert conn is not None
+    conn = Imu.openConnection('com15', 115200) # Windows USB
+    assert conn is not None
 
-    #Imu.q = Imu.getRandomQuat()
+    serialThread = Thread(target=Imu.asyncRead)
+    serialThread.start()
+    while True:
+        time.sleep(0.05)
+        results = Imu.getRollPitch()
+        print("Roll: %s, Pitch: %s" % (results['r']*180/3.1415, results['p']*180/3.1415))
 
-    #Imu.w = np.array([0.0, 0.0, 0.1], dtype=float)
-
-
-    #serialThread = Thread(target=Imu.emulateImu)
-    #serialThread.start()
-    #serialThread.join()
-    #while True:
-        #time.sleep(0.05)
-        #print("Q:%s, W:%s" % (Imu.q, Imu.w))
+    serialThread.join()
         
