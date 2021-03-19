@@ -1,0 +1,41 @@
+Switch to Desktop directory:
+cd Desktop
+
+Clone prudentia repository:
+sudo git clone <prudentia repo>
+
+Set permissions:
+sudo chmod u=wrx -R  Prudentia
+
+Enable camera:
+sudo raspi-config
+Go to interface settings -> Camera -> enable -> finish -> reboot
+Make sure camera is installed correctly on boot
+
+Install websockets:
+sudo pip3 install websockets
+
+Enable multiple UART ports:
+sudo nano /boot/config.txt
+Add lines:
+miniuart-bt
+dtoverlay=uart2
+dtoverlay=uart3
+dtoverlay=uart4
+dtoverlay=uart5
+core_freq=250
+
+Install python CRC version 1.21
+sudo pip3 install pythoncrc
+
+Install pyvesc
+sudo pip3 install pyvesc
+
+
+####IMU STUFF####
+
+
+
+####TROUBLESHOOTING####
+
+If numpy gives the error "cannot open shared object file: No such file or directory" the most likely solution is to run "sudo apt-get install libatlas-base-dev" see https://numpy.org/devdocs/user/troubleshooting-importerror.html

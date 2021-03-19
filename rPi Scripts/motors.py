@@ -5,7 +5,7 @@ from pyvesc import VESC
 class MotorsSingleton:
     
     #Define serial ports
-    serialPorts = ['/dev/ttyS0', '/dev/ttyAMA1', '/dev/ttyAMA2', '/dev/ttyAMA3']
+    serialPorts = ['/dev/ttyAMA1', '/dev/ttyAMA2', '/dev/ttyAMA3', '/dev/ttyAMA4']
     vescs = [None, None, None, None]
     dutys = [0, 0, 0, 0]
     
