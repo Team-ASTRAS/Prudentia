@@ -145,6 +145,7 @@ def startHtmlServer(sharedDataRef, ip, port):
     log("Loading Gui Files from directory: \"" + os.getcwd() + "\"") 
 
     handle = MyHttpRequestHandler
+    #socketserver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) 
     sharedDataRef.htmlServer = socketserver.TCPServer((ip, port), handle)
 
     sharedDataRef.htmlServer.serve_forever()

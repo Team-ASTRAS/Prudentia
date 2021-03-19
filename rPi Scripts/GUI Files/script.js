@@ -47,7 +47,7 @@ var dataMode = document.querySelector('.DataMode'),
     searchmode = document.querySelector('.SearchButton');
 
 //Connect to RPi here
-ip = "ws://127.0.0.1:8010/";
+ip = "ws://172.30.115.211:8010/";
 start(ip);
 
 dataUpdate =  100;
@@ -141,6 +141,14 @@ if (go){
         console.log('Target Yaw = ' + yawTarget); // Send Target to Python Script
         console.log('Target Pitch = ' + pitchTarget);
         console.log('Target Roll = ' + rollTarget);
+        
+        Target = [10, 20, 30];
+        var msg = {"messageType":"setTarget", "target":Target};
+        jsonMSG = JSON.stringify(msg);
+        console.log(jsonMSG);
+        websocket.send(jsonMSG);
+        
+        page = "AI";
         GraphInitialization();
       }
       else if (yawTarget > 180 || yawTarget < -180){
@@ -283,7 +291,7 @@ function GraphInitialization() {
     })
   });
 
-  if (routine == "AttitudeInput"){
+  if (page == "AI"){
     YPRErrorGraph = $("#YPRErrorGraph");
 
     YPRErrorChartInstant = new Chart(YPRErrorGraph,{

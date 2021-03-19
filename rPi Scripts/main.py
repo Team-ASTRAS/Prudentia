@@ -39,10 +39,10 @@ log('Hello world from Prudentia!')
 sharedData = user.SharedDataPackage()
 
 sharedData.state = State.running
-sharedData.controlRoutine = ControlRoutine.search
+sharedData.controlRoutine = ControlRoutine.attitudeInput
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
-sharedData.qTarget = [0, 0, 0]
+sharedData.target = [0, 0, 0]
 
 
 log('Setting up GUI server. Accessible on LAN through \"%s:%s\"' % (ip, htmlPort))
@@ -171,7 +171,7 @@ while True:
         #Set IMU data
         sharedData.quaternion = Imu.q.tolist()
         ypr = quat2ypr(Imu.q)
-        sharedData.orientation = [ypr.y, ypr.p, ypr.r]
+        sharedData.orientation = [180/3.1415*ypr.y, 180/3.1415*ypr.p, 180/3.1415*ypr.r]
 
         sharedData.velocity = Imu.w.tolist()
         sharedData.velocityMagnitude = np.linalg.norm(Imu.w)
@@ -210,7 +210,7 @@ while True:
         elif sharedData.controlRoutine == ControlRoutine.attitudeInput:
 
             #Unpack qTarget from shared data.
-            qTarget = controlLaw.ypr2quat(sharedData.qTarget[0], sharedData.qTarget[1], sharedData.qTarget[2])
+            qTarget = controlLaw.ypr2quat(3.1415/180*sharedData.target[0], 3.1415/180*sharedData.target[1], 3.1415/180*sharedData.target[2])
 
             #Run control law with latest IMU data and qTarget
             response = ControlLaw.routineAttitudeInput(Imu.q, Imu.w, qTarget)
@@ -219,7 +219,11 @@ while True:
             sharedData.lqrMode = response.lqrMode.name
             sharedData.qError = response.qError.tolist()
             ypr = quat2ypr(response.qError)
-            sharedData.eulerError = [ypr.y, ypr.p, ypr.r]
+            sharedData.eulerError = [180/3.1415*ypr.y, 180/3.1415*ypr.p, 180/3.1415*ypr.r]
+            #print("qERROR:%s" % sharedData.qError)
+            #print("Euler Target:%s, Euler Orientation:%s, Euler Error:%s" %
+            #      (sharedData.target, sharedData.orientation, sharedData.eulerError))
+
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
