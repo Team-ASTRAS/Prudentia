@@ -7,13 +7,15 @@ script2.src = 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundl
 script2.type = 'text/javascript';
 document.getElementsByTagName('head')[0].appendChild(script2);
 
-var dataMode = document.querySelector('.dataMode'),
-    dataYaw = document.querySelector('.dataYaw'),
-    dataPitch = document.querySelector('.dataPitch'),
-    dataRoll = document.querySelector('.dataRoll'),
-    dataSpeed = document.querySelector('.dataSpeed'),
+var dataMode = document.querySelector('.DataMode'),
+    dataRoutine = document.querySelector('.DataRoutine'),
+    dataYaw = document.querySelector('.DataYaw'),
+    dataPitch = document.querySelector('.DataPitch'),
+    dataRoll = document.querySelector('.DataRoll'),
+    dataSpeed = document.querySelector('.DataSpeed'),
     calibrated, // Variable should come from IMU instead of button press
     ready, // Variable should come from IMU/Motors instead of button press
+
     // SHUTDOWN, STABILIZE, STOP BUTTONS
     shutdown = document.querySelector('.Shutdown'),
     stabilize = document.querySelector('.Stabilize'),
@@ -42,13 +44,13 @@ var dataMode = document.querySelector('.dataMode'),
     // AI BUTTONS
     go = document.querySelector('.GO'),
     // SM BUTTONS
-    searchmode = document.querySelector('.SearchButton'),
+    searchmode = document.querySelector('.SearchButton');
 
 //Connect to RPi here
 ip = "ws://127.0.0.1:8010/";
 start(ip);
 
-dataUpdate =  1000;
+dataUpdate =  100;
 refreshData() //This function is called recursively
 
 // Button callbacks
@@ -86,25 +88,30 @@ stop.onclick = function (event) {
 homeNav.onclick = function (event) {
     console.log('Home Navigation');
     window.location = "Homepage.html";
+    Initialized = false;
 }
 instructionsNav.onclick = function (event) {
     console.log('Instructions Navigation');
     window.location = "InstructionPage.html";
+    Initialized = false;
 }
 settingsNav.onclick = function (event) {
     console.log('Settings Navigation');
     window.location = "SettingsPage.html";
+    Initialized = false;
 }
 aiNav.onclick = function (event) {
   if (ready == true){             // mode = running
       console.log('AI Navigation');
       window.location = "AIPage.html";
+      Initialized = false;
   }
 }
 searchNav.onclick = function (event) {
   if (ready == true){         //mode = running
       console.log('Search Navigation');
       window.location = "SMPage.html";
+      Initialized = false;
   }
 }
 // LOGGING
@@ -134,6 +141,7 @@ if (go){
         console.log('Target Yaw = ' + yawTarget); // Send Target to Python Script
         console.log('Target Pitch = ' + pitchTarget);
         console.log('Target Roll = ' + rollTarget);
+        GraphInitialization();
       }
       else if (yawTarget > 180 || yawTarget < -180){
         alert('Target Yaw must be between -180\u00B0 and +180\u00B0');
@@ -154,42 +162,145 @@ if (go){
 if (searchmode){
   searchmode.onclick = function (event) {
       console.log('Search Mode'); // Send mode to python
+      GraphInitialization();
   }
 };
 
 // GRAPHS
-function updateGraphs(mode, routine, orientation, velocityMag, eulerError) {
-    var ElementsKept = 50;
-    var ElementsCounted = 0;
-    var commonOptions = {
-      responsive: true,
-      maintainAspectRatio: false,
-      legend: {display: false},
-      tooltips:{enabled: false},
-      elements: {
-                point:{
-                    radius: 0
-                }
-            }
-    };
-    var YPRGraph = $("#YPRGraph");
-    var AngVelGraph = $("#AngVelGraph");
+function GraphInitialization() {
+  Initialized = true;
+  ElementsKept = 50;
+  ElementsCounted = 0;
 
-    var YPRChartInstant = new Chart(YPRGraph,{
+  commonOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    legend: {display: false},
+    tooltips:{enabled: false},
+    elements: {
+              point:{
+                  radius: 0
+              }
+          }
+  };
+
+  YPRGraph = $("#YPRGraph");
+  AngVelGraph = $("#AngVelGraph");
+
+  YPRChartInstant = new Chart(YPRGraph,{
+    type: 'line',
+    data: {
+      datasets: [{
+        label: "Yaw",
+        data: 0,
+        borderColor: ['rgb(255,0,0)'],
+        borderWidth: 1,
+        fill: false},
+      {label: "Pitch",
+        data: 0,
+        borderColor: ['rgb(0,255,0)'],
+        borderWidth: 1,
+        fill: false},
+      {label: "Roll",
+        data: 0,
+        borderColor: ['rgb(0,0,255)'],
+        borderWidth: 1,
+        fill: false}
+    ]
+    },
+    options: Object.assign({}, commonOptions,{
+      title:{
+        display: true,
+        text: "YPR",
+        fontSize: 18
+      },
+      scales: {
+        xAxes: [{
+          type: 'time',
+          scaleLabel: {
+            display: true,
+            labelString: 'time (min:sec)',
+          },
+          time: {
+            displayFormats: {
+              second: 'mm:ss'
+            }
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Degrees'
+          }
+        }]
+      }
+    })
+  });
+
+  AngVelChartInstant = new Chart(AngVelGraph,{
+    type: 'line',
+    data: {
+      datasets: [{
+        label: "Angular Velocity",
+        data: 0,
+        borderColor: ['rgb(0,255,0)'],
+        borderWidth: 1,
+        fill: false
+      }]
+    },
+    options: Object.assign({}, commonOptions,{
+      title:{
+        display: true,
+        text: "Angular Velocity",
+        fontSize: 18
+      },
+      scales: {
+        xAxes: [{
+          type: 'time',
+          scaleLabel: {
+            display: true,
+            labelString: 'time (min:sec)',
+          },
+          time: {
+            displayFormats: {
+              second: 'mm:ss'
+            }
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          },
+          scaleLabel: {
+            display: true,
+            labelString: 'Degrees/Sec'
+          }
+        }]
+      }
+    })
+  });
+
+  if (routine == "AttitudeInput"){
+    YPRErrorGraph = $("#YPRErrorGraph");
+
+    YPRErrorChartInstant = new Chart(YPRErrorGraph,{
       type: 'line',
       data: {
         datasets: [{
-          label: "Yaw",
+          label: "Yaw Error",
           data: 0,
           borderColor: ['rgb(255,0,0)'],
           borderWidth: 1,
           fill: false},
-        {label: "Pitch",
+        {label: "Pitch Error",
           data: 0,
           borderColor: ['rgb(0,255,0)'],
           borderWidth: 1,
           fill: false},
-        {label: "Roll",
+        {label: "Roll Error",
           data: 0,
           borderColor: ['rgb(0,0,255)'],
           borderWidth: 1,
@@ -199,7 +310,7 @@ function updateGraphs(mode, routine, orientation, velocityMag, eulerError) {
       options: Object.assign({}, commonOptions,{
         title:{
           display: true,
-          text: "YPR",
+          text: "YPR Error",
           fontSize: 18
         },
         scales: {
@@ -225,52 +336,14 @@ function updateGraphs(mode, routine, orientation, velocityMag, eulerError) {
             }
           }]
         }
-      })
-    });
+    })
+  })
+};
 
-    var AngVelChartInstant = new Chart(AngVelGraph,{
-      type: 'line',
-      data: {
-        datasets: [{
-          label: "Angular Velocity",
-          data: 0,
-          borderColor: ['rgb(0,255,0)'],
-          borderWidth: 1,
-          fill: false
-        }]
-      },
-      options: Object.assign({}, commonOptions,{
-        title:{
-          display: true,
-          text: "Angular Velocity",
-          fontSize: 18
-        },
-        scales: {
-          xAxes: [{
-            type: 'time',
-            scaleLabel: {
-              display: true,
-              labelString: 'time (min:sec)',
-            },
-            time: {
-              displayFormats: {
-                second: 'mm:ss'
-              }
-            }
-          }],
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            },
-            scaleLabel: {
-              display: true,
-              labelString: 'Degrees/Sec'
-            }
-          }]
-        }
-      })
-    });
 
+};
+function updateGraphs(routine, orientation, velocityMag, eulerError) {
+  if (Initialized == true) {
     YPRChartInstant.data.labels.push(new Date());
     YPRChartInstant.data.datasets[0].data.push(orientation[0].toFixed(2));
     YPRChartInstant.data.datasets[1].data.push(orientation[1].toFixed(2));
@@ -278,62 +351,7 @@ function updateGraphs(mode, routine, orientation, velocityMag, eulerError) {
     AngVelChartInstant.data.labels.push(new Date());
     AngVelChartInstant.data.datasets[0].data.push(velocityMag.toFixed(2));
 
-    if (routine = "AttitudeInput"){
-      var YPRErrorGraph = $("#YPRErrorGraph");
-
-      var YPRErrorChartInstant = new Chart(YPRErrorGraph,{
-        type: 'line',
-        data: {
-          datasets: [{
-            label: "Yaw Error",
-            data: 0,
-            borderColor: ['rgb(255,0,0)'],
-            borderWidth: 1,
-            fill: false},
-          {label: "Pitch Error",
-            data: 0,
-            borderColor: ['rgb(0,255,0)'],
-            borderWidth: 1,
-            fill: false},
-          {label: "Roll Error",
-            data: 0,
-            borderColor: ['rgb(0,0,255)'],
-            borderWidth: 1,
-            fill: false}
-        ]
-        },
-        options: Object.assign({}, commonOptions,{
-          title:{
-            display: true,
-            text: "YPR Error",
-            fontSize: 18
-          },
-          scales: {
-            xAxes: [{
-              type: 'time',
-              scaleLabel: {
-                display: true,
-                labelString: 'time (min:sec)',
-              },
-              time: {
-                displayFormats: {
-                  second: 'mm:ss'
-                }
-              }
-            }],
-            yAxes: [{
-              ticks: {
-                beginAtZero: true
-              },
-              scaleLabel: {
-                display: true,
-                labelString: 'Degrees'
-              }
-            }]
-          }
-      })
-    });
-
+    if (routine == "attitudeInput"){
       YPRErrorChartInstant.data.labels.push(new Date());
       YPRErrorChartInstant.data.datasets[0].data.push(eulerError[0]);
       YPRErrorChartInstant.data.datasets[1].data.push(eulerError[1]);
@@ -356,36 +374,25 @@ function updateGraphs(mode, routine, orientation, velocityMag, eulerError) {
         AngVelChartInstant.update();
       }
 
-    else if (routine = "SearchMode"){
-      if(ElementsCounted > ElementsKept){
-          YPRChartInstant.data.labels.shift();
-          YPRChartInstant.data.datasets[0].data.shift();
-          YPRChartInstant.data.datasets[1].data.shift();
-          YPRChartInstant.data.datasets[2].data.shift();
-          AngVelChartInstant.data.labels.shift();
-          AngVelChartInstant.data.datasets[0].data.shift();
-      }
+      else if (routine == "search"){
+        if(ElementsCounted > ElementsKept){
+            YPRChartInstant.data.labels.shift();
+            YPRChartInstant.data.datasets[0].data.shift();
+            YPRChartInstant.data.datasets[1].data.shift();
+            YPRChartInstant.data.datasets[2].data.shift();
+            AngVelChartInstant.data.labels.shift();
+            AngVelChartInstant.data.datasets[0].data.shift();
+        }
       else ElementsCounted++;
       YPRChartInstant.update();
       AngVelChartInstant.update();
     }
+  }
 };
 
 function setState(state){
     var msg = {"messageType":"setState", "state":state}
     websocket.send(JSON.stringify(msg));
-};
-
-function updateLogTable(mode, routine, orientation, velocityMag) {
-    modeName = mode
-    if (mode == "running") {
-        modeName = modeName + " (" + routine + ")"
-    }
-    document.getElementById('DataMode').innerHTML = modeName;
-    document.getElementById('DataYaw').innerHTML = orientation[0].toFixed(2);
-    document.getElementById('DataPitch').innerHTML = orientation[1].toFixed(2);
-    document.getElementById('DataRoll').innerHTML = orientation[2].toFixed(2);
-    document.getElementById('DataSpeed').innerHTML = velocityMag.toFixed(2);
 };
 
 function setRoutine(routine) {
@@ -394,11 +401,8 @@ function setRoutine(routine) {
 }
 
 function updateLogTable(mode, routine, orientation, velocityMag) {
-    modeName = mode
-    if (mode == "running") {
-        modeName = modeName + " (" + routine + ")"
-    }
-    document.getElementById('DataMode').innerHTML = modeName;
+    document.getElementById('DataMode').innerHTML = mode;
+    document.getElementById('DataRoutine').innerHTML = routine;
     document.getElementById('DataYaw').innerHTML = orientation[0].toFixed(2);
     document.getElementById('DataPitch').innerHTML = orientation[1].toFixed(2);
     document.getElementById('DataRoll').innerHTML = orientation[2].toFixed(2);
@@ -415,9 +419,9 @@ function start(websocketServerLocation){
         data = JSON.parse(event.data);
 
         updateLogTable(data["state"], data["routine"], data["orientation"], data["velocityMag"])
-		
-        updateGraphs(data["state"], data["routine"], data["orientation"], data["velocityMag"], data["eulerError"])
-		
+
+        updateGraphs(data["routine"], data["orientation"], data["velocityMag"], data["eulerError"])
+
     };
 
     //If an error occurs, close socket. This will call websocket.onclose
