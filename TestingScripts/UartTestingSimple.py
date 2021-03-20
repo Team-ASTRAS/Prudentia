@@ -1,5 +1,6 @@
 import serial
 import time
+from threading import Thread
 from pyvesc import VESC
 
 serialPorts = ['/dev/ttyAMA1', #TX-IDSD  #RX-IDSC
@@ -8,7 +9,16 @@ serialPorts = ['/dev/ttyAMA1', #TX-IDSD  #RX-IDSC
                '/dev/ttyAMA4'] #TX-IO12  #RX-IO13
 
 
-vesc = VESC(serialPorts[0], baudrate=9600)
+vesc = VESC(serialPorts[2], baudrate=115200)
+
+def setDutyThread(vesc):
+    while True:
+        time.sleep(0.05)
+        print(vesc.get_duty_cycle())
+        
+getDutyThread = Thread(target=setDutyThread, args=(vesc, ))
+getDutyThread.start()
+
 
 for i in range(1000):
 

@@ -31,6 +31,11 @@ sudo pip3 install pythoncrc
 Install pyvesc
 sudo pip3 install pyvesc
 
+Install Custom PyVESC Code
+sudo python3 -m pip install -e /home/pi/Desktop/test/PyVESC
+#This runs setup.py and installs lib to pip3
+
+
 
 ####IMU STUFF####
 

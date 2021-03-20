@@ -9,10 +9,12 @@ GPIO.setup(LED,GPIO.OUT)
 ledState = not ledState
 GPIO.output(LED, ledState)
 
-time.sleep(20)
+while True:
 
-ledState = not ledState
-GPIO.output(LED, ledState)
+    time.sleep(0.5)
+
+    ledState = not ledState
+    GPIO.output(LED, ledState)
 
 
 
