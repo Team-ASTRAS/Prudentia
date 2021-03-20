@@ -138,11 +138,12 @@ if (go){
       pitchTarget = document.getElementById("PitchTarget").value;
       rollTarget = document.getElementById("RollTarget").value;
       if (yawTarget <= 180 && yawTarget >= -180 && pitchTarget <= 19 && pitchTarget >= -19 && rollTarget <= 180 && rollTarget >= -180){
-        console.log('Target Yaw = ' + yawTarget); // Send Target to Python Script
+        console.log(typeof yawTarget);
+        console.log('Target Yaw = ' + yawTarget);
         console.log('Target Pitch = ' + pitchTarget);
         console.log('Target Roll = ' + rollTarget);
         
-        Target = [10, 20, 30];
+        Target = [parseInt(yawTarget),parseInt(pitchTarget),parseInt(rollTarget)];
         var msg = {"messageType":"setTarget", "target":Target};
         jsonMSG = JSON.stringify(msg);
         console.log(jsonMSG);
