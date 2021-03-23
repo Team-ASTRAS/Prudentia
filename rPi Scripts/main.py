@@ -1,6 +1,5 @@
 
 import time
-import numpy
 from threading import Thread
 from utilities import log
 import user
@@ -24,13 +23,13 @@ websocketPort = 8010
 if internalWebsocket:
     ip = '127.0.0.1' #Local Machine
 else:
-    ip = '172.30.115.211' #Static external IP
+    ip = '172.30.55.146' #Static external IP
 
 if developMode:
     log("WARNING: You are in develop mode. Motor and camera functionality is disabled in this mode. To exit develop mode, set 'developMode = False' in main.py")
 else:
     import motors
-
+    import camera
 log('Hello world from Prudentia!')
 
 ## GUI Servers Setup
@@ -66,7 +65,7 @@ Imu = imu.ImuSingleton()
 log("Opening connection with IMU.")
 
 conn = Imu.openConnection('/dev/ttyUSB0', 115200)
-#Start thread to read data asynchronously
+#Start thrCameraead to read data asynchronously
 if developMode:
     #If develop mode, run IMU emulation (random data)
     log("Develop mode on; emulating IMU. Expect random gyro and accel data.")
@@ -93,9 +92,8 @@ if not developMode:
 ## Camera Setup
 
 if not developMode:
-    #import camera
-    #Camera = camera.CameraSingleton()
-    pass
+    Camera = camera.CameraSingleton()
+    
 ## Variable Initialization
 
 lastState = sharedData.state #Store a copy of last state to see mode transitions
@@ -177,6 +175,9 @@ while True:
         sharedData.velocityMagnitude = np.linalg.norm(Imu.w)
 
         sharedData.acceleration = Imu.a.tolist()
+        
+        if not developMode:
+            sharedData.image = Camera.getPictureString()
 
         #Set timestamp
         sharedData.timestamp = time.time()

@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import math
 import time
+import base64
 
 class CameraSingleton:
 
@@ -10,18 +11,15 @@ class CameraSingleton:
         #Camera setup.
         #Set resolution, other settings
         self.camera = PiCamera()
-        self.camera.resolution = (540,500) # if this changes then the FOV math below needs to be updated
-        self.camera.framerate = 15
+        self.camera.resolution = (320,240) # if this changes then the FOV math below needs to be updated
+        self.camera.framerate = 24
         
-    def getPicture(self):
-        #This now gets a picture
-        
-        #self.camera.start_preview()
-        #time.sleep(20) # if you just want to see stuffs
-        for i in range(1):
-            self.camera.capture('/home/pi/Desktop/Prudentia/rPi Scripts/images/image%s.bmp' % i)
-        
-            
+    def getPictureString(self):
+        #This returns a base64 image string
+        output = np.empty((240,320,3), dtype=np.uint8)
+        self.camera.capture(output,'bgr')
+        return base64.b64encode(output)
+         
     def findLocation(self):
         #Return screen position based on target in picture
         #Or, return None if no target is found
@@ -84,6 +82,8 @@ class CameraSingleton:
         # Does this above
         pass
     
-Camera = CameraSingleton()
-Camera.getPicture()
-Camera.findLocation()
+if __name__ == "__main__":
+        
+    Camera = CameraSingleton()
+    print(Camera.getPictureString())
+    #Camera.findLocation()

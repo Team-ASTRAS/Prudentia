@@ -75,6 +75,8 @@ class SharedDataPackage:
                         "currentDC" : self.currentDC,           #Current Duty Cycle of the motors
                         "targetDC" : self.targetDC,             #Target Duty Cycle of the motors
 
+                        "image" : self.image,                   #Camera images
+ 
                         "timestamp" : self.timestamp
                         }             
 

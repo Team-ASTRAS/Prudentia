@@ -15,6 +15,9 @@ Make sure camera is installed correctly on boot
 Install websockets:
 sudo pip3 install websockets
 
+Install numpy / scipy
+sudo pip3 install scipy
+
 Enable multiple UART ports:
 sudo nano /boot/config.txt
 Add lines:
