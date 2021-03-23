@@ -48,6 +48,8 @@ class SharedDataPackage:
     targetDC = [0, 0, 0, 0]
 
     stopServer = None
+    
+    image = ""
 
     timestamp = time.time()
 
