@@ -60,11 +60,13 @@ shutdown.onclick = function (event) {
     if (quit == true){
       alert('Hold Prudentia steady while the motors spin down. Click OK to begin spin down.');
       console.log('Shutdown');
+      setState("shutdown");
     }
 }
 stabilize.onclick = function (event) {
   if (ready == true){           // Change to if mode = running
     console.log('Stabilize');
+    setRoutine("stabilize");
   }
 }
 if (calibrate){
@@ -83,6 +85,7 @@ if (calibrate){
 }
 stop.onclick = function (event) {
     console.log('Stop');
+    setState("standby");
 }
 // NAVIGATION BUTTONS
 homeNav.onclick = function (event) {
@@ -142,13 +145,13 @@ if (go){
         console.log('Target Yaw = ' + yawTarget);
         console.log('Target Pitch = ' + pitchTarget);
         console.log('Target Roll = ' + rollTarget);
-        
+
         Target = [parseInt(yawTarget),parseInt(pitchTarget),parseInt(rollTarget)];
         var msg = {"messageType":"setTarget", "target":Target};
         jsonMSG = JSON.stringify(msg);
         console.log(jsonMSG);
         websocket.send(jsonMSG);
-        
+
         page = "AI";
         GraphInitialization();
       }
@@ -170,7 +173,9 @@ if (go){
 // SM BUTTONS
 if (searchmode){
   searchmode.onclick = function (event) {
-      console.log('Search Mode'); // Send mode to python
+      console.log('Search Mode');
+      setRoutine("searchMode");
+      page = "SM";
       GraphInitialization();
   }
 };
@@ -349,9 +354,8 @@ function GraphInitialization() {
   })
 };
 
-
 };
-function updateGraphs(routine, orientation, velocityMag, eulerError) {
+function updateGraphs(routine, orientation, velocityMag, eulerError, image) {
   if (Initialized == true) {
     YPRChartInstant.data.labels.push(new Date());
     YPRChartInstant.data.datasets[0].data.push(orientation[0].toFixed(2));
@@ -384,6 +388,12 @@ function updateGraphs(routine, orientation, velocityMag, eulerError) {
       }
 
       else if (routine == "search"){
+        $('Camera').html('');
+          imageString = image.slice(2);
+          imageSrc = 'data:image/jpeg;base64,/' + imageString;
+            $('<img>', {
+                src: imageSrc
+            }).appendTo($('Camera'));
         if(ElementsCounted > ElementsKept){
             YPRChartInstant.data.labels.shift();
             YPRChartInstant.data.datasets[0].data.shift();
@@ -429,7 +439,7 @@ function start(websocketServerLocation){
 
         updateLogTable(data["state"], data["routine"], data["orientation"], data["velocityMag"])
 
-        updateGraphs(data["routine"], data["orientation"], data["velocityMag"], data["eulerError"])
+        updateGraphs(data["routine"], data["orientation"], data["velocityMag"], data["eulerError"], data["image"])
 
     };
 
