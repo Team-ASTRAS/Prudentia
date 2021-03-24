@@ -34,7 +34,7 @@ def getQuatError(qObserved, qTarget):
     return quatMultiplyFlipped(qObserved, qTarget)
 
 #This is currently unused 2/23/2021. We shpuld always have a unit quaternion.
-def normalizeQuat(self, quat):
+def normalizeQuat(quat):
     norm = np.linalg.norm(quat)
     if norm == 0: 
         return quat

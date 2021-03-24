@@ -4,6 +4,7 @@ import numpy as np
 import math
 import time
 import base64
+import io
 
 class CameraSingleton:
 
@@ -12,14 +13,30 @@ class CameraSingleton:
         #Set resolution, other settings
         self.camera = PiCamera()
         self.camera.resolution = (320,240) # if this changes then the FOV math below needs to be updated
-        self.camera.framerate = 24
+        self.camera.framerate = 120
+        self.camera.shutter_speed = 400
         
     def getPictureString(self):
         #This returns a base64 image string
+        t0 = time.time()
         output = np.empty((240,320,3), dtype=np.uint8)
-        self.camera.capture(output,'bgr')
-        return base64.b64encode(output)
-         
+        
+        t1 = time.time()
+        self.camera.capture(output, 'bgr', use_video_port=True)
+        
+        t2 = time.time()
+        b = base64.b64encode(output)
+        
+        t3 = time.time()
+        s = str(b)
+        
+        t4 = time.time()
+        print("T1-T0: %s" % (t1-t0))
+        print("T2-T1: %s" % (t2-t1))
+        print("T3-T2: %s" % (t3-t2))
+        print("T4-T3: %s" % (t4-t3))
+        return s
+    
     def findLocation(self):
         #Return screen position based on target in picture
         #Or, return None if no target is found

@@ -1,43 +1,53 @@
-Switch to Desktop directory:
+#Switch to Desktop directory:
 cd Desktop
 
-Clone prudentia repository:
+#Clone prudentia repository:
 sudo git clone <prudentia repo>
 
-Set permissions:
+#Set permissions:
 sudo chmod u=wrx -R  Prudentia
 
-Enable camera:
+#Enable camera:
 sudo raspi-config
-Go to interface settings -> Camera -> enable -> finish -> reboot
-Make sure camera is installed correctly on boot
+#Go to interface settings -> Camera -> enable -> finish -> reboot
+#Make sure camera is installed correctly on boot
 
-Install websockets:
+#Install picamera
+sudo apt-get update
+sudo apt-get install python-picamera python3-picamera
+
+#Install cv2
+sudo pip3 install opencv-python
+
+#Install websockets:
 sudo pip3 install websockets
 
-Install numpy / scipy
+#Install numpy / scipy
 sudo pip3 install scipy
 
-Enable multiple UART ports:
+
+#Install python CRC version 1.21
+sudo pip3 install pythoncrc
+
+#Install pyvesc
+sudo pip3 install pyvesc
+
+#Install Custom PyVESC Code
+#Download PyVESC and modify:
+#PyVESC/pyvesc/VESC/messages/getters.py -> duty field should read 'duty_now' (Check both field lists)
+#PyVESC/pyvesc/VESC/VESC.py -> Comment out version checking code 
+sudo python3 -m pip install -e /home/pi/Desktop/test/PyVESC
+#This runs setup.py and installs lib to pip3
+
+#Enable multiple UART ports:
 sudo nano /boot/config.txt
-Add lines:
+#Add lines:
 miniuart-bt
 dtoverlay=uart2
 dtoverlay=uart3
 dtoverlay=uart4
 dtoverlay=uart5
 core_freq=250
-
-Install python CRC version 1.21
-sudo pip3 install pythoncrc
-
-Install pyvesc
-sudo pip3 install pyvesc
-
-Install Custom PyVESC Code
-sudo python3 -m pip install -e /home/pi/Desktop/test/PyVESC
-#This runs setup.py and installs lib to pip3
-
 
 
 ####IMU STUFF####

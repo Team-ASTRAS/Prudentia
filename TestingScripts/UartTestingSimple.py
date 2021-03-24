@@ -9,7 +9,7 @@ serialPorts = ['/dev/ttyAMA1', #TX-IDSD  #RX-IDSC
                '/dev/ttyAMA4'] #TX-IO12  #RX-IO13
 
 
-vesc = VESC(serialPorts[2], baudrate=115200)
+vesc = VESC(serialPorts[3], baudrate=115200)
 
 def setDutyThread(vesc):
     while True:
@@ -20,7 +20,7 @@ getDutyThread = Thread(target=setDutyThread, args=(vesc, ))
 getDutyThread.start()
 
 
-for i in range(1000):
+for i in range(5):
 
     print('forward')
     vesc.set_duty_cycle(0.05)

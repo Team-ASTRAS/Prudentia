@@ -5,7 +5,7 @@ from math import sqrt, cos, sin
 from time import sleep
 
 import serial
-from controlLaw import eulerAxis2quat, quatMultiply, ypr2str, quat2ypr, w2str
+from controlLaw import eulerAxis2quat, quatMultiply, ypr2str, quat2ypr, w2str, normalizeQuat
 from threading import Thread
 from random import uniform
 
@@ -31,6 +31,7 @@ class ImuSingleton:
 
     def openConnection(self, port, baudrate):
         self.port = port
+        self.q = normalizeQuat(self.q)
         self.baudrate = baudrate
         try:
             self.conn = serial.Serial(self.port, self.baudrate)
@@ -104,6 +105,7 @@ class ImuSingleton:
 
         deltaQ = eulerAxis2quat(wAxis, wMag)
         self.q = quatMultiply(self.q, deltaQ)
+        self.q = normalizeQuat(self.q)
     
     def setCalibration(self):
         print("Calibrating! Accels: %s" % self.a)
@@ -172,16 +174,17 @@ if __name__ == "__main__":
     np.set_printoptions(precision=4)
 
     Imu = ImuSingleton()
-    #conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
-    conn = Imu.openConnection('com15', 115200) # Windows USB
+    conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
+    #conn = Imu.openConnection('com15', 115200) # Windows USB
     assert conn is not None
 
     serialThread = Thread(target=Imu.asyncRead)
     serialThread.start()
     while True:
         time.sleep(0.05)
-        results = Imu.getRollPitch()
-        print("Roll: %s, Pitch: %s" % (results['r']*180/3.1415, results['p']*180/3.1415))
+        #results = Imu.getRollPitch()
+        #print("Roll: %s, Pitch: %s" % (results['r']*180/3.1415, results['p']*180/3.1415))
+        print("IMU Euler: %s" % ypr2str(quat2ypr(Imu.q)))
 
     serialThread.join()
         
