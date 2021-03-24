@@ -141,7 +141,6 @@ if (go){
       pitchTarget = document.getElementById("PitchTarget").value;
       rollTarget = document.getElementById("RollTarget").value;
       if (yawTarget <= 180 && yawTarget >= -180 && pitchTarget <= 19 && pitchTarget >= -19 && rollTarget <= 180 && rollTarget >= -180){
-        console.log(typeof yawTarget);
         console.log('Target Yaw = ' + yawTarget);
         console.log('Target Pitch = ' + pitchTarget);
         console.log('Target Roll = ' + rollTarget);
@@ -151,7 +150,7 @@ if (go){
         jsonMSG = JSON.stringify(msg);
         console.log(jsonMSG);
         websocket.send(jsonMSG);
-
+        setRoutine("attitudeInput");
         page = "AI";
         GraphInitialization();
       }
@@ -174,9 +173,9 @@ if (go){
 if (searchmode){
   searchmode.onclick = function (event) {
       console.log('Search Mode');
-      setRoutine("searchMode");
       page = "SM";
       GraphInitialization();
+      setRoutine("searchMode");
   }
 };
 
@@ -388,12 +387,9 @@ function updateGraphs(routine, orientation, velocityMag, eulerError, image) {
       }
 
       else if (routine == "search"){
-        $('Camera').html('');
           imageString = image.slice(2);
-          imageSrc = 'data:image/jpeg;base64,/' + imageString;
-            $('<img>', {
-                src: imageSrc
-            }).appendTo($('Camera'));
+          imageSrc = 'data:image/bmp;base64,' + imageString;
+          document.getElementById("Camera").src = imageSrc;
         if(ElementsCounted > ElementsKept){
             YPRChartInstant.data.labels.shift();
             YPRChartInstant.data.datasets[0].data.shift();
