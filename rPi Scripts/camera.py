@@ -14,7 +14,11 @@ class CameraSingleton:
         self.camera = PiCamera()
         self.camera.resolution = (320,240) # if this changes then the FOV math below needs to be updated
         self.camera.framerate = 120
-        self.camera.shutter_speed = 400
+        self.camera.shutter_speed = 8000
+        
+        self.camera.start_preview()
+        time.sleep(2)
+        self.camera.stop_preview()
         
     def getPictureString(self):
         #This returns a base64 image string

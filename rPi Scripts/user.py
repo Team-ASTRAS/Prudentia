@@ -44,8 +44,9 @@ class SharedDataPackage:
     motorTorque = [0, 0, 0, 0]
     motorAccel = [0, 0, 0, 0]
 
-    currentDC = [0, 0, 0, 0]
-    targetDC = [0, 0, 0, 0]
+    duty = [0, 0, 0, 0]
+    currentRpm = [0, 0, 0, 0]
+    targetRpm = [0, 0, 0, 0]
 
     stopServer = None
     
@@ -72,8 +73,9 @@ class SharedDataPackage:
                         "motorTorque" : self.motorTorque,       #Torque requested for each motor
                         "motorAccel" : self.motorAccel,         #Acceleration requested for each motor
                         
-                        "currentDC" : self.currentDC,           #Current Duty Cycle of the motors
-                        "targetDC" : self.targetDC,             #Target Duty Cycle of the motors
+                        "duty" : self.duty,                     #Current Duty Cycle of the motors
+                        "currentRpm" : self.currentRpm,         #Current RPM array of motors
+                        "targetRpm" : self.targetRpm,           #Target RPM array of motors
 
                         "image" : self.image,                   #Camera images
  

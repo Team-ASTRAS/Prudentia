@@ -9,12 +9,15 @@ serialPorts = ['/dev/ttyAMA1', #TX-IDSD  #RX-IDSC
                '/dev/ttyAMA4'] #TX-IO12  #RX-IO13
 
 
-vesc = VESC(serialPorts[3], baudrate=115200)
+vesc = VESC(serialPorts[0], baudrate=115200)
 
 def setDutyThread(vesc):
     while True:
         time.sleep(0.05)
-        print(vesc.get_duty_cycle())
+        t0 = time.time()
+        print(vesc.get_rpm())
+        t1 = time.time()
+        print("Time taken: %s" % (t1-t0))
         
 getDutyThread = Thread(target=setDutyThread, args=(vesc, ))
 getDutyThread.start()

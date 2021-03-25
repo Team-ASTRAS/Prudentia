@@ -1,4 +1,3 @@
-
 import time
 from threading import Thread
 from utilities import log
@@ -9,9 +8,16 @@ import numpy as np
 import controlLaw
 from controlLaw import ControlRoutine, ypr2quat, quat2ypr
 
-developMode = False
-#This should be set to True when testing on windows. When set to True, the IMU is emulated and
-#motor functionality is disabled.
+log('Hello world from Prudentia!')
+
+enableImu = True
+#When set to False, the IMU is emulated with random data.
+
+enableMotors = True
+#When set to False, motor input and output is ignored.
+
+enableCamera = False
+#When set to False, the camera is not initialized and is unused.
 
 internalWebsocket = False
 #This should be set to True when testing on the same machine the script is running on. When set
@@ -22,15 +28,10 @@ websocketPort = 8010
 
 if internalWebsocket:
     ip = '127.0.0.1' #Local Machine
+    log("WARNING: internal websocket in use. GUI is only accessible through localhost:8009")
 else:
-    ip = '172.30.55.146' #Static external IP
+    ip = '172.30.115.211' #Static external IP
 
-if developMode:
-    log("WARNING: You are in develop mode. Motor and camera functionality is disabled in this mode. To exit develop mode, set 'developMode = False' in main.py")
-else:
-    import motors
-    import camera
-log('Hello world from Prudentia!')
 
 ## GUI Servers Setup
 
@@ -61,38 +62,43 @@ time.sleep(0.1) #Give the html thread a moment to setup
 
 #Create IMU class and open a connection
 Imu = imu.ImuSingleton()
+log("Initializing imu.py")
 
-log("Opening connection with IMU.")
 
-conn = Imu.openConnection('/dev/ttyUSB0', 115200)
-#Start thrCameraead to read data asynchronously
-if developMode:
-    #If develop mode, run IMU emulation (random data)
-    log("Develop mode on; emulating IMU. Expect random gyro and accel data.")
-    imuReadThread = Thread(target=Imu.emulateImu)
-
-else:
-    #Else, connect to the VN-200.
-    assert conn is not None #Make sure the port opened correctly.
+#Start thread to read data asynchronously
+if enableImu:
+    conn = Imu.openConnection('/dev/ttyUSB0', 115200)
+    #Check connection to the VN-200.
+    assert conn is not None
     imuReadThread = Thread(target=Imu.asyncRead)
+else:
+    #Run IMU emulation (random data)
+    log("WARNING: IMU functionality disabled, emulating data. To reverse this, set 'enableImu = True' in main.py")
+    imuReadThread = Thread(target=Imu.emulateImu)
 
 imuReadThread.start()
 time.sleep(0.1) #Give the imu thread a moment to setup
 
 
 ## Control Law Setup
-
 ControlLaw = controlLaw.ControlLawSingleton()
 
 ## Motor Setup
-
-if not developMode:
+if enableMotors:
+    log("Initializing motors.py")
+    import motors
     Motors = motors.MotorsSingleton()
+else:
+    log("WARNING: Motor functionality disabled. To reverse this, set 'enableMotors = True' in main.py")
+
 
 ## Camera Setup
-
-if not developMode:
+if enableCamera:
+    log("Initializing camera.py")
+    import camera
     Camera = camera.CameraSingleton()
+else:
+    log("WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py")
     
 ## Variable Initialization
 
@@ -176,7 +182,7 @@ while True:
 
         sharedData.acceleration = Imu.a.tolist()
         
-        if not developMode:
+        if enableCamera:
             sharedData.image = Camera.getPictureString()
 
         #Set timestamp
@@ -203,7 +209,7 @@ while True:
             sharedData.motorAccel = response.motorAccel.tolist()
 
             # Use response to actuate motors
-            if not developMode:
+            if enableMotors:
                 Motors.setAllMotorRpm(response.motorAccel)
                 #sharedData.currentDC = Motors.currentDC
                 #sharedData.targetDC = Motors.targetDC
@@ -218,23 +224,27 @@ while True:
 
             sharedData.quatTarget = qTarget.tolist()
             sharedData.lqrMode = response.lqrMode.name
+            
             sharedData.qError = response.qError.tolist()
             ypr = quat2ypr(response.qError)
             sharedData.eulerError = [180/3.1415*ypr.y, 180/3.1415*ypr.p, 180/3.1415*ypr.r]
-            #print("qERROR:%s" % sharedData.qError)
-            #print("Euler Target:%s, Euler Orientation:%s, Euler Error:%s" %
-            #      (sharedData.target, sharedData.orientation, sharedData.eulerError))
-
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
+            
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
             sharedData.motorAccel = response.motorAccel.tolist()
 
             # Use response to actuate motors
-            if not developMode:
+            if enableMotors:
                 Motors.setAllMotorRpm(response.motorAccel)
-                #sharedData.currentDC = Motors.currentDC
-                #sharedData.targetDC = Motors.targetDC
+                sharedData.duty = Motors.duty
+                
+                
+            print("""Motor Torques: %s
+Duty Cycle[0]: %s
+CurrentRpm[0]: %s
+TargetRpm[0]: %s""" %
+                  (sharedData.motorTorque, sharedData.duty[0], Motors.currentRpm[0], Motors.targetRpm[0]))
 
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search
@@ -269,8 +279,8 @@ while True:
         #Report times
         #Instead of reporting 20 times per second, lets report an average over a second.
         if loopNumber % 20 == 0:
-            tavg = round(numpy.average(times), 6) # Get average
-            tmax = round(numpy.max(times), 6) # Get max
+            tavg = round(np.average(times), 6) # Get average
+            tmax = round(np.max(times), 6) # Get max
             processingPercent = round(tavg/allowedTime*100, 2) # Get percent of time used
             log("-" * 40)
 
