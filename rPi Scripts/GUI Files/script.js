@@ -387,11 +387,7 @@ function updateGraphs(routine, orientation, velocityMag, eulerError, image) {
       }
 
       else if (routine == "search"){
-          imageString = image.slice(2);
-          console.log(image);
-          imageSrc = 'data:image/bmp;base64,' + imageString;
-          console.log(imageSrc);
-          document.getElementById("Camera").src = imageSrc;
+          document.getElementById("Camera").src = ip;
         if(ElementsCounted > ElementsKept){
             YPRChartInstant.data.labels.shift();
             YPRChartInstant.data.datasets[0].data.shift();

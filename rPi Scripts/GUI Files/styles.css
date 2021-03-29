@@ -257,7 +257,8 @@
 					text-align: left;
 					padding-left: 4%;
 					padding-right: 2%;
-					margin: 0.5% 0 0 0;}
+					margin: 0.5% 0 0 0;
+					line-height: 150%;}
 	.warningmsg{font: 1.75vw Helvetica;
 			font-weight: 900;
 			font-style: italic;
