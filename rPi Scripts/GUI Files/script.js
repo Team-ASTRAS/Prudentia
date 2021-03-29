@@ -73,14 +73,8 @@ if (calibrate){
   calibrate.onclick = function (event) {
       alert('Align Prudentia with the calibration target. Click OK when Prudentia is aligned.');
       calibrated = true;
+      ready = true;
       console.log('System Calibrated');
-  }
-  spinup.onclick = function (event) {
-      if (calibrated == true){
-        alert('Hold Prudentia steady while the motors spin up. Click OK to begin spin up.');
-        ready = true;           //mode = running
-        console.log('Spinup');
-    }
   }
 }
 stop.onclick = function (event) {
