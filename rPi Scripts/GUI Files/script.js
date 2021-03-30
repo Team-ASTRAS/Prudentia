@@ -72,7 +72,8 @@ stabilize.onclick = function (event) {
 if (calibrate){
   calibrate.onclick = function (event) {
       alert('Align Prudentia with the calibration target. Click OK when Prudentia is aligned.');
-        ready = true;
+      calibrated = true;
+      ready = true;
       console.log('System Calibrated');
   }
 }
