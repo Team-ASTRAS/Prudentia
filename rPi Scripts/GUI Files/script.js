@@ -47,7 +47,7 @@ var dataMode = document.querySelector('.DataMode'),
     searchmode = document.querySelector('.SearchButton');
 
 //Connect to RPi here
-ip = "ws://172.30.115.211:8010/";
+ip = "ws://172.30.135.229:8010/";
 start(ip);
 
 dataUpdate =  100;
@@ -72,15 +72,8 @@ stabilize.onclick = function (event) {
 if (calibrate){
   calibrate.onclick = function (event) {
       alert('Align Prudentia with the calibration target. Click OK when Prudentia is aligned.');
-      calibrated = true;
+        ready = true;
       console.log('System Calibrated');
-  }
-  spinup.onclick = function (event) {
-      if (calibrated == true){
-        alert('Hold Prudentia steady while the motors spin up. Click OK to begin spin up.');
-        ready = true;           //mode = running
-        console.log('Spinup');
-    }
   }
 }
 stop.onclick = function (event) {
@@ -175,7 +168,8 @@ if (searchmode){
       console.log('Search Mode');
       page = "SM";
       GraphInitialization();
-      setRoutine("searchMode");
+      //setRoutine("searchMode");
+      document.getElementById("Camera").src = 'http://172.30.135.229:8000/';
   }
 };
 
@@ -387,7 +381,6 @@ function updateGraphs(routine, orientation, velocityMag, eulerError, image) {
       }
 
       else if (routine == "search"){
-          document.getElementById("Camera").src = ip;
         if(ElementsCounted > ElementsKept){
             YPRChartInstant.data.labels.shift();
             YPRChartInstant.data.datasets[0].data.shift();
@@ -446,7 +439,7 @@ function start(websocketServerLocation){
     //Retry connection after 2 seconds when socket closes
     websocket.onclose = function(event){
         retryTime = 2000;
-        console.log("Websocket closed: ", event.reason, "Reconnecting in ", retryTime, " ms.")
+        console.log("Websocket closed: ", event, "Reconnecting in ", retryTime, " ms.")
         setTimeout(function(){start(websocketServerLocation)}, retryTime);
     }
 };

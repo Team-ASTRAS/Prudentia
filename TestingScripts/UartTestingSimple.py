@@ -9,31 +9,44 @@ serialPorts = ['/dev/ttyAMA1', #TX-IDSD  #RX-IDSC
                '/dev/ttyAMA4'] #TX-IO12  #RX-IO13
 
 
-vesc = VESC(serialPorts[0], baudrate=115200)
-
-def setDutyThread(vesc):
+vesc0 = VESC(serialPorts[0], baudrate=115200)
+vesc1 = VESC(serialPorts[1], baudrate=115200)
+vesc2 = VESC(serialPorts[2], baudrate=115200)
+vesc3 = VESC(serialPorts[3], baudrate=115200)
+def setDutyThread(vesc0):
     while True:
         time.sleep(0.05)
         t0 = time.time()
-        print(vesc.get_rpm())
+        print(vesc0.get_rpm())
         t1 = time.time()
         print("Time taken: %s" % (t1-t0))
         
-getDutyThread = Thread(target=setDutyThread, args=(vesc, ))
+getDutyThread = Thread(target=setDutyThread, args=(vesc0, ))
 getDutyThread.start()
 
 
-for i in range(5):
+for i in range(3 ):
 
     print('forward')
-    vesc.set_duty_cycle(0.05)
-
+    vesc0.set_rpm(500)
+    vesc1.set_duty_cycle(0.10)
+    vesc2.set_duty_cycle(-0.10)
+    vesc3.set_duty_cycle(0.10)
     time.sleep(2)
 
     print('backward')
-    vesc.set_duty_cycle(-0.05)
+    vesc0.set_rpm(500)
+    vesc1.set_duty_cycle(-0.10)
+    vesc2.set_duty_cycle(0.10)
+    vesc3.set_duty_cycle(-0.10)
 
     time.sleep(2)
+    
+    i = i+1
 
 print('end')
-vesc.set_duty_cycle(0)
+vesc0.set_duty_cycle(0)
+vesc1.set_duty_cycle(0)
+vesc2.set_duty_cycle(0)
+vesc3.set_duty_cycle(0)
+
