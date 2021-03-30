@@ -10,13 +10,13 @@ from controlLaw import ControlRoutine, ypr2quat, quat2ypr
 
 log('Hello world from Prudentia!')
 
-enableImu = True
+enableImu = False
 #When set to False, the IMU is emulated with random data.
 
 enableMotors = True
 #When set to False, motor input and output is ignored.
 
-enableCamera = False
+enableCamera = True
 #When set to False, the camera is not initialized and is unused.
 
 internalWebsocket = False
@@ -30,7 +30,7 @@ if internalWebsocket:
     ip = '127.0.0.1' #Local Machine
     log("WARNING: internal websocket in use. GUI is only accessible through localhost:8009")
 else:
-    ip = '172.30.115.211' #Static external IP
+    ip = '172.30.135.229' #Static external IP
 
 
 ## GUI Servers Setup
