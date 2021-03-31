@@ -20,7 +20,11 @@ class ImuSingleton:
     conn = None
     packetLength = 30    
     updateFrequency = 50 #Hz
+    
+    gyroOffsets = np.array([0.000745, 0.000729, 0.000469], dtype=float)
         
+
+
     #Imu data fields. These are updated by self.asyncRead() on another thread
     q = np.array([0, 0, 0, 1], dtype=float)
     w = np.array([0, 0, 0], dtype=float)
@@ -84,14 +88,21 @@ class ImuSingleton:
         i+=4
         self.a[2] = struct.unpack('f', packet[i:i+4])[0]
 
-        #print("Acceleration Data: %s" % self.a) 
-
         i+=4
-        self.w[0] = struct.unpack('f', packet[i:i+4])[0]
+        self.w[0] = struct.unpack('f', packet[i:i+4])[0] 
         i+=4
         self.w[1] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
         self.w[2] = struct.unpack('f', packet[i:i+4])[0]
+        
+        self.w[0] = self.w[0] + 0.21
+        self.w[1] = self.w[1] + 0.001
+        self.w[2] = self.w[2] - 0.008
+
+
+        #print("W: %s" % self.w)
+
+        #self.w[0] = self.w[0] + self.gyroOffsets[0]
 
         self.propogateQuaternion()
 
@@ -103,7 +114,7 @@ class ImuSingleton:
         if(wMag < 0.01):
             pass #TODO Recalibrate P, R
 
-        deltaQ = eulerAxis2quat(wAxis, wMag)
+        deltaQ = eulerAxis2quat(wAxis, wMag * 180 / np.pi)
         self.q = quatMultiply(self.q, deltaQ)
         self.q = normalizeQuat(self.q)
     
@@ -171,11 +182,11 @@ class ImuSingleton:
 
 if __name__ == "__main__":
 
-    np.set_printoptions(precision=4)
+    np.set_printoptions(precision=4, suppress=True)
 
     Imu = ImuSingleton()
-    conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
-    #conn = Imu.openConnection('com15', 115200) # Windows USB
+    #conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
+    conn = Imu.openConnection('com15', 115200) # Windows USB
     assert conn is not None
 
     serialThread = Thread(target=Imu.asyncRead)
@@ -184,7 +195,9 @@ if __name__ == "__main__":
         time.sleep(0.05)
         #results = Imu.getRollPitch()
         #print("Roll: %s, Pitch: %s" % (results['r']*180/3.1415, results['p']*180/3.1415))
-        print("IMU Euler: %s" % ypr2str(quat2ypr(Imu.q)))
+        ypr = quat2ypr(Imu.q)
+        print("Quaternion: %s" % Imu.q)
+        print("IMU Euler: [%s, %s, %s]" % (ypr.y, ypr.p, ypr.r))
 
     serialThread.join()
         
