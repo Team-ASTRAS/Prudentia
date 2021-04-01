@@ -32,6 +32,7 @@ class ImuSingleton:
     
     #Packets start with identifier "FA 04 0C 00"
     startBytes = bytearray([int('0xfa', 16), int('0x04', 16), int('0x0C', 16), int('0x00', 16)])
+    #startBytes = bytearray([int('0xfa', 16), int('0x04', 16), int('0x00', 16), int('0x06', 16)])
 
     def openConnection(self, port, baudrate):
         self.port = port
@@ -95,10 +96,11 @@ class ImuSingleton:
         i+=4
         self.w[2] = struct.unpack('f', packet[i:i+4])[0]
         
-        self.w[0] = self.w[0] + 0.21
-        self.w[1] = self.w[1] + 0.001
-        self.w[2] = self.w[2] - 0.008
+        print("%s,%s,%s" % (self.w[0], self.w[1], self.w[2]))
 
+        #self.w[0] = self.w[0] + 0.20991
+        #self.w[1] = self.w[1] + 0.00005053
+        #self.w[2] = self.w[2] - 0.009464
 
         #print("W: %s" % self.w)
 
@@ -195,9 +197,9 @@ if __name__ == "__main__":
         time.sleep(0.05)
         #results = Imu.getRollPitch()
         #print("Roll: %s, Pitch: %s" % (results['r']*180/3.1415, results['p']*180/3.1415))
-        ypr = quat2ypr(Imu.q)
-        print("Quaternion: %s" % Imu.q)
-        print("IMU Euler: [%s, %s, %s]" % (ypr.y, ypr.p, ypr.r))
+        #ypr = quat2ypr(Imu.q)
+        #print("Quaternion: %s" % Imu.q)
+        #print("IMU Euler: [%s, %s, %s]" % (ypr.y, ypr.p, ypr.r))
 
     serialThread.join()
         

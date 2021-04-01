@@ -178,9 +178,9 @@ class ControlLawSingleton:
         #                       [largeAngle, 0, smallAngle],
         #                       [largeAngle, 0, -smallAngle]]) 
 
-        motorAngles = np.array([[largeAngle, largeAngle, largeAngle, largeAngle],
-                                [smallAngle, 0,          -smallAngle, 0],
-                                [0,          smallAngle, 0,          -smallAngle]])
+        motorAngles = np.array([[largeAngle,  largeAngle,  largeAngle,  largeAngle],
+                                [0,           -smallAngle, 0,           smallAngle],
+                                [smallAngle,  0,           -smallAngle, 0        ]])
 
         self.IrwArray = np.linalg.pinv(self.Irw * motorAngles)
 
