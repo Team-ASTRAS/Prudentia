@@ -76,9 +76,9 @@ def ypr2quat(yaw, pitch, roll):
 #Returns roll, pitch, and yaw (results.r, results.p, results.y) in degrees, given a quaternion.
 def quat2ypr(q):
     result = EulerSet()
-    result.y = np.arctan2(2 * (q[1] * q[2] + q[0] * q[3]), q[3]**2 - q[0]**2 - q[1]**2 + q[2]**2) * 180 / np.pi
+    result.r = np.arctan2(2 * (q[1] * q[2] + q[0] * q[3]), q[3]**2 - q[0]**2 - q[1]**2 + q[2]**2) * 180 / np.pi
     result.p = np.arcsin(-2 * (q[0] * q[2] - q[1] * q[3])) * 180 / np.pi
-    result.r = np.arctan2(2 * (q[0] * q[1] + q[2] * q[3]), q[3]**2 + q[0]**2 - q[1]**2 - q[2]**2) * 180 / np.pi
+    result.y = np.arctan2(2 * (q[0] * q[1] + q[2] * q[3]), q[3]**2 + q[0]**2 - q[1]**2 - q[2]**2) * 180 / np.pi
     
     return result
 

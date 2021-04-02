@@ -96,7 +96,7 @@ class ImuSingleton:
         i+=4
         self.w[2] = struct.unpack('f', packet[i:i+4])[0]
         
-        print("%s,%s,%s" % (self.w[0], self.w[1], self.w[2]))
+        #print("%s,%s,%s" % (self.w[0], self.w[1], self.w[2]))
 
         #self.w[0] = self.w[0] + 0.20991
         #self.w[1] = self.w[1] + 0.00005053
@@ -104,7 +104,9 @@ class ImuSingleton:
 
         #print("W: %s" % self.w)
 
-        #self.w[0] = self.w[0] + self.gyroOffsets[0]
+        self.w[0] = self.w[0] + self.gyroOffsets[0]
+        self.w[1] = self.w[1] + self.gyroOffsets[1]
+        self.w[2] = self.w[2] + self.gyroOffsets[2]
 
         self.propogateQuaternion()
 
@@ -172,13 +174,18 @@ class ImuSingleton:
         # about checking that. 
         
         # Use self.a to return pitch and roll
+        # when mounted, x is z, y is y, z is x
         a_x = self.a[0]
         a_y = self.a[1]
         a_z = self.a[2]
-        pitch = a_x/sqrt(a_y*a_y+a_z*a_z) 
-        roll = -a_y/sqrt(a_x*a_x+a_z*a_z)
+
+        normA = self.a / np.linalg.norm(self.a)
+
+        a_x = normA[2]
+        a_y = normA[1]
+        a_z = normA[0]
         results = {}
-        results['p'] = np.arctan2(a_x,sqrt(a_y*a_y+a_z*a_z)) #only 0 to 90 rn, needs to be updated
+        results['p'] = np.arctan2(-a_x,sqrt((a_y*a_y)+(a_z*a_z))) #only 0 to 90 rn, needs to be updated
         results['r'] = np.arctan2(-a_y,-a_z)
         return results
 
@@ -188,7 +195,7 @@ if __name__ == "__main__":
 
     Imu = ImuSingleton()
     #conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
-    conn = Imu.openConnection('com15', 115200) # Windows USB
+    conn = Imu.openConnection('com3', 115200) # Windows USB
     assert conn is not None
 
     serialThread = Thread(target=Imu.asyncRead)
@@ -197,9 +204,9 @@ if __name__ == "__main__":
         time.sleep(0.05)
         #results = Imu.getRollPitch()
         #print("Roll: %s, Pitch: %s" % (results['r']*180/3.1415, results['p']*180/3.1415))
-        #ypr = quat2ypr(Imu.q)
+        ypr = quat2ypr(Imu.q)
         #print("Quaternion: %s" % Imu.q)
-        #print("IMU Euler: [%s, %s, %s]" % (ypr.y, ypr.p, ypr.r))
+        print("IMU Euler: [%s, %s, %s]" % (round(ypr.y,1), round(ypr.p,1), round(ypr.r,1)))
 
     serialThread.join()
         
