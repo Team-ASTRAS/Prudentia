@@ -16,10 +16,6 @@ class LqrMode(Enum):
     yawSweepLockRoll = 3 #Overrides target pitch to 0 and roll to rollBody if yaw and roll are high
     correctivePitch = 4 #Immediately rotate toward neutal plane. Occurs on pitch boundry breaks
   
-class EulerSet:
-    r = 0
-    p = 0
-    y = 0
 
 class routineReport:
     qError = np.array([0, 0, 0, 0])
@@ -60,11 +56,11 @@ def quatMultiplyFlipped(q1, q2):
 
     return np.dot(qExpanded, qFlipped)
 
-#Returns a quaternion [qhat, q0] based on inputs roll, pitch, yaw (degrees)
-def ypr2quat(yaw, pitch, roll):
-    r = np.deg2rad(roll) / 2
-    p = np.deg2rad(pitch) / 2
-    y = np.deg2rad(yaw) / 2
+#Returns a quaternion [qhat, q0] based on inputs roll, pitch, yaw (rad)
+def ypr2quat(ypr):
+    y = ypr[0] / 2
+    p = ypr[1] / 2
+    r = ypr[2] / 2
 
     quat = np.array([-np.cos(r)*np.sin(p)*np.sin(y) + np.sin(r)*np.cos(p)*np.cos(y),
                       np.cos(r)*np.sin(p)*np.cos(y) + np.sin(r)*np.cos(p)*np.sin(y),
@@ -73,21 +69,17 @@ def ypr2quat(yaw, pitch, roll):
         
     return quat
 
-#Returns roll, pitch, and yaw (results.r, results.p, results.y) in degrees, given a quaternion.
+#Returns roll, pitch, and yaw (results.r, results.p, results.y) in radians, given a quaternion.
 def quat2ypr(q):
-    result = EulerSet()
-    result.r = np.arctan2(2 * (q[1] * q[2] + q[0] * q[3]), q[3]**2 - q[0]**2 - q[1]**2 + q[2]**2) * 180 / np.pi
-    result.p = np.arcsin(-2 * (q[0] * q[2] - q[1] * q[3])) * 180 / np.pi
-    result.y = np.arctan2(2 * (q[0] * q[1] + q[2] * q[3]), q[3]**2 + q[0]**2 - q[1]**2 - q[2]**2) * 180 / np.pi
+    result = np.array([0.0, 0.0, 0.0])
+    #result[0] = np.arctan2(2 * (q[1] * q[2] + q[0] * q[3]), q[3]**2 - q[0]**2 - q[1]**2 + q[2]**2)
+    #result[1] = np.arcsin(-2 * (q[0] * q[2] - q[1] * q[3]))
+    #result[2] = np.arctan2(2 * (q[0] * q[1] + q[2] * q[3]), q[3]**2 + q[0]**2 - q[1]**2 - q[2]**2)
+    result[0] = np.arctan2(2 * (q[1] * q[2] + q[0] * q[3]), q[3]**2 - q[0]**2 - q[1]**2 + q[2]**2)
+    result[1] = np.arcsin(-2 * (q[0] * q[2] - q[1] * q[3]))
+    result[2] = np.arctan2(2 * (q[0] * q[1] + q[2] * q[3]), q[3]**2 + q[0]**2 - q[1]**2 - q[2]**2)
     
     return result
-
-def ypr2str(ypr):
-    return "[%.4f, %.4f, %.4f]" % (ypr.y, ypr.p, ypr.r)
-
-def w2str(arr):
-    str = "["
-    return "[%.4f, %.4f, %.4f]" % (arr[0], arr[1], arr[2])
 
 #Returns a quaternion based on a normalized euler axis and angle. Expects units in radians.
 def eulerAxis2quat(axis, angle):
@@ -99,9 +91,9 @@ class ControlLawSingleton:
 
     lqrMode = LqrMode.nominal
 
-    yawSweepThreshold = 45
-    rollSweepThreshold = 45
-    correctivePitchThreshold = 20
+    yawSweepThreshold = np.radians(45)
+    rollSweepThreshold = np.radians(45)
+    correctivePitchThreshold = np.radians(20)
     
     K_nominal = np.zeros((3,6))
     K_yawSweep = np.zeros((3,6))
@@ -116,9 +108,9 @@ class ControlLawSingleton:
 
     def routineStabilize(self, q, w):
         ypr = quat2ypr(q)
-        ypr.p = 0
-        ypr.r = 0
-        qTarget = ypr2quat(ypr.y, ypr.p, ypr.r)
+        ypr[1] = 0
+        ypr[2] = 0
+        qTarget = ypr2quat(ypr)
         qError = getQuatError(q, qTarget)
 
         lqrMode = self.getControllerType(q, qError)
@@ -156,9 +148,12 @@ class ControlLawSingleton:
     def initialize(self):
 
         #Moment of Inertias
-        I = np.array([[1.01560749, 0.00028915, 0.00002257],
-                      [0.00028915, 0.17343628, 0.00936307],
-                      [0.00002257, 0.00936307, 1.01561864]]);
+        #I = np.array([[1.01560749, 0.00028915, 0.00002257],
+        #              [0.00028915, 0.17343628, 0.00936307],
+        #              [0.00002257, 0.00936307, 1.01561864]]);
+        I = np.array([[0.17343628,  0,          0       ],
+                      [0,           1.01561,    0       ],
+                      [0,           0,          1.01561 ]]);
 
         #inverseI = linalg.inv(I)       TODO: Why don't we take the full inverse?? 
         inverseI = np.array([[1/I[0,0], 0,        0       ],
@@ -244,27 +239,27 @@ class ControlLawSingleton:
         
         elif lqrMode == LqrMode.correctivePitch:
             # Overwrite target with current position, and override pitch to zero.
-            rpy = quat2ypr(q)
-            rpy.p = 0
-            newTarget = ypr2quat(rpy.y, rpy.p, rpy.r)
+            ypr = quat2ypr(q)
+            ypr[1] = 0
+            newTarget = ypr2quat(ypr)
             return getQuatError(q, newTarget)
         
         elif lqrMode == LqrMode.yawSweep:
             #Override pitch to zero
-            rpy = quat2ypr(qTarget)
-            rpy.p = 0
-            newTarget = ypr2quat(rpy.y, rpy.p, rpy.r)
+            ypr = quat2ypr(qTarget)
+            ypr[1] = 0
+            newTarget = ypr2quat(ypr)
             return getQuatError(q, newTarget)
         
         elif lqrMode == LqrMode.yawSweepLockRoll:
             #Override pitch to zero, set target roll to body roll.
-            rpyTarget = quat2ypr(qTarget)
-            rpyPrudentia = quat2ypr(q)
-            rpy = EulerSet()
-            rpy.r = rpyPrudentia.r
-            rpy.p = 0
-            rpy.y = rpyTarget.y
-            newTarget = ypr2quat(rpy.y, rpy.p, rpy.r)
+            yprTarget = quat2ypr(qTarget)
+            yprPrudentia = quat2ypr(q)
+            ypr = [0,0,0]
+            ypr[2] = yprPrudentia[2]
+            ypr[1] = 0
+            ypr[0] = yprTarget[0]
+            newTarget = ypr2quat(ypr)
             return getQuatError(q, newTarget)
             
         else:
@@ -273,11 +268,11 @@ class ControlLawSingleton:
 
     def getControllerType(self, qObserved, qError):
         #Returns a LqrMode enum representing the target override state.
-        rpyError = quat2ypr(qError)
-        yawErrorAbs = np.abs(rpyError.y)
-        rollErrorAbs = np.abs(rpyError.r)
+        yprError = quat2ypr(qError)
+        yawErrorAbs = np.abs(yprError[0])
+        rollErrorAbs = np.abs(yprError[2])
 
-        pitchInertial = np.abs(quat2ypr(qObserved).p)
+        pitchInertial = np.abs(quat2ypr(qObserved)[1])
 
         if pitchInertial > self.correctivePitchThreshold:
             #Override target pitch to 0
@@ -316,21 +311,19 @@ class ControlLawSingleton:
 if __name__ == "__main__":
     cls = ControlLawSingleton()
 
-    q = ypr2quat(0,0,0)
+    q = ypr2quat([0,0,0])
     w = np.array([0, 0, 0])
-    qTarget = ypr2quat(-90, 0, 0)
+    qTarget = ypr2quat(np.radians([30, 10, 0]))
 
     res = cls.routineAttitudeInput(q, w, qTarget)
-    log("IN q:             %s Euler: %s" % (q , ypr2str(quat2ypr(q))) )
+    log("IN q:             %s Euler: %s" % (q , np.degrees(quat2ypr(q))) )
     log("IN w:             %s" % w)
-    log("IN qTarget:       %s Euler: %s" % (qTarget , ypr2str(quat2ypr(qTarget))) )
+    log("IN qTarget:       %s Euler: %s" % (qTarget , np.degrees(quat2ypr(qTarget))) )
     log("-"*20)
-    log("OUT qError:       %s Euler: %s]" % (res.qError , ypr2str(quat2ypr(res.qError))) )
-    log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , ypr2str(quat2ypr(res.qErrorAdjusted))) )
+    log("OUT qError:       %s Euler: %s]" % (res.qError , quat2ypr(res.qError)) )
+    log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , quat2ypr(res.qErrorAdjusted)) )
     log("OUT lqrMode:      %s" % res.lqrMode)
     log("OUT Inert Torque: %s" % res.inertialTorque)
     log("OUT Motor Torque: %s" % res.motorTorques)
     log("OUT Motor Alpha:  %s (rad/s)" % res.motorAlpha)
     log("OUT Motor Alpha:  %s (rpm)" % (res.motorAlpha * 9.5493))
-    deltaDC = (res.motorAlpha * 9.5493 + 267.34) / 524.55
-    log("OUT deltaDC:      %s" % deltaDC)

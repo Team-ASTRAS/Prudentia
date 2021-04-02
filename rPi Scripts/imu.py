@@ -5,7 +5,7 @@ from math import sqrt, cos, sin
 from time import sleep
 
 import serial
-from controlLaw import eulerAxis2quat, quatMultiply, ypr2str, quat2ypr, w2str, normalizeQuat
+from controlLaw import eulerAxis2quat, quatMultiply, quat2ypr, ypr2quat, normalizeQuat
 from threading import Thread
 from random import uniform
 
@@ -21,14 +21,20 @@ class ImuSingleton:
     packetLength = 30    
     updateFrequency = 50 #Hz
     
-    gyroOffsets = np.array([0.000745, 0.000729, 0.000469], dtype=float)
+    gyroOffsets = np.array([0.009185, 0.000229, -0.00877], dtype=float)
+    accelOffsets = np.array([0, 0, 0], dtype=float)
         
+    tempGyroX = np.array([], dtype=float)
+    tempGyroY = np.array([], dtype=float)
+    tempGyroZ = np.array([], dtype=float)
 
 
     #Imu data fields. These are updated by self.asyncRead() on another thread
     q = np.array([0, 0, 0, 1], dtype=float)
     w = np.array([0, 0, 0], dtype=float)
+    wRaw = np.array([0, 0, 0], dtype=float)
     a = np.array([0, 0, 0], dtype=float)
+    aRaw = np.array([0, 0, 0], dtype=float)
     
     #Packets start with identifier "FA 04 0C 00"
     startBytes = bytearray([int('0xfa', 16), int('0x04', 16), int('0x0C', 16), int('0x00', 16)])
@@ -83,42 +89,53 @@ class ImuSingleton:
                     
     def processPacket(self, packet):
         i = 4
-        self.a[0] = struct.unpack('f', packet[i:i+4])[0]
+        self.aRaw[0] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
-        self.a[1] = struct.unpack('f', packet[i:i+4])[0]
+        self.aRaw[1] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
-        self.a[2] = struct.unpack('f', packet[i:i+4])[0]
+        self.aRaw[2] = struct.unpack('f', packet[i:i+4])[0]
 
         i+=4
-        self.w[0] = struct.unpack('f', packet[i:i+4])[0] 
+        self.wRaw[0] = struct.unpack('f', packet[i:i+4])[0] 
         i+=4
-        self.w[1] = struct.unpack('f', packet[i:i+4])[0]
+        self.wRaw[1] = struct.unpack('f', packet[i:i+4])[0]
         i+=4
-        self.w[2] = struct.unpack('f', packet[i:i+4])[0]
-        
-        #print("%s,%s,%s" % (self.w[0], self.w[1], self.w[2]))
+        self.wRaw[2] = struct.unpack('f', packet[i:i+4])[0]
 
-        #self.w[0] = self.w[0] + 0.20991
-        #self.w[1] = self.w[1] + 0.00005053
-        #self.w[2] = self.w[2] - 0.009464
+        self.w[0] = self.wRaw[0] + self.gyroOffsets[0]
+        self.w[1] = self.wRaw[1] + self.gyroOffsets[1]
+        self.w[2] = -(self.wRaw[2] + self.gyroOffsets[2])
 
-        #print("W: %s" % self.w)
+        self.a[0] = self.aRaw[0] + self.accelOffsets[0]
+        self.a[1] = self.aRaw[1] + self.accelOffsets[1]
+        self.a[2] = self.aRaw[2] + self.accelOffsets[2]
 
-        self.w[0] = self.w[0] + self.gyroOffsets[0]
-        self.w[1] = self.w[1] + self.gyroOffsets[1]
-        self.w[2] = self.w[2] + self.gyroOffsets[2]
+        self.tempGyroX = np.append(self.tempGyroX, self.w[0])
+        self.tempGyroY = np.append(self.tempGyroY, self.w[1])
+        self.tempGyroZ = np.append(self.tempGyroZ, self.w[2])
+
+        #print(self.a)
+
+        #print("Average Gyro Values: %s, %s, %s" % (np.mean(self.tempGyroX), np.mean(self.tempGyroY), np.mean(self.tempGyroZ)))
 
         self.propogateQuaternion()
 
     def propogateQuaternion(self):
-        w = np.deg2rad(self.w) / self.updateFrequency
+        w = self.w / self.updateFrequency
         wMag = np.linalg.norm(w)
         wAxis = w / wMag
 
         if(wMag < 0.01):
-            pass #TODO Recalibrate P, R
-
-        deltaQ = eulerAxis2quat(wAxis, wMag * 180 / np.pi)
+            results = self.getRollPitch()
+            roll = results['r']
+            pitch = results['p']
+            ypr = quat2ypr(self.q)
+            ypr[2] = roll
+            ypr[1] = pitch
+            #print(ypr)
+            #self.q = ypr2quat(ypr)
+            
+        deltaQ = eulerAxis2quat(wAxis, wMag)
         self.q = quatMultiply(self.q, deltaQ)
         self.q = normalizeQuat(self.q)
     
@@ -175,10 +192,6 @@ class ImuSingleton:
         
         # Use self.a to return pitch and roll
         # when mounted, x is z, y is y, z is x
-        a_x = self.a[0]
-        a_y = self.a[1]
-        a_z = self.a[2]
-
         normA = self.a / np.linalg.norm(self.a)
 
         a_x = normA[2]
@@ -202,11 +215,11 @@ if __name__ == "__main__":
     serialThread.start()
     while True:
         time.sleep(0.05)
-        #results = Imu.getRollPitch()
+        results = Imu.getRollPitch()
         #print("Roll: %s, Pitch: %s" % (results['r']*180/3.1415, results['p']*180/3.1415))
         ypr = quat2ypr(Imu.q)
-        #print("Quaternion: %s" % Imu.q)
-        print("IMU Euler: [%s, %s, %s]" % (round(ypr.y,1), round(ypr.p,1), round(ypr.r,1)))
+        print("Quaternion: %s" % Imu.q)
+        print("IMU Euler: %s" % (ypr))
 
     serialThread.join()
         
