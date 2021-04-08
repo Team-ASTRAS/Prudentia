@@ -47,7 +47,7 @@ var dataMode = document.querySelector('.DataMode'),
     searchmode = document.querySelector('.SearchButton');
 
 //Connect to RPi here
-ip = "ws://172.30.135.229:8010/";
+ip = "ws://127.0.0.1:8010/";
 start(ip);
 
 dataUpdate =  100;
@@ -115,6 +115,8 @@ searchNav.onclick = function (event) {
 if (startlog){
     startlog.onclick = function (event) {
         console.log('Start Logging');
+        var msg = {"messageType":"DataLogging", "LogType":"StartLog"};
+        jsonMSG = JSON.stringify(msg);
       }
       stoplog.onclick = function (event) {
         console.log('Stop Logging');
@@ -124,6 +126,10 @@ if (startlog){
       }
       downloadlog.onclick = function (event) {
         console.log('Download Log');
+        filename = prompt("Filename:");
+        if (filename == null || filename == ""){
+          filename = "Data";
+        }
       }
   }
 //if mode = running
@@ -169,7 +175,7 @@ if (searchmode){
       console.log('Search Mode');
       page = "SM";
       GraphInitialization();
-      //setRoutine("searchMode");
+      setRoutine("searchMode");
       document.getElementById("Camera").src = 'http://172.30.135.229:8000/';
   }
 };
