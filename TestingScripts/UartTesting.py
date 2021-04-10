@@ -25,10 +25,10 @@ startTime = time.time()
 
 def getDutyAsync(vesc):
     while True:
-        time.sleep(0.05)
-        print(vesc.get_duty_cycle())
+        time.sleep(0.001)
+        print(vesc.get_rpm())
         
-getDutyThread = Thread(target=getDutyAsync, args=(vescs[2], ))
+getDutyThread = Thread(target=getDutyAsync, args=(vescs[0], ))
 getDutyThread.start()
 
 
@@ -43,22 +43,23 @@ while time.time() - startTime < 30:
         dc = dc + 0.001
     else:
         dc = dc - 0.001
-        x
+        
     dc = round(dc,3)
     
-    for vesc in vescs:
-        if vesc is not None:
-            vesc.set_duty_cycle(dc)
+    for i in range(4):
+        vescs[i].set_duty_cycle(dc)
     
-    print("OUT(%s)" % dc )
     
-    time.sleep(0.001)
+    currentTime = time.time() - startTime
+    print("[%s] - OUT: %s" % (currentTime, dc) )
+    
+    time.sleep(0.003)
     
 
 print("END TEST")
 for vesc in vescs:
     if vesc is not None:
-        vesc.set_duty_cycle(0)
+        pass#vesc.set_duty_cycle(0)
 
 
 

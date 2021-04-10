@@ -18,11 +18,20 @@ class LqrMode(Enum):
   
 
 class routineReport:
+    
+    def __init__(self, qError, qErrorAdjusted, lqrMode, inertialTorque, motorTorques, motorAlpha):
+        self.qError = qError
+        self.qErrorAdjusted = qErrorAdjusted
+        self.lqrMode = lqrMode
+        self.inertialTorque = inertialTorque
+        self.motorTorques = motorTorques
+        self.motorAlpha = motorAlpha
+    
     qError = np.array([0, 0, 0, 0])
     qErrorAdjusted = np.array([0, 0, 0, 0])
     lqrMode = LqrMode.nominal
     inertialTorque = np.array([0, 0, 0])
-    motorTorques = np.array([0, 0, 0, 0])
+    motorTorques = np.array([0, 0, 0, 0]) 
     motorAlpha = np.array([0, 0, 0, 0])
 
 #Returns the quaternion error between the target and observed quaternions.
@@ -99,6 +108,8 @@ class ControlLawSingleton:
     K_yawSweep = np.zeros((3,6))
     K_correctivePitch = np.zeros((3,6))
     
+    maxAccel = 1000
+    
     #Functions named with the format routineName are functions that are called
     #by main.py when the state machine is set to run a particular routine
     
@@ -107,40 +118,30 @@ class ControlLawSingleton:
         self.initialize()
 
     def routineStabilize(self, q, w):
-        ypr = quat2ypr(q)
-        ypr[1] = 0
-        ypr[2] = 0
-        qTarget = ypr2quat(ypr)
-        qError = getQuatError(q, qTarget)
-
-        lqrMode = self.getControllerType(q, qError)
-        qErrorAdjusted = self.adjustAttitude(lqrMode, q, qTarget, qError)
-        inertialTorque = self.getTorque(lqrMode, qErrorAdjusted, w)
-
-        results = routineReport()
-        results.qError = qError
-        results.qErrorAdjusted = qErrorAdjusted
-        results.lqrMode = lqrMode
-        results.inertialTorque = inertialTorque
-        results.motorAccel = np.dot(self.IrwArray, -1 * inertialTorque)
-        results.motorTorques = results.motorAlpha * self.Irw
-        return results
+        pass
 
     def routineAttitudeInput(self, q, w, qTarget):
+        
         qError = getQuatError(q, qTarget)
 
         lqrMode = self.getControllerType(q, qError)
+        
         qErrorAdjusted = self.adjustAttitude(lqrMode, q, qTarget, qError)
+        
         inertialTorque = self.getTorque(lqrMode, qErrorAdjusted, w)
         
-        results = routineReport()
-        results.qError = qError
-        results.qErrorAdjusted = qErrorAdjusted
-        results.lqrMode = lqrMode
-        results.inertialTorque = inertialTorque
-        results.motorAccel = np.dot(self.IrwArray, -1 * inertialTorque)
-        results.motorTorques = results.motorAlpha * self.Irw
+        motorAlpha = self.getMotorAlpha(inertialTorque)
+        
+        motorTorques = motorAlpha * self.Irw
+        
+        results = routineReport(qError, qErrorAdjusted, lqrMode, inertialTorque, motorAlpha, motorTorques)
+        
         return results
+    
+    def getMotorAlpha(self, inertialTorque):
+        unsatAlpha = np.dot(self.IrwArray, -1 * inertialTorque)
+        
+        if max(unsatTorques) > self.maxTorque
 
     def routineSearch(self):
         pass
@@ -163,8 +164,8 @@ class ControlLawSingleton:
         #Reaction wheels
         self.Irw = 0.000453158
 
-        largeAngle = np.cos(np.deg2rad(70.0))
-        smallAngle = np.sin(np.deg2rad(70.0))
+        largeAngle = np.sin(np.deg2rad(70.0))
+        smallAngle = np.cos(np.deg2rad(70.0))
         
         #This is the 3D vector representation of the reaction wheel's applied momentum, orientated about the X axis
         #This is previously "e" in simulink files
@@ -304,7 +305,7 @@ class ControlLawSingleton:
         else:
             log("Error in getTorque! lqrMode was not set to an expected value! lqrMode: %s " % lqrMode)
             K = self.K_nominal
-
+        
         return np.dot(K, xbar)
 
 
@@ -319,7 +320,7 @@ if __name__ == "__main__":
     log("IN q:             %s Euler: %s" % (q , np.degrees(quat2ypr(q))) )
     log("IN w:             %s" % w)
     log("IN qTarget:       %s Euler: %s" % (qTarget , np.degrees(quat2ypr(qTarget))) )
-    log("-"*20)
+    log("-" * 20)
     log("OUT qError:       %s Euler: %s]" % (res.qError , quat2ypr(res.qError)) )
     log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , quat2ypr(res.qErrorAdjusted)) )
     log("OUT lqrMode:      %s" % res.lqrMode)

@@ -13,7 +13,9 @@ class MotorsSingleton:
     currentRpm = np.array([0, 0, 0, 0], dtype=float)
     targetRpm = np.array([0, 0, 0, 0], dtype=float)
     
-    rpmRampLimit = 400.0 / 20 #Maximum allowed RPM change per second.
+    accelLimit = 150 #rad/s^2. Accel of 246.53 rad/s^2 caused a back EMF overvoltage of 60V. 63V+ overvoltage may cause capacitor explosion.
+    
+    lastLoopTime = time.time()
     
     def __init__(self):
         for i in range(len(self.serialPorts)):
@@ -33,11 +35,13 @@ class MotorsSingleton:
     # This function expects an array of motor delta RPMs ex: [1000.2, -1820, 3000, -3000]
     def setAllMotorRpm(self, deltaRpmArray):
         if len(deltaRpmArray) != 4:
-            log("Error! setAllMotorRP expected argument of length 4, got %s instead" % len(motorArray))
+            log("Error! setAllMotorRpm expected argument of length 4, got %s instead" % len(motorArray))
             return
         
         for i in range(len(deltaRpmArray)):
-            if deltaRpmArray[i] > (self.rpmRampLimit) or deltaRpmArray[i] < -(self.rpmRampLimit):
+            deltaW = deltaRpmArray[i] * 2 * np.pi / 60
+            
+            if abs() > self.accelLimit:
                 log("Requested RPM change in motor %s exceeded rpmRampLimit (%s/%s). Throttling input RPM." %
                     (i,deltaRpmArray[i], self.rpmRampLimit)) 
                 deltaRpmArray[i] = self.rpmRampLimit

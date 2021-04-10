@@ -13,7 +13,7 @@ log('Hello world from Prudentia!')
 enableImu = True
 #When set to False, the IMU is emulated with random data.
 
-enableMotors = False
+enableMotors = True
 #When set to False, motor input and output is ignored.
 
 enableCamera = False
@@ -32,8 +32,8 @@ if internalWebsocket:
 else:
     ip = '172.30.135.229' #Static external IP
 
-#imuPortName = '/dev/ttyUSB0'
-imuPortName = 'com3'
+imuPortName = '/dev/ttyUSB0'
+#imuPortName = 'com3'
 
 ## GUI Servers Setup
 
@@ -44,7 +44,7 @@ sharedData.state = State.running
 sharedData.controlRoutine = ControlRoutine.attitudeInput
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
-sharedData.target = [0, 0, 0]
+sharedData.target = [0, 0, 90]
 
 
 log('Setting up GUI server. Accessible on LAN through \"%s:%s\"' % (ip, htmlPort))
@@ -146,6 +146,9 @@ def processCommands():
 
             sharedData.target = msgJSON["target"]
 
+print("Starting in 5 seconds...")
+time.sleep(5)
+
 while True:
     loopNumber += 1
     loopStart = time.time()
@@ -240,19 +243,13 @@ while True:
             #print("%s: %s" % (sharedData.lqrMode, np.round(np.degrees(quat2ypr(Imu.q)), 2)))
             #print("Interial Torque: %s" % sharedData.inertialTorque)
             #print("qError: %s" % sharedData.qErrorAdjusted)
-            print("Motor Accel Response: %s" % np.round(sharedData.motorAccel))
+            print("Mode: %s, Motors: %s" % (sharedData.lqrMode, np.round(sharedData.motorAccel)))
 
             # Use response to actuate motors
             if enableMotors:
                 Motors.setAllMotorRpm(response.motorAccel)
                 sharedData.duty = Motors.duty
                 
-                
-                print("""Motor Torques: %s
-Duty Cycle[0]: %s
-CurrentRpm[0]: %s
-TargetRpm[0]: %s""" %
-                  (sharedData.motorTorque, sharedData.duty[0], Motors.currentRpm[0], Motors.targetRpm[0]))
 
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search
