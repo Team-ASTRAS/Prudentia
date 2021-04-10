@@ -10,7 +10,7 @@ from controlLaw import ControlRoutine, ypr2quat, quat2ypr
 
 log('Hello world from Prudentia!')
 
-enableImu = True
+enableImu = False
 #When set to False, the IMU is emulated with random data.
 
 enableMotors = True
@@ -101,7 +101,7 @@ if enableCamera:
     Camera = camera.CameraSingleton()
 else:
     log("WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py")
-    
+
 ## Variable Initialization
 
 lastState = sharedData.state #Store a copy of last state to see mode transitions
@@ -146,6 +146,18 @@ def processCommands():
 
             sharedData.target = msgJSON["target"]
 
+        # Data Log command was issued
+        if msgJSON["messageType"] == "DataLogging":
+
+            if msgJSON["LogType"] == "StartLog":
+                sharedData.recordingData = True
+
+            elif msgJSON["LogType"] == "ClearLog":
+                user.deleteData()
+
+            elif msgJSON["LogType"] == "StopLog":
+                sharedData.recordingData = False
+
 print("Starting in 5 seconds...")
 time.sleep(5)
 
@@ -186,7 +198,7 @@ while True:
         sharedData.velocityMagnitude = np.linalg.norm(Imu.w)
 
         sharedData.acceleration = Imu.a.tolist()
-        
+
         if enableCamera:
             sharedData.image = Camera.getPictureString()
 
@@ -228,16 +240,16 @@ while True:
 
             sharedData.quatTarget = qTarget.tolist()
             sharedData.lqrMode = response.lqrMode.name
-            
+
             sharedData.qError = response.qError.tolist()
             ypr = quat2ypr(response.qError)
             sharedData.eulerError = np.degrees(ypr).tolist() #TODO - Because qError flips qhat, I think this needs to use a XYZ rotation instead of a ZYX to get back to Euler coordinates properly.
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
-            
+
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
             sharedData.motorAccel = response.motorAccel.tolist()
-            
+
             #print("Target: %s" %  np.round(sharedData.quatTarget,2))
             #print("qError: %s" %  np.round(sharedData.qError,2))
             #print("%s: %s" % (sharedData.lqrMode, np.round(np.degrees(quat2ypr(Imu.q)), 2)))
@@ -249,7 +261,6 @@ while True:
             if enableMotors:
                 Motors.setAllMotorRpm(response.motorAccel)
                 sharedData.duty = Motors.duty
-                
 
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search
@@ -261,6 +272,10 @@ while True:
             log("Error: controlRoutine not found")
             pass
 
+    ## Save Data
+
+    if sharedData.recordingData:
+        user.RecordData()
 
     ## Timing
 

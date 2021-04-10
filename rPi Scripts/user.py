@@ -8,6 +8,7 @@ import queue
 import functools
 import os
 import time
+import csv
 from enum import Enum, unique
 from utilities import log
 
@@ -28,12 +29,14 @@ class SharedDataPackage:
     state = State.standby
     controlRoutine = ""
 
+    recordingData = True
+
     quaternion = [0, 0, 0, 0]
     orientation = [0, 0, 0]
     velocity = [0, 0, 0]
     velocityMagnitude = 0
     acceleration = [0, 0, 0]
-    
+
     quatTarget = [0, 0, 0, 0]
     target = [0, 0, 0]
     lqrMode = ""
@@ -49,7 +52,7 @@ class SharedDataPackage:
     targetRpm = [0, 0, 0, 0]
 
     stopServer = None
-    
+
     image = ""
 
     timestamp = time.time()
@@ -72,21 +75,34 @@ class SharedDataPackage:
                         "inertialTorque" : self.inertialTorque, #3 axis inertial torque output from control law
                         "motorTorque" : self.motorTorque,       #Torque requested for each motor
                         "motorAccel" : self.motorAccel,         #Acceleration requested for each motor
-                        
+
                         "duty" : self.duty,                     #Current Duty Cycle of the motors
                         "currentRpm" : self.currentRpm,         #Current RPM array of motors
                         "targetRpm" : self.targetRpm,           #Target RPM array of motors
 
                         "image" : self.image,                   #Camera images
- 
+
                         "timestamp" : self.timestamp
-                        }             
+                        }
 
         return json.dumps(dataObject)
 
-    def saveJson(self):
-        with open('data.txt', 'w') as outfile:
-            json.dump(data, outfile)
+def deleteData():
+    filename = "TempData.csv"
+    temp = open(filename, 'w')
+    temp.truncate(0)
+    pass
+
+def sendCsv():
+    #Pack csv data in json and return it
+    pass
+
+def RecordData():
+    filename = "TempData.csv"
+    temp = open(filename, 'a')
+    filename_writer = csv.writer(temp)
+    filename_writer.writerow([dataObject.routine, dataObject.timestamp, dataObject.orientation])
+    temp.close()
 
 ## Websocket Server
 
@@ -124,6 +140,9 @@ async def prudentiaServer(websocket, path, sharedData):
                 log("Sending data to client.")
                 await websocket.send(sharedData.getDataJson())
 
+            elif msgJSON["messageType"] == "downloadData":
+                await websocket.send(sendCsv())
+
             else:
                 sharedData.commandQueue.put(msgJSON)
 
@@ -148,10 +167,10 @@ def startHtmlServer(sharedDataRef, ip, port):
 
     guiDir = os.path.join(os.path.dirname(__file__), 'GUI Files')
     os.chdir(guiDir)
-    log("Loading Gui Files from directory: \"" + os.getcwd() + "\"") 
+    log("Loading Gui Files from directory: \"" + os.getcwd() + "\"")
 
     handle = MyHttpRequestHandler
-    #socketserver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1) 
+    #socketserver.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sharedDataRef.htmlServer = socketserver.TCPServer((ip, port), handle)
 
     sharedDataRef.htmlServer.serve_forever()
