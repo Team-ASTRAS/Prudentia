@@ -13,7 +13,7 @@ log('Hello world from Prudentia!')
 enableImu = False
 #When set to False, the IMU is emulated with random data.
 
-enableMotors = True
+enableMotors = False
 #When set to False, motor input and output is ignored.
 
 enableCamera = False
@@ -44,7 +44,7 @@ sharedData.state = State.running
 sharedData.controlRoutine = ControlRoutine.attitudeInput
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
-sharedData.target = [0, 0, 90]
+sharedData.target = [0.2, 0.1, -0.1]
 
 
 log('Setting up GUI server. Accessible on LAN through \"%s:%s\"' % (ip, htmlPort))
@@ -76,7 +76,7 @@ if enableImu:
 else:
     #Run IMU emulation (random data)
     log("WARNING: IMU functionality disabled, emulating data. To reverse this, set 'enableImu = True' in main.py")
-    imuReadThread = Thread(target=Imu.emulateImu)
+    imuReadThread = Thread(target=Imu.runImuZero)
 
 imuReadThread.start()
 time.sleep(0.1) #Give the imu thread a moment to setup
@@ -101,17 +101,6 @@ if enableCamera:
     Camera = camera.CameraSingleton()
 else:
     log("WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py")
-
-## Variable Initialization
-
-lastState = sharedData.state #Store a copy of last state to see mode transitions
-
-loopSpeed = 20 # Hz
-allowedTime = 1.0/loopSpeed # Convert Hz to s
-times = []
-
-startRuntime = time.time() #Track total runtime for timestamping
-loopNumber = 0 #Track the number of total loop iterations.
 
 def processCommands():
     while not sharedData.commandQueue.empty():
@@ -158,8 +147,19 @@ def processCommands():
             elif msgJSON["LogType"] == "StopLog":
                 sharedData.recordingData = False
 
-print("Starting in 5 seconds...")
-time.sleep(5)
+print("Starting in 2 seconds...")
+time.sleep(2)
+
+## Variable Initialization
+
+lastState = sharedData.state #Store a copy of last state to see mode transitions
+
+loopSpeed = 20 # Hz
+allowedTime = 1.0/loopSpeed # Convert Hz to s
+times = []
+
+startRuntime = time.time() #Track total runtime for timestamping
+loopNumber = 0 #Track the number of total loop iterations.
 
 while True:
     loopNumber += 1
@@ -248,14 +248,14 @@ while True:
 
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
-            sharedData.motorAccel = response.motorAccel.tolist()
+            sharedData.motorAccels = response.motorAccels.tolist()
 
             #print("Target: %s" %  np.round(sharedData.quatTarget,2))
             #print("qError: %s" %  np.round(sharedData.qError,2))
             #print("%s: %s" % (sharedData.lqrMode, np.round(np.degrees(quat2ypr(Imu.q)), 2)))
             #print("Interial Torque: %s" % sharedData.inertialTorque)
             #print("qError: %s" % sharedData.qErrorAdjusted)
-            print("Mode: %s, Motors: %s" % (sharedData.lqrMode, np.round(sharedData.motorAccel)))
+            print("Mode: %s, Motors: %s" % (sharedData.lqrMode, np.round(response.motorAccels * 60 / (2 * np.pi) )))
 
             # Use response to actuate motors
             if enableMotors:

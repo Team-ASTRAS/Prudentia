@@ -101,7 +101,7 @@ def RecordData():
     filename = "TempData.csv"
     temp = open(filename, 'a')
     filename_writer = csv.writer(temp)
-    filename_writer.writerow([dataObject.routine, dataObject.timestamp, dataObject.orientation])
+    #filename_writer.writerow([dataObject.routine, dataObject.timestamp, dataObject.orientation])
     temp.close()
 
 ## Websocket Server

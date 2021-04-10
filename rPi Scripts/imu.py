@@ -123,6 +123,9 @@ class ImuSingleton:
     def propogateQuaternion(self):
         w = self.w / self.updateFrequency
         wMag = np.linalg.norm(w)
+        if wMag == 0:
+            return
+        
         wAxis = w / wMag
 
         if(wMag < 0.01):
@@ -150,7 +153,16 @@ class ImuSingleton:
                     
             self.propogateQuaternion()
             #print("Propogation Data: %s      w: %s" % (ypr2str(quat2ypr(Imu.q)), w2str(self.w)))
-                   
+    
+    def runImuZero(self):
+        while True:
+            sleep(0.02)
+
+            self.w = np.array([0,0,0])
+            self.a = np.array([10,0,0])
+                    
+            self.propogateQuaternion()
+            
     def getRandomQuat(self):
         
         #Produces a unit quaternion with uniform random rotation
