@@ -37,14 +37,6 @@ class MotorsSingleton:
         if len(deltaRpmArray) != 4:
             log("Error! setAllMotorRpm expected argument of length 4, got %s instead" % len(motorArray))
             return
-        
-        for i in range(len(deltaRpmArray)):
-            deltaW = deltaRpmArray[i] * 2 * np.pi / 60
-            
-            if abs() > self.accelLimit:
-                log("Requested RPM change in motor %s exceeded rpmRampLimit (%s/%s). Throttling input RPM." %
-                    (i,deltaRpmArray[i], self.rpmRampLimit)) 
-                deltaRpmArray[i] = self.rpmRampLimit
             
         deltaDutyArray = [0]*4
         

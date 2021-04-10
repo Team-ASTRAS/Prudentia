@@ -10,10 +10,10 @@ from controlLaw import ControlRoutine, ypr2quat, quat2ypr
 
 log('Hello world from Prudentia!')
 
-enableImu = False
+enableImu = True
 #When set to False, the IMU is emulated with random data.
 
-enableMotors = False
+enableMotors = True
 #When set to False, motor input and output is ignored.
 
 enableCamera = False
@@ -44,7 +44,7 @@ sharedData.state = State.running
 sharedData.controlRoutine = ControlRoutine.attitudeInput
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
-sharedData.target = [0.2, 0.1, -0.1]
+sharedData.target = [0, 0, 0]
 
 
 log('Setting up GUI server. Accessible on LAN through \"%s:%s\"' % (ip, htmlPort))
@@ -222,11 +222,11 @@ while True:
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
-            sharedData.motorAccel = response.motorAccel.tolist()
+            sharedData.motorAccels = response.motorAccels.tolist()
 
             # Use response to actuate motors
             if enableMotors:
-                Motors.setAllMotorRpm(response.motorAccel)
+                Motors.setAllMotorRpm(response.motorAccels)
                 #sharedData.currentDC = Motors.currentDC
                 #sharedData.targetDC = Motors.targetDC
 
@@ -255,11 +255,11 @@ while True:
             #print("%s: %s" % (sharedData.lqrMode, np.round(np.degrees(quat2ypr(Imu.q)), 2)))
             #print("Interial Torque: %s" % sharedData.inertialTorque)
             #print("qError: %s" % sharedData.qErrorAdjusted)
-            print("Mode: %s, Motors: %s" % (sharedData.lqrMode, np.round(response.motorAccels * 60 / (2 * np.pi) )))
+            print("Mode: %s\nMotors: %s\nRPM: " % (sharedData.lqrMode, np.round(response.motorAccels * 60 / (2 * np.pi) )), Motors.currentRpm)
 
             # Use response to actuate motors
             if enableMotors:
-                Motors.setAllMotorRpm(response.motorAccel)
+                Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
                 sharedData.duty = Motors.duty
 
         elif sharedData.controlRoutine == ControlRoutine.search:

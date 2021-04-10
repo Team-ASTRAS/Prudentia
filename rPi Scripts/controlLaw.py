@@ -106,7 +106,7 @@ class ControlLawSingleton:
     K_correctivePitch = np.zeros((3,6))
     
     enableSaturation = True
-    maxAccel = 2000 * (2 * np.pi) / 60
+    maxAccel = 20000 * (2 * np.pi) / 60
     loopFrequency = 20
     
     #Functions named with the format routineName are functions that are called
