@@ -123,6 +123,9 @@ class ImuSingleton:
     def propogateQuaternion(self):
         w = self.w / self.updateFrequency
         wMag = np.linalg.norm(w)
+        if wMag == 0:
+            return
+        
         wAxis = w / wMag
 
         if(wMag < 0.01):
@@ -150,7 +153,16 @@ class ImuSingleton:
                     
             self.propogateQuaternion()
             #print("Propogation Data: %s      w: %s" % (ypr2str(quat2ypr(Imu.q)), w2str(self.w)))
-                   
+    
+    def runImuZero(self):
+        while True:
+            sleep(0.02)
+
+            self.w = np.array([0,0,0])
+            self.a = np.array([10,0,0])
+                    
+            self.propogateQuaternion()
+            
     def getRandomQuat(self):
         
         #Produces a unit quaternion with uniform random rotation
@@ -207,8 +219,8 @@ if __name__ == "__main__":
     np.set_printoptions(precision=4, suppress=True)
 
     Imu = ImuSingleton()
-    #conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
-    conn = Imu.openConnection('com3', 115200) # Windows USB
+    conn = Imu.openConnection('/dev/ttyUSB0', 115200) # Raspi USB
+    #conn = Imu.openConnection('com3', 115200) # Windows USB
     assert conn is not None
 
     serialThread = Thread(target=Imu.asyncRead)
@@ -219,7 +231,7 @@ if __name__ == "__main__":
         #print("Roll: %s, Pitch: %s" % (results['r']*180/3.1415, results['p']*180/3.1415))
         ypr = quat2ypr(Imu.q)
         print("Quaternion: %s" % Imu.q)
-        print("IMU Euler: %s" % (ypr))
+        print("IMU Euler: %s" % (np.degrees(ypr)))
 
     serialThread.join()
         

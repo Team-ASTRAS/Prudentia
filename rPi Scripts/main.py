@@ -10,10 +10,10 @@ from controlLaw import ControlRoutine, ypr2quat, quat2ypr
 
 log('Hello world from Prudentia!')
 
-enableImu = False
+enableImu = True
 #When set to False, the IMU is emulated with random data.
 
-enableMotors = False
+enableMotors = True
 #When set to False, motor input and output is ignored.
 
 enableCamera = False
@@ -32,8 +32,8 @@ if internalWebsocket:
 else:
     ip = '172.30.135.229' #Static external IP
 
-#imuPortName = '/dev/ttyUSB0'
-imuPortName = 'com3'
+imuPortName = '/dev/ttyUSB0'
+#imuPortName = 'com3'
 
 ## GUI Servers Setup
 
@@ -76,7 +76,7 @@ if enableImu:
 else:
     #Run IMU emulation (random data)
     log("WARNING: IMU functionality disabled, emulating data. To reverse this, set 'enableImu = True' in main.py")
-    imuReadThread = Thread(target=Imu.emulateImu)
+    imuReadThread = Thread(target=Imu.runImuZero)
 
 imuReadThread.start()
 time.sleep(0.1) #Give the imu thread a moment to setup
@@ -101,17 +101,6 @@ if enableCamera:
     Camera = camera.CameraSingleton()
 else:
     log("WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py")
-
-## Variable Initialization
-
-lastState = sharedData.state #Store a copy of last state to see mode transitions
-
-loopSpeed = 20 # Hz
-allowedTime = 1.0/loopSpeed # Convert Hz to s
-times = []
-
-startRuntime = time.time() #Track total runtime for timestamping
-loopNumber = 0 #Track the number of total loop iterations.
 
 def processCommands():
     while not sharedData.commandQueue.empty():
@@ -157,6 +146,20 @@ def processCommands():
 
             elif msgJSON["LogType"] == "StopLog":
                 sharedData.recordingData = False
+
+print("Starting in 2 seconds...")
+time.sleep(2)
+
+## Variable Initialization
+
+lastState = sharedData.state #Store a copy of last state to see mode transitions
+
+loopSpeed = 20 # Hz
+allowedTime = 1.0/loopSpeed # Convert Hz to s
+times = []
+
+startRuntime = time.time() #Track total runtime for timestamping
+loopNumber = 0 #Track the number of total loop iterations.
 
 while True:
     loopNumber += 1
@@ -219,11 +222,11 @@ while True:
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
-            sharedData.motorAccel = response.motorAccel.tolist()
+            sharedData.motorAccels = response.motorAccels.tolist()
 
             # Use response to actuate motors
             if enableMotors:
-                Motors.setAllMotorRpm(response.motorAccel)
+                Motors.setAllMotorRpm(response.motorAccels)
                 #sharedData.currentDC = Motors.currentDC
                 #sharedData.targetDC = Motors.targetDC
 
@@ -245,26 +248,19 @@ while True:
 
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
-            sharedData.motorAccel = response.motorAccel.tolist()
+            sharedData.motorAccels = response.motorAccels.tolist()
 
             #print("Target: %s" %  np.round(sharedData.quatTarget,2))
             #print("qError: %s" %  np.round(sharedData.qError,2))
             #print("%s: %s" % (sharedData.lqrMode, np.round(np.degrees(quat2ypr(Imu.q)), 2)))
             #print("Interial Torque: %s" % sharedData.inertialTorque)
             #print("qError: %s" % sharedData.qErrorAdjusted)
-            print("Motor Accel Response: %s" % np.round(sharedData.motorAccel))
+            print("Mode: %s\nMotors: %s\nRPM: " % (sharedData.lqrMode, np.round(response.motorAccels * 60 / (2 * np.pi) )), Motors.currentRpm)
 
             # Use response to actuate motors
             if enableMotors:
-                Motors.setAllMotorRpm(response.motorAccel)
+                Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
                 sharedData.duty = Motors.duty
-
-
-                print("""Motor Torques: %s
-Duty Cycle[0]: %s
-CurrentRpm[0]: %s
-TargetRpm[0]: %s""" %
-                  (sharedData.motorTorque, sharedData.duty[0], Motors.currentRpm[0], Motors.targetRpm[0]))
 
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search

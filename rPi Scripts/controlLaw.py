@@ -18,16 +18,25 @@ class LqrMode(Enum):
   
 
 class routineReport:
+    
+    def __init__(self, qError, qErrorAdjusted, lqrMode, inertialTorque, motorAccels, motorTorques):
+        self.qError = qError
+        self.qErrorAdjusted = qErrorAdjusted
+        self.lqrMode = lqrMode
+        self.inertialTorque = inertialTorque
+        self.motorAccels = motorAccels
+        self.motorTorques = motorTorques
+    
     qError = np.array([0, 0, 0, 0])
     qErrorAdjusted = np.array([0, 0, 0, 0])
     lqrMode = LqrMode.nominal
     inertialTorque = np.array([0, 0, 0])
-    motorTorques = np.array([0, 0, 0, 0])
-    motorAlpha = np.array([0, 0, 0, 0])
+    motorTorques = np.array([0, 0, 0, 0]) 
+    motorAccels = np.array([0, 0, 0, 0])
 
 #Returns the quaternion error between the target and observed quaternions.
-def getQuatError(qObserved, qTarget):
-    return quatMultiplyFlipped(qObserved, qTarget)
+def getQuatError(qObserved, qTar):
+    return quatMultiplyFlipped(qObserved, qTar)
 
 #This is currently unused 2/23/2021. We shpuld always have a unit quaternion.
 def normalizeQuat(quat):
@@ -69,23 +78,20 @@ def ypr2quat(ypr):
         
     return quat
 
-#Returns roll, pitch, and yaw (results.r, results.p, results.y) in radians, given a quaternion.
+#Returns roll, pitch, and yaw in radians, given a quaternion.
 def quat2ypr(q):
     result = np.array([0.0, 0.0, 0.0])
-    #result[0] = np.arctan2(2 * (q[1] * q[2] + q[0] * q[3]), q[3]**2 - q[0]**2 - q[1]**2 + q[2]**2)
-    #result[1] = np.arcsin(-2 * (q[0] * q[2] - q[1] * q[3]))
-    #result[2] = np.arctan2(2 * (q[0] * q[1] + q[2] * q[3]), q[3]**2 + q[0]**2 - q[1]**2 - q[2]**2)
-    result[0] = np.arctan2(2 * (q[1] * q[2] + q[0] * q[3]), q[3]**2 - q[0]**2 - q[1]**2 + q[2]**2)
+    result[2] = np.arctan2(2 * (q[1] * q[2] + q[0] * q[3]), q[3]**2 - q[0]**2 - q[1]**2 + q[2]**2)
     result[1] = np.arcsin(-2 * (q[0] * q[2] - q[1] * q[3]))
-    result[2] = np.arctan2(2 * (q[0] * q[1] + q[2] * q[3]), q[3]**2 + q[0]**2 - q[1]**2 - q[2]**2)
+    result[0] = np.arctan2(2 * (q[0] * q[1] + q[2] * q[3]), q[3]**2 + q[0]**2 - q[1]**2 - q[2]**2)
     
     return result
 
 #Returns a quaternion based on a normalized euler axis and angle. Expects units in radians.
 def eulerAxis2quat(axis, angle):
-        qHat = axis * sin(angle / 2)
-        qReal = cos(angle / 2)
-        return np.append(qHat, qReal)
+    qHat = axis * sin(angle / 2)
+    qReal = cos(angle / 2)
+    return np.append(qHat, qReal)
 
 class ControlLawSingleton:
 
@@ -99,6 +105,10 @@ class ControlLawSingleton:
     K_yawSweep = np.zeros((3,6))
     K_correctivePitch = np.zeros((3,6))
     
+    enableSaturation = True
+    maxAccel = 20000 * (2 * np.pi) / 60
+    loopFrequency = 20
+    
     #Functions named with the format routineName are functions that are called
     #by main.py when the state machine is set to run a particular routine
     
@@ -107,40 +117,43 @@ class ControlLawSingleton:
         self.initialize()
 
     def routineStabilize(self, q, w):
-        ypr = quat2ypr(q)
-        ypr[1] = 0
-        ypr[2] = 0
-        qTarget = ypr2quat(ypr)
-        qError = getQuatError(q, qTarget)
-
-        lqrMode = self.getControllerType(q, qError)
-        qErrorAdjusted = self.adjustAttitude(lqrMode, q, qTarget, qError)
-        inertialTorque = self.getTorque(lqrMode, qErrorAdjusted, w)
-
-        results = routineReport()
-        results.qError = qError
-        results.qErrorAdjusted = qErrorAdjusted
-        results.lqrMode = lqrMode
-        results.inertialTorque = inertialTorque
-        results.motorAccel = np.dot(self.IrwArray, -1 * inertialTorque)
-        results.motorTorques = results.motorAlpha * self.Irw
-        return results
+        pass
 
     def routineAttitudeInput(self, q, w, qTarget):
+        
         qError = getQuatError(q, qTarget)
 
         lqrMode = self.getControllerType(q, qError)
+        
         qErrorAdjusted = self.adjustAttitude(lqrMode, q, qTarget, qError)
+        
         inertialTorque = self.getTorque(lqrMode, qErrorAdjusted, w)
         
-        results = routineReport()
-        results.qError = qError
-        results.qErrorAdjusted = qErrorAdjusted
-        results.lqrMode = lqrMode
-        results.inertialTorque = inertialTorque
-        results.motorAccel = np.dot(self.IrwArray, -1 * inertialTorque)
-        results.motorTorques = results.motorAlpha * self.Irw
+        motorAccels = self.getMotorAccels(inertialTorque)
+        
+        motorTorques = motorAccels * self.Irw
+        
+        results = routineReport(qError, qErrorAdjusted, lqrMode, inertialTorque, motorAccels, motorTorques)
+        
         return results
+    
+    def getMotorAccels(self, inertialTorque):
+        motorAccels = np.dot(self.IrwArray, -1 * inertialTorque)
+                
+        if self.enableSaturation:
+            for i in range(len(motorAccels)):
+                
+                if motorAccels[i] > self.maxAccel / self.loopFrequency:
+                    print("Limiting acceleration in motor %s. Requested accel: %s, Maximum Accel: %s." %
+                          (i, motorAccels[i], self.maxAccel / self.loopFrequency))
+                    motorAccels[i] = self.maxAccel / self.loopFrequency
+                    
+                elif motorAccels[i] < - self.maxAccel / self.loopFrequency:
+                    print("Limiting acceleration in motor %s. Requested accel: %s, Maximum Accel: %s." %
+                          (i, motorAccels[i], - self.maxAccel / self.loopFrequency))
+                    motorAccels[i] = - self.maxAccel / self.loopFrequency
+        
+        return motorAccels
 
     def routineSearch(self):
         pass
@@ -163,22 +176,15 @@ class ControlLawSingleton:
         #Reaction wheels
         self.Irw = 0.000453158
 
-        largeAngle = np.cos(np.deg2rad(70.0))
-        smallAngle = np.sin(np.deg2rad(70.0))
+        sinAngle = np.sin(np.deg2rad(70.0))
+        cosAngle = np.cos(np.deg2rad(70.0))
+
+        motorAngles = np.array([[sinAngle,  sinAngle,  sinAngle,  sinAngle],
+                                [0,        -cosAngle,  0,         cosAngle],
+                                [cosAngle,  0,        -cosAngle,  0        ]])
         
-        #This is the 3D vector representation of the reaction wheel's applied momentum, orientated about the X axis
-        #This is previously "e" in simulink files
-        #motorAngles = np.array([[largeAngle, smallAngle, 0],
-        #                       [largeAngle, -smallAngle, 0],
-        #                       [largeAngle, 0, smallAngle],
-        #                       [largeAngle, 0, -smallAngle]]) 
-
-        motorAngles = np.array([[largeAngle,  largeAngle,  largeAngle,  largeAngle],
-                                [0,           -smallAngle, 0,           smallAngle],
-                                [smallAngle,  0,           -smallAngle, 0        ]])
-
         self.IrwArray = np.linalg.pinv(self.Irw * motorAngles)
-
+        
         #Consider adding max torque, rpm
 
         # Gain setup
@@ -304,26 +310,33 @@ class ControlLawSingleton:
         else:
             log("Error in getTorque! lqrMode was not set to an expected value! lqrMode: %s " % lqrMode)
             K = self.K_nominal
-
+        
         return np.dot(K, xbar)
 
 
 if __name__ == "__main__":
     cls = ControlLawSingleton()
 
-    q = ypr2quat([0,0,0])
-    w = np.array([0, 0, 0])
-    qTarget = ypr2quat(np.radians([30, 10, 0]))
+    inertialTorque = np.array([0, 0, 0.1])
 
-    res = cls.routineAttitudeInput(q, w, qTarget)
-    log("IN q:             %s Euler: %s" % (q , np.degrees(quat2ypr(q))) )
-    log("IN w:             %s" % w)
-    log("IN qTarget:       %s Euler: %s" % (qTarget , np.degrees(quat2ypr(qTarget))) )
-    log("-"*20)
-    log("OUT qError:       %s Euler: %s]" % (res.qError , quat2ypr(res.qError)) )
-    log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , quat2ypr(res.qErrorAdjusted)) )
-    log("OUT lqrMode:      %s" % res.lqrMode)
-    log("OUT Inert Torque: %s" % res.inertialTorque)
-    log("OUT Motor Torque: %s" % res.motorTorques)
-    log("OUT Motor Alpha:  %s (rad/s)" % res.motorAlpha)
-    log("OUT Motor Alpha:  %s (rpm)" % (res.motorAlpha * 9.5493))
+    res = cls.getMotorAccels(inertialTorque)
+    
+    print(res)
+
+#     q = ypr2quat(np.radians([0,0,0]))
+#     w = np.array([0, 0, 0])
+#     qTarget = ypr2quat(np.radians([30, 0, 0]))
+# 
+#     res = cls.routineAttitudeInput(q, w, qTarget)
+#     
+#     log("IN q:             %s Euler: %s" % (q , np.degrees(quat2ypr(q))) )
+#     log("IN w:             %s" % w)
+#     log("IN qTarget:       %s Euler: %s" % (qTarget , np.degrees(quat2ypr(qTarget))) )
+#     log("-" * 20)
+#     log("OUT qError:       %s Euler: %s]" % (res.qError , np.degrees(quat2ypr(res.qError))) )
+#     log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , np.degrees(quat2ypr(res.qErrorAdjusted))) )
+#     log("OUT lqrMode:      %s" % res.lqrMode)
+#     log("OUT Inert Torque: %s" % res.inertialTorque)
+#     log("OUT Motor Torque: %s" % res.motorTorques)
+#     log("OUT Motor Alpha:  %s (rad/s)" % res.motorAccels)
+#     log("OUT Motor Alpha:  %s (rpm)" % (res.motorAccels * 60 / (2 * np.pi)))
