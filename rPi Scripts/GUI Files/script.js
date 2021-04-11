@@ -114,15 +114,22 @@ searchNav.onclick = function (event) {
 // LOGGING
 if (startlog){
     startlog.onclick = function (event) {
-        console.log('Start Logging');
         var msg = {"messageType":"DataLogging", "LogType":"StartLog"};
         jsonMSG = JSON.stringify(msg);
+        console.log(jsonMSG);
+        websocket.send(jsonMSG);
       }
       stoplog.onclick = function (event) {
-        console.log('Stop Logging');
+        var msg = {"messageType":"DataLogging", "LogType":"StopLog"};
+        jsonMSG = JSON.stringify(msg);
+        console.log(jsonMSG);
+        websocket.send(jsonMSG);
       }
       clearlog.onclick = function (event) {
         console.log('Clear Log');
+        var msg = {"messageType":"DataLogging", "LogType":"ClearLog"};
+        jsonMSG = JSON.stringify(msg);
+        websocket.send(jsonMSG);
       }
       downloadlog.onclick = function (event) {
         console.log('Download Log');

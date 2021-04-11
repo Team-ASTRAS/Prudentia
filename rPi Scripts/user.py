@@ -29,7 +29,8 @@ class SharedDataPackage:
     state = State.standby
     controlRoutine = ""
 
-    recordingData = True
+    recordingData = ""
+    LogType = ""
 
     quaternion = [0, 0, 0, 0]
     orientation = [0, 0, 0]
@@ -87,22 +88,67 @@ class SharedDataPackage:
 
         return json.dumps(dataObject)
 
-def deleteData():
-    filename = "TempData.csv"
-    temp = open(filename, 'w')
-    temp.truncate(0)
-    pass
+    def deleteData(self):
+        filename = "TempData.csv"
+        temp = open(filename, 'w')
+        temp.truncate(0)
 
-def sendCsv():
-    #Pack csv data in json and return it
-    pass
+    def sendCsv(self):
+        filename = "TempData.csv"
+        with open(filename, encoding='utf-8') as csvf:
+        csvReader = csv.DictReader(csvf)
+        for rows in csvReader:
+            key = rows["State"]
+            data[key] = rows
+        with open('TempData.json', 'w', encoding='utf-8') as jsonf:
+        jsonf.write(json.dumps(data, indent=4))
 
-def RecordData():
-    filename = "TempData.csv"
-    temp = open(filename, 'a')
-    filename_writer = csv.writer(temp)
-    filename_writer.writerow([dataObject.routine, dataObject.timestamp, dataObject.orientation])
-    temp.close()
+    def RecordData(self):
+        filename = "TempData.csv"
+        if os.stat(filename).st_size == 0:
+            temp = open(filename, 'a')
+            headers = ["State","Routine","Timestamp","Yaw","Pitch","Roll","q1",
+                        "q2","q3","q4","Vel_Yaw","Vel_Pitch","Vel_Roll",
+                        "Vel_Mag","Accel_Yaw","Accel_Pitch","Accel_Roll",
+                        "Target_Yaw","Target_Pitch","Target_Roll", "q1_Error",
+                        "q2_Error","q3_Error","q4_Error","Yaw_Error",
+                        "Pitch_Error","Roll_Error","Req_InertTorque_Yaw",
+                        "Req_InertTorque_Pitch","Req_InertTorque_Roll",
+                        "Req_Torque_M1","Req_Torque_M2","Req_Torque_M3",
+                        "Req_Torque_M4","Accel_M1","Accel_M2","Accel_M3",
+                        "Accel_M4","Duty_M1","Duty_M2","Duty_M3","Duty_M4",
+                        "RPM_M1","RPM_M2","RPM_M3","RPM_M4","TargetRPM_M1",
+                        "TargetRPM_M2","TargetRPM_M3","TargetRPM_M4",]
+            filename_writer = csv.writer(temp)
+            filename_writer.writerow(headers)
+        else:
+            temp = open(filename, 'a')
+            filename_writer = csv.writer(temp)
+            filename_writer.writerow([self.state.name, self.controlRoutine.name,
+                                    self.timestamp, self.orientation[0],
+                                    self.orientation[1], self.orientation[2],
+                                    self.quaternion[0], self.quaternion [1],
+                                    self.quaternion [2], self.quaternion [3],
+                                    self.velocity [0], self.velocity [1],
+                                    self.velocity [2], self.velocityMagnitude,
+                                    self.acceleration [0], self.acceleration [1],
+                                    self.acceleration [2], self.target [0],
+                                    self.target [1], self.target [2],
+                                    self.qError [0], self.qError [1],
+                                    self.qError [2], self.qError [3],
+                                    self.eulerError [0], self.eulerError [1],
+                                    self.eulerError [2], self.inertialTorque [0],
+                                    self.inertialTorque [1], self.inertialTorque [2],
+                                    self.motorTorque [0], self.motorTorque [1],
+                                    self.motorTorque [2], self.motorTorque [3],
+                                    self.motorAccel [0], self.motorAccel [1],
+                                    self.motorAccel [2], self.motorAccel [3],
+                                    self.duty [0], self.duty [1], self.duty [2],
+                                    self.duty [3], self.currentRpm [0],
+                                    self.currentRpm [1], self.currentRpm [2],
+                                    self.currentRpm [3], self.targetRpm [0],
+                                    self.targetRpm [1], self.targetRpm [2],
+                                    self.targetRpm [3]])
 
 ## Websocket Server
 

@@ -132,7 +132,7 @@ def processCommands():
         # Routine change was issued
         if msgJSON["messageType"] == "setRoutine":
 
-            if   msgJSON["routine"] == "stabilize":
+            if msgJSON["routine"] == "stabilize":
                 sharedData.controlRoutine = ControlRoutine.stabilize
 
             elif msgJSON["routine"] == "attitudeInput":
@@ -153,7 +153,7 @@ def processCommands():
                 sharedData.recordingData = True
 
             elif msgJSON["LogType"] == "ClearLog":
-                user.deleteData()
+                sharedData.deleteData()
 
             elif msgJSON["LogType"] == "StopLog":
                 sharedData.recordingData = False
@@ -189,7 +189,7 @@ while True:
         #Set IMU data
         sharedData.quaternion = Imu.q.tolist()
         ypr = quat2ypr(Imu.q)
-        sharedData.orientation = [np.degrees(ypr)]
+        sharedData.orientation = np.degrees(ypr).tolist()
 
         sharedData.velocity = Imu.w.tolist()
         sharedData.velocityMagnitude = np.linalg.norm(Imu.w)
@@ -279,7 +279,7 @@ TargetRpm[0]: %s""" %
     ## Save Data
 
     if sharedData.recordingData:
-        user.RecordData()
+        sharedData.RecordData()
 
     ## Timing
 
