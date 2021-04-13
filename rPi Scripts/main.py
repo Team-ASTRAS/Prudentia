@@ -10,10 +10,10 @@ from controlLaw import ControlRoutine, ypr2quat, quat2ypr
 
 log('Hello world from Prudentia!')
 
-enableImu = True
+enableImu = False
 #When set to False, the IMU is emulated with random data.
 
-enableMotors = True
+enableMotors = False
 #When set to False, motor input and output is ignored.
 
 enableCamera = False
@@ -76,7 +76,7 @@ if enableImu:
 else:
     #Run IMU emulation (random data)
     log("WARNING: IMU functionality disabled, emulating data. To reverse this, set 'enableImu = True' in main.py")
-    imuReadThread = Thread(target=Imu.runImuZero)
+    imuReadThread = Thread(target=Imu.emulateImu)
 
 imuReadThread.start()
 time.sleep(0.1) #Give the imu thread a moment to setup
@@ -214,21 +214,24 @@ while True:
 
             #Run control law with latest IMU data. Stabilize based on current yaw, with zero roll and pitch.
             response = ControlLaw.routineStabilize(Imu.q, Imu.w)
-
+             
             sharedData.quatTarget = qTarget.tolist()
             sharedData.lqrMode = response.lqrMode.name
+
             sharedData.qError = response.qError.tolist()
-            sharedData.eulerError = degrees(quat2ypr(response.qError))
+            ypr = quat2ypr(response.qError)
+            sharedData.eulerError = np.degrees(ypr).tolist() #TODO - Because qError flips qhat, I think this needs to use a XYZ rotation instead of a ZYX to get back to Euler coordinates properly.
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
+
             sharedData.inertialTorque = response.inertialTorque.tolist()
             sharedData.motorTorque = response.motorTorques.tolist()
             sharedData.motorAccels = response.motorAccels.tolist()
 
             # Use response to actuate motors
             if enableMotors:
-                Motors.setAllMotorRpm(response.motorAccels)
-                #sharedData.currentDC = Motors.currentDC
-                #sharedData.targetDC = Motors.targetDC
+                Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
+               
+                sharedData.duty = Motors.duty
 
         elif sharedData.controlRoutine == ControlRoutine.attitudeInput:
 
@@ -250,16 +253,10 @@ while True:
             sharedData.motorTorque = response.motorTorques.tolist()
             sharedData.motorAccels = response.motorAccels.tolist()
 
-            #print("Target: %s" %  np.round(sharedData.quatTarget,2))
-            #print("qError: %s" %  np.round(sharedData.qError,2))
-            #print("%s: %s" % (sharedData.lqrMode, np.round(np.degrees(quat2ypr(Imu.q)), 2)))
-            #print("Interial Torque: %s" % sharedData.inertialTorque)
-            #print("qError: %s" % sharedData.qErrorAdjusted)
-            print("Mode: %s\nMotors: %s\nRPM: " % (sharedData.lqrMode, np.round(response.motorAccels * 60 / (2 * np.pi) )), Motors.currentRpm)
-
             # Use response to actuate motors
             if enableMotors:
                 Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
+               
                 sharedData.duty = Motors.duty
 
         elif sharedData.controlRoutine == ControlRoutine.search:

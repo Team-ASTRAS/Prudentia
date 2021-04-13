@@ -136,7 +136,10 @@ if (startlog){
         filename = prompt("Filename:");
         if (filename == null || filename == ""){
           filename = "Data";
-        }
+          }
+          var msg = { "messageType": "downloadData", "filename" : filename};
+          jsonMSG = JSON.stringify(msg);
+          websocket.send(jsonMSG);
       }
   }
 //if mode = running
@@ -187,6 +190,7 @@ if (searchmode){
   }
 };
 
+Initialized = true;
 // GRAPHS
 function GraphInitialization() {
   Initialized = true;
@@ -438,9 +442,15 @@ function start(websocketServerLocation){
     websocket.onmessage = function (event) {
         data = JSON.parse(event.data);
 
-        updateLogTable(data["state"], data["routine"], data["orientation"], data["velocityMag"])
+        if (data.hasOwnProperty("csvFile")) {
 
-        updateGraphs(data["routine"], data["orientation"], data["velocityMag"], data["eulerError"], data["image"])
+            download(data["filename"] + ".csv", data["csvFile"])
+        }
+        else {
+            updateLogTable(data["state"], data["routine"], data["orientation"], data["velocityMag"])
+
+            updateGraphs(data["routine"], data["orientation"], data["velocityMag"], data["eulerError"], data["image"])
+        }
 
     };
 
@@ -468,3 +478,16 @@ function refreshData(){
     //Repeat this function again later
     setTimeout(refreshData, dataUpdate);
 };
+
+function download(filename, text) {
+    var element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    element.setAttribute('download', filename);
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+}

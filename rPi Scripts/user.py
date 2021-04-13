@@ -93,37 +93,37 @@ class SharedDataPackage:
         temp = open(filename, 'w')
         temp.truncate(0)
 
-    def sendCsv(self):
-        filename = "TempData.csv"
-        with open(filename, encoding='utf-8') as csvf:
-        csvReader = csv.DictReader(csvf)
-        for rows in csvReader:
-            key = rows["State"]
-            data[key] = rows
-        with open('TempData.json', 'w', encoding='utf-8') as jsonf:
-        jsonf.write(json.dumps(data, indent=4))
+    def sendCsv(self, filenameToSave):
+        localFile = "TempData.csv"
+        with open(localFile) as csvf:
+            reader = csv.reader(csvf)
+            stringyBoi = ""
+            for row in reader:
+                stringyBoi += str(",".join(row)) + "\n"
+            csvJson = {"csvFile" : stringyBoi, "filename" : filenameToSave}
+            return json.dumps(csvJson)
 
     def RecordData(self):
         filename = "TempData.csv"
         if os.stat(filename).st_size == 0:
-            temp = open(filename, 'a')
-            headers = ["State","Routine","Timestamp","Yaw","Pitch","Roll","q1",
-                        "q2","q3","q4","Vel_Yaw","Vel_Pitch","Vel_Roll",
-                        "Vel_Mag","Accel_Yaw","Accel_Pitch","Accel_Roll",
-                        "Target_Yaw","Target_Pitch","Target_Roll", "q1_Error",
-                        "q2_Error","q3_Error","q4_Error","Yaw_Error",
-                        "Pitch_Error","Roll_Error","Req_InertTorque_Yaw",
-                        "Req_InertTorque_Pitch","Req_InertTorque_Roll",
-                        "Req_Torque_M1","Req_Torque_M2","Req_Torque_M3",
-                        "Req_Torque_M4","Accel_M1","Accel_M2","Accel_M3",
-                        "Accel_M4","Duty_M1","Duty_M2","Duty_M3","Duty_M4",
-                        "RPM_M1","RPM_M2","RPM_M3","RPM_M4","TargetRPM_M1",
-                        "TargetRPM_M2","TargetRPM_M3","TargetRPM_M4",]
-            filename_writer = csv.writer(temp)
-            filename_writer.writerow(headers)
-        else:
-            temp = open(filename, 'a')
-            filename_writer = csv.writer(temp)
+            with open(filename, 'a', newline='', encoding='utf-8') as temp:
+                headers = ["State","Routine","Timestamp","Yaw","Pitch","Roll","q1",
+                            "q2","q3","q4","Vel_Yaw","Vel_Pitch","Vel_Roll",
+                            "Vel_Mag","Accel_Yaw","Accel_Pitch","Accel_Roll",
+                            "Target_Yaw","Target_Pitch","Target_Roll", "q1_Error",
+                            "q2_Error","q3_Error","q4_Error","Yaw_Error",
+                            "Pitch_Error","Roll_Error","Req_InertTorque_Yaw",
+                            "Req_InertTorque_Pitch","Req_InertTorque_Roll",
+                            "Req_Torque_M1","Req_Torque_M2","Req_Torque_M3",
+                            "Req_Torque_M4","Accel_M1","Accel_M2","Accel_M3",
+                            "Accel_M4","Duty_M1","Duty_M2","Duty_M3","Duty_M4",
+                            "RPM_M1","RPM_M2","RPM_M3","RPM_M4","TargetRPM_M1",
+                            "TargetRPM_M2","TargetRPM_M3","TargetRPM_M4"]
+                filename_writer = csv.writer(temp)
+                filename_writer.writerow(headers)
+
+        with open(filename, 'a', newline='', encoding='utf-8') as temp:
+            filename_writer = csv.writer(temp, delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
             filename_writer.writerow([self.state.name, self.controlRoutine.name,
                                     self.timestamp, self.orientation[0],
                                     self.orientation[1], self.orientation[2],
@@ -187,7 +187,7 @@ async def prudentiaServer(websocket, path, sharedData):
                 await websocket.send(sharedData.getDataJson())
 
             elif msgJSON["messageType"] == "downloadData":
-                await websocket.send(sendCsv())
+                await websocket.send(sharedData.sendCsv(msgJSON["filename"]))
 
             else:
                 sharedData.commandQueue.put(msgJSON)
@@ -220,3 +220,19 @@ def startHtmlServer(sharedDataRef, ip, port):
     sharedDataRef.htmlServer = socketserver.TCPServer((ip, port), handle)
 
     sharedDataRef.htmlServer.serve_forever()
+
+
+if __name__ == "__main__":
+    
+    sharedData = SharedDataPackage()
+    sharedData.state = State.running
+    from controlLaw import ControlRoutine
+    sharedData.controlRoutine = ControlRoutine.attitudeInput
+    sharedData.angularPosition = [0, 0, 0]
+    sharedData.angularVelocity = [0, 0, 0]
+    sharedData.target = [0, 0, 0]
+
+    for i in range(10):
+       sharedData.orientation[0] = i
+       filename = "TempData.csv"
+       sharedData.RecordData()

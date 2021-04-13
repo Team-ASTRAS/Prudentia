@@ -105,8 +105,8 @@ class ControlLawSingleton:
     K_yawSweep = np.zeros((3,6))
     K_correctivePitch = np.zeros((3,6))
     
-    enableSaturation = True
-    maxAccel = 20000 * (2 * np.pi) / 60
+    enableSaturation = False
+    maxAccel = 2000 * (2 * np.pi) / 60
     loopFrequency = 20
     
     #Functions named with the format routineName are functions that are called
@@ -161,23 +161,26 @@ class ControlLawSingleton:
     def initialize(self):
 
         #Moment of Inertias
-        #I = np.array([[1.01560749, 0.00028915, 0.00002257],
-        #              [0.00028915, 0.17343628, 0.00936307],
-        #              [0.00002257, 0.00936307, 1.01561864]]);
-        I = np.array([[0.17343628,  0,          0       ],
-                      [0,           1.01561,    0       ],
-                      [0,           0,          1.01561 ]]);
+        I = np.array([[5.35260018, 1.78704216, 2.62357767],
+                      [3.73154545, 8.28831661, 1.78704216],
+                      [2.62357767, 3.73154545, 8.28977575]]);
+        #I = np.array([[0.17343628,  0,          0       ],
+        #              [0,           1.01561,    0       ],
+        #              [0,           0,          1.01561 ]]);
 
-        #inverseI = linalg.inv(I)       TODO: Why don't we take the full inverse?? 
-        inverseI = np.array([[1/I[0,0], 0,        0       ],
-                             [0,        1/I[1,1], 0       ],
-                             [0,        0,        1/I[2,2]]])
+        inverseI = linalg.inv(I)      
+        # Note: Previously, the below code shows how we were
+        # taking the inverse only along principal axes.
+        #inverseI = np.array([[1/I[0,0], 0,        0       ],
+        #                     [0,        1/I[1,1], 0       ],
+        #                     [0,        0,        1/I[2,2]]])
 
         #Reaction wheels
         self.Irw = 0.000453158
+        motorAngle = 45
 
-        sinAngle = np.sin(np.deg2rad(70.0))
-        cosAngle = np.cos(np.deg2rad(70.0))
+        sinAngle = np.sin(np.deg2rad(motorAngle))
+        cosAngle = np.cos(np.deg2rad(motorAngle))
 
         motorAngles = np.array([[sinAngle,  sinAngle,  sinAngle,  sinAngle],
                                 [0,        -cosAngle,  0,         cosAngle],
@@ -222,12 +225,12 @@ class ControlLawSingleton:
         S_correctivePitch = linalg.solve_continuous_are(A, B, Q_correctivePitch, R)
         self.K_correctivePitch = -1 * np.dot(np.dot(linalg.inv(R), np.transpose(B)), S_correctivePitch)
         
-        #log("Initialized A matrix:")
-        #log(A)
-        #log("Initialized B matrix:")
-        #log(B)
-        #log("Initialized R matrix:")
-        #log(R)
+        log("Initialized A matrix:")
+        log(A)
+        log("Initialized B matrix:")
+        log(B)
+        log("Initialized R matrix:")
+        log(R)
 
         log("---------- Initializing gain matricies ----------")
         log("Initialized gain matrix K_nominal:")
@@ -317,26 +320,20 @@ class ControlLawSingleton:
 if __name__ == "__main__":
     cls = ControlLawSingleton()
 
-    inertialTorque = np.array([0, 0, 0.1])
-
-    res = cls.getMotorAccels(inertialTorque)
-    
-    print(res)
-
-#     q = ypr2quat(np.radians([0,0,0]))
-#     w = np.array([0, 0, 0])
-#     qTarget = ypr2quat(np.radians([30, 0, 0]))
-# 
-#     res = cls.routineAttitudeInput(q, w, qTarget)
-#     
-#     log("IN q:             %s Euler: %s" % (q , np.degrees(quat2ypr(q))) )
-#     log("IN w:             %s" % w)
-#     log("IN qTarget:       %s Euler: %s" % (qTarget , np.degrees(quat2ypr(qTarget))) )
-#     log("-" * 20)
-#     log("OUT qError:       %s Euler: %s]" % (res.qError , np.degrees(quat2ypr(res.qError))) )
-#     log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , np.degrees(quat2ypr(res.qErrorAdjusted))) )
-#     log("OUT lqrMode:      %s" % res.lqrMode)
-#     log("OUT Inert Torque: %s" % res.inertialTorque)
-#     log("OUT Motor Torque: %s" % res.motorTorques)
-#     log("OUT Motor Alpha:  %s (rad/s)" % res.motorAccels)
-#     log("OUT Motor Alpha:  %s (rpm)" % (res.motorAccels * 60 / (2 * np.pi)))
+    q = ypr2quat(np.radians([0,0,0]))
+    w = np.array([0, 0, 0])
+    qTarget = ypr2quat(np.radians([30, 0, 0]))
+ 
+    res = cls.routineAttitudeInput(q, w, qTarget)
+     
+    log("IN q:             %s Euler: %s" % (q , np.degrees(quat2ypr(q))) )
+    log("IN w:             %s" % w)
+    log("IN qTarget:       %s Euler: %s" % (qTarget , np.degrees(quat2ypr(qTarget))) )
+    log("-" * 20)
+    log("OUT qError:       %s Euler: %s]" % (res.qError , np.degrees(quat2ypr(res.qError))) )
+    log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , np.degrees(quat2ypr(res.qErrorAdjusted))) )
+    log("OUT lqrMode:      %s" % res.lqrMode)
+    log("OUT Inert Torque: %s" % res.inertialTorque)
+    log("OUT Motor Torque: %s" % res.motorTorques)
+    log("OUT Motor Alpha:  %s (rad/s)" % res.motorAccels)
+    log("OUT Motor Alpha:  %s (rpm)" % (res.motorAccels * 60 / (2 * np.pi)))
