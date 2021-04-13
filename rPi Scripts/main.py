@@ -46,7 +46,6 @@ sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
 sharedData.target = [0, 0, 0]
 
-
 log('Setting up GUI server. Accessible on LAN through \"%s:%s\"' % (ip, htmlPort))
 log('Data will be exchanged via websockets on LAN through \"%s:%s\"' % (ip, websocketPort))
 
@@ -242,7 +241,7 @@ while True:
             response = ControlLaw.routineAttitudeInput(Imu.q, Imu.w, qTarget)
 
             sharedData.quatTarget = qTarget.tolist()
-            sharedData.lqrMode = response.lqrMode.name
+            sharedData.pdMode = response.pdMode.name
 
             sharedData.qError = response.qError.tolist()
             ypr = quat2ypr(response.qError)

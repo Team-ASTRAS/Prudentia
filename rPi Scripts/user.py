@@ -40,7 +40,7 @@ class SharedDataPackage:
 
     quatTarget = [0, 0, 0, 0]
     target = [0, 0, 0]
-    lqrMode = ""
+    pdMode = ""
     qError = [0, 0, 0, 0]
     eulerError = [0, 0, 0]
     qErrorAdjusted = [0, 0, 0, 0]
@@ -69,7 +69,7 @@ class SharedDataPackage:
                         "acceleration" : self.acceleration,     #a in m/s^2 (IMU Accels)
 
                         "target" : self.target,                 #User defined target in YPR
-                        "lqrMode" : self.lqrMode,               #Current control law mode (nominal, yaw sweep, etc)
+                        "lqrMode" : self.pdMode,               #Current control law mode (nominal, yaw sweep, etc)
                         "qError" : self.qError,                 #Error between target and quaternion
                         "eulerError" : self.eulerError,         #Euler Angle version of qError
                         "qErrorAdjusted" : self.qErrorAdjusted, #Error after corrective adjustment
