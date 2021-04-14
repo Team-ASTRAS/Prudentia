@@ -23,38 +23,63 @@ dc = 0.02
 startTime = time.time()
 
 
-def getDutyAsync(vesc):
+def getDutyAsync(vesc, rpmObj):
     while True:
         time.sleep(0.001)
-        print(vesc.get_rpm())
-        
-getDutyThread = Thread(target=getDutyAsync, args=(vescs[0], ))
+        rpmObj.rpm = vesc.get_rpm() / 10.0
+      
+class rpmObj:
+    rpm = 0
+    
+RPM = rpmObj()
+
+getDutyThread = Thread(target=getDutyAsync, args=(vescs[3], RPM ))
 getDutyThread.start()
 
+timeNow = time.time()
+
+c = 0
+allowedTime = 1/20
+
+dutyCyclePerStep = 0.008
 
 
-while time.time() - startTime < 30:
+while timeNow - startTime < 300:
+    c = c + 1
+    
     if dc >= 0.80 and increasing:
         increasing = False
     if dc <= -0.80 and not increasing:
         increasing = True
         
     if increasing:
-        dc = dc + 0.001
+        dc = dc + dutyCyclePerStep
     else:
-        dc = dc - 0.001
+        dc = dc - dutyCyclePerStep
         
     dc = round(dc,3)
     
+    timeNow = time.time() - startTime
+    targetTime = c * allowedTime
+    
+    
     for i in range(4):
+        if i == 3:
+            print("Time:[%s], RPM:[%s], DC:[%s]" % (round(timeNow, 4), RPM.rpm, dc))
+            f = open("testData.csv", "a")
+            f.write("%s,%s,%s\n" % (round(timeNow, 4), RPM.rpm, dc))
+            f.close()
         vescs[i].set_duty_cycle(dc)
     
     
-    currentTime = time.time() - startTime
-    print("[%s] - OUT: %s" % (currentTime, dc) )
-    
-    time.sleep(0.003)
-    
+
+    if timeNow > targetTime:
+        log("Loop time exceeded allowance. Loop time: %s. Allowed time: %s" %
+            (loopTime, allowedTime))
+    else:
+
+        sleepTime = targetTime - timeNow
+        time.sleep(sleepTime) # Sleep for remaining loop time
 
 print("END TEST")
 for vesc in vescs:

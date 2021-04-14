@@ -13,7 +13,8 @@ class MotorsSingleton:
     currentRpm = np.array([0, 0, 0, 0], dtype=float)
     targetRpm = np.array([0, 0, 0, 0], dtype=float)
     
-    accelLimit = 150 #rad/s^2. Accel of 246.53 rad/s^2 caused a back EMF overvoltage of 60V. 63V+ overvoltage may cause capacitor explosion.
+    #accelLimit = 150 #rad/s^2. Accel of 246.53 rad/s^2 caused a back EMF overvoltage of 60V. 63V+ overvoltage may cause capacitor explosion.
+    dutyLimit = 0.05 #Max duty change per loop
     
     lastLoopTime = time.time()
     
@@ -46,11 +47,15 @@ class MotorsSingleton:
             
             newDuty = self.getDutyFromRpm(newRpm)
             
-            if newDuty > 0.8 or newDuty < -0.8:
-                log("WARNING - Motor %s may be oversatured. New duty cycle request ignored: Over 80%% limit(%s%%)." % (i, round(newDuty*100, 2)))
+            if abs(newDuty - self.duty[i]) > self.dutyLimit:
+                log("WARNING - Duty cycle limit of %s per loop reached." % self.dutyLimit)
             else:
-                self.targetRpm[i] = newRpm
-                self.duty[i] = newDuty
+                    
+                if newDuty > 0.8 or newDuty < -0.8:
+                    log("WARNING - Motor %s may be oversatured. New duty cycle request ignored: Over 80%% limit(%s%%)." % (i, round(newDuty*100, 2)))
+                else:
+                    self.targetRpm[i] = newRpm
+                    self.duty[i] = newDuty
                 
             self.vescs[i].set_duty_cycle(self.duty[i])
             deltaDutyArray[i] = self.duty[i]
