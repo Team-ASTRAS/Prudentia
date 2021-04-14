@@ -4,13 +4,14 @@ from scipy import linalg
 import time
 from utilities import log
 from math import cos, sin
+
 @unique
 class ControlRoutine(Enum):
     stabilize = 1 #Stabilize angular position
     attitudeInput = 2 #Set a target vector for Prudentia
     search = 3 #Search routines
 
-class LqrMode(Enum):
+class PdMode(Enum):
     nominal = 1 #Standard LQR controller tuned for fast pointing
     yawSweep = 2 #Overrides target pitch to 0 if yaw is high
     yawSweepLockRoll = 3 #Overrides target pitch to 0 and roll to rollBody if yaw and roll are high
@@ -29,7 +30,7 @@ class routineReport:
     
     qError = np.array([0, 0, 0, 0])
     qErrorAdjusted = np.array([0, 0, 0, 0])
-    lqrMode = LqrMode.nominal
+    pdMode = PdMode.nominal
     inertialTorque = np.array([0, 0, 0])
     motorTorques = np.array([0, 0, 0, 0]) 
     motorAccels = np.array([0, 0, 0, 0])
@@ -95,20 +96,26 @@ def eulerAxis2quat(axis, angle):
 
 class ControlLawSingleton:
 
-    lqrMode = LqrMode.nominal
+    pdMode = PdMode.nominal
 
     yawSweepThreshold = np.radians(45)
     rollSweepThreshold = np.radians(45)
     correctivePitchThreshold = np.radians(20)
     
-    K_nominal = np.zeros((3,6))
-    K_yawSweep = np.zeros((3,6))
-    K_correctivePitch = np.zeros((3,6))
-    
-    enableSaturation = False
-    maxAccel = 2000 * (2 * np.pi) / 60
+    enableSaturation = True
+    maxTorque = [0.055, 0.055, 0.055]
     loopFrequency = 20
+
+    I = np.array([[ 0.27021632, -0.00050396, -0.00034281],
+                  [-0.00050396, 1.5538962  , 2.344e-05  ],
+                  [-0.00034281, 2.344e-05  , 1.55353581 ]]);
     
+    Irw = 0.000453158
+    motorAngle = 45
+
+    overshoot = 0.1 # arbitrary percent OS
+    ts = 30 # seconds, arbitrary settling time
+
     #Functions named with the format routineName are functions that are called
     #by main.py when the state machine is set to run a particular routine
     
@@ -139,19 +146,6 @@ class ControlLawSingleton:
     
     def getMotorAccels(self, inertialTorque):
         motorAccels = np.dot(self.IrwArray, -1 * inertialTorque)
-                
-        if self.enableSaturation:
-            for i in range(len(motorAccels)):
-                
-                if motorAccels[i] > self.maxAccel / self.loopFrequency:
-                    print("Limiting acceleration in motor %s. Requested accel: %s, Maximum Accel: %s." %
-                          (i, motorAccels[i], self.maxAccel / self.loopFrequency))
-                    motorAccels[i] = self.maxAccel / self.loopFrequency
-                    
-                elif motorAccels[i] < - self.maxAccel / self.loopFrequency:
-                    print("Limiting acceleration in motor %s. Requested accel: %s, Maximum Accel: %s." %
-                          (i, motorAccels[i], - self.maxAccel / self.loopFrequency))
-                    motorAccels[i] = - self.maxAccel / self.loopFrequency
         
         return motorAccels
 
@@ -160,107 +154,103 @@ class ControlLawSingleton:
 
     def initialize(self):
 
-        #Moment of Inertias
-        I = np.array([[5.35260018, 1.78704216, 2.62357767],
-                      [3.73154545, 8.28831661, 1.78704216],
-                      [2.62357767, 3.73154545, 8.28977575]]);
-        #I = np.array([[0.17343628,  0,          0       ],
-        #              [0,           1.01561,    0       ],
-        #              [0,           0,          1.01561 ]]);
+        #Reaction wheel angles
+        sinAngle = np.sin(np.deg2rad(self.motorAngle))
+        cosAngle = np.cos(np.deg2rad(self.motorAngle))
 
-        inverseI = linalg.inv(I)      
-        # Note: Previously, the below code shows how we were
-        # taking the inverse only along principal axes.
-        #inverseI = np.array([[1/I[0,0], 0,        0       ],
-        #                     [0,        1/I[1,1], 0       ],
-        #                     [0,        0,        1/I[2,2]]])
-
-        #Reaction wheels
-        self.Irw = 0.000453158
-        motorAngle = 45
-
-        sinAngle = np.sin(np.deg2rad(motorAngle))
-        cosAngle = np.cos(np.deg2rad(motorAngle))
-
-        motorAngles = np.array([[sinAngle,  sinAngle,  sinAngle,  sinAngle],
-                                [0,        -cosAngle,  0,         cosAngle],
-                                [cosAngle,  0,        -cosAngle,  0        ]])
+        self.motorAngles = np.array([[sinAngle,  sinAngle,  sinAngle,  sinAngle],
+                                    [0,         -cosAngle,  0,         cosAngle],
+                                    [cosAngle,   0,         -cosAngle, 0        ]])
         
-        self.IrwArray = np.linalg.pinv(self.Irw * motorAngles)
+        #cosAngle30 = np.cos(np.deg2rad(self.motorAngle))*np.cos(np.deg2rad(30))
+        #cosAngle60 = np.cos(np.deg2rad(self.motorAngle))*np.cos(np.deg2rad(60))
+        #self.motorAngles = np.array([[sinAngle,    sinAngle,    sinAngle,    sinAngle],
+        #                             [cosAngle60,  cosAngle30, -cosAngle60, -cosAngle30],
+        #                             [cosAngle30, -cosAngle60, -cosAngle30,  cosAngle60]])
+       
+        self.IrwArray = np.linalg.pinv(self.Irw * self.motorAngles)
         
-        #Consider adding max torque, rpm
+        # Optimal PID Controller, LQR can't work with no gravity gradient torque
+        z = np.sqrt((np.log(self.overshoot)**2.0)/((np.pi**2.0)+(np.log(self.overshoot)**2.0)))
+        zwn = 4/self.ts
+        wn = zwn/z
+
+        #Calculate gains
+        self.kd = 2*zwn*np.diag(self.I)
+        self.kp = (wn**2)*np.diag(self.I)
+
 
         # Gain setup
-        k1 = (I[1,1] - I[2,2])/I[0,0]
-        k2 = (I[1,1] - I[2,2])/I[1,1]
-        k3 = (I[1,1] - I[0,0])/I[2,2]
+        #k1 = (I[1,1] - I[2,2])/I[0,0]
+        #k2 = (I[1,1] - I[2,2])/I[1,1]
+        #k3 = (I[1,1] - I[0,0])/I[2,2]
 
-        mu = 398600 #km^3/s^2 (Earth)
-        a = 6378; #km (Earth)
-        n = np.sqrt(mu / a**3)
+        #mu = 398600 #km^3/s^2 (Earth)
+        #a = 6378; #km (Earth)
+        #n = np.sqrt(mu / a**3)
 
-        F = -2 * n**2 * np.array([[4*k1, 0, 0], [0, 3*k2, 0], [0, 0, k3]])
-        G = n * np.array([[0, 0, (1.0-k1)], [0, 0, 0], [(k3-1.0), 0, 0 ]])
+        #F = -2 * n**2 * np.array([[4*k1, 0, 0], [0, 3*k2, 0], [0, 0, k3]])
+        #G = n * np.array([[0, 0, (1.0-k1)], [0, 0, 0], [(k3-1.0), 0, 0 ]])
 
         # CARE Equation
-        A_top = np.concatenate((np.zeros([3,3]), 0.5*np.eye(3)), axis=1)
-        A_bottom = np.concatenate((F, G), axis=1)
+        #A_top = np.concatenate((np.zeros([3,3]), 0.5*np.eye(3)), axis=1)
+        #A_bottom = np.concatenate((F, G), axis=1)
         
-        A = np.concatenate((A_top, A_bottom), axis=0)
-        B = np.concatenate((np.zeros([3,3]), np.diag(np.diag(inverseI))), axis=0) #TODO Should we mask along the diagonal like MATLAB is doing?
-        R = np.eye(3)
+        #A = np.concatenate((A_top, A_bottom), axis=0)
+        #B = np.concatenate((np.zeros([3,3]), np.diag(np.diag(inverseI))), axis=0) #TODO Should we mask along the diagonal like MATLAB is doing?
+        #R = np.eye(3)
         
-        # Gains for nominal operation
-        Q_nominal = np.diag([1,1,1,10,10,10])
-        S_nominal = linalg.solve_continuous_are(A, B, Q_nominal, R)
-        self.K_nominal = -1 * np.dot(np.dot(linalg.inv(R), np.transpose(B)), S_nominal)
+        ## Gains for nominal operation
+        #Q_nominal = np.diag([1,1,1,10,10,10])
+        #S_nominal = linalg.solve_continuous_are(A, B, Q_nominal, R)
+        #self.K_nominal = -1 * np.dot(np.dot(linalg.inv(R), np.transpose(B)), S_nominal)
 
-        # Gains for yawSweep and yawSweepLockRoll operations
-        Q_yawSweep = np.diag([1,1,1,10,15,10])
-        S_yawSweep = linalg.solve_continuous_are(A, B, Q_yawSweep, R)
-        self.K_yawSweep = -1 * np.dot(np.dot(linalg.inv(R), np.transpose(B)), S_yawSweep)
+        ## Gains for yawSweep and yawSweepLockRoll operations
+        #Q_yawSweep = np.diag([1,1,1,10,15,10])
+        #S_yawSweep = linalg.solve_continuous_are(A, B, Q_yawSweep, R)
+        #self.K_yawSweep = -1 * np.dot(np.dot(linalg.inv(R), np.transpose(B)), S_yawSweep)
 
-        # Gains for correctivePitch operation
-        Q_correctivePitch = np.diag([1,1,1,10,10,10])
-        S_correctivePitch = linalg.solve_continuous_are(A, B, Q_correctivePitch, R)
-        self.K_correctivePitch = -1 * np.dot(np.dot(linalg.inv(R), np.transpose(B)), S_correctivePitch)
+        ## Gains for correctivePitch operation
+        #Q_correctivePitch = np.diag([1,1,1,10,10,10])
+        #S_correctivePitch = linalg.solve_continuous_are(A, B, Q_correctivePitch, R)
+        #self.K_correctivePitch = -1 * np.dot(np.dot(linalg.inv(R), np.transpose(B)), S_correctivePitch)
         
-        log("Initialized A matrix:")
-        log(A)
-        log("Initialized B matrix:")
-        log(B)
-        log("Initialized R matrix:")
-        log(R)
+        #log("Initialized A matrix:")
+        #log(A)
+        #log("Initialized B matrix:")
+        #log(B)
+        #log("Initialized R matrix:")
+        #log(R)
 
-        log("---------- Initializing gain matricies ----------")
-        log("Initialized gain matrix K_nominal:")
-        log(self.K_nominal)
-        log("Initialized gain matrix K_yawsweep:")
-        log(self.K_yawSweep)
-        log("Initialized gain matrix K_correctivePitch:")
-        log(self.K_correctivePitch)
-        log("-------------------------------------------------")
+        #log("---------- Initializing gain matricies ----------")
+        #log("Initialized gain matrix K_nominal:")
+        #log(self.K_nominal)
+        #log("Initialized gain matrix K_yawsweep:")
+        #log(self.K_yawSweep)
+        #log("Initialized gain matrix K_correctivePitch:")
+        #log(self.K_correctivePitch)
+        #log("-------------------------------------------------")
        
     def adjustAttitude(self, lqrMode, q, qTarget, qError):
-        if lqrMode == LqrMode.nominal:
+        if lqrMode == PdMode.nominal:
             #Do nothing, return qError
             return qError
         
-        elif lqrMode == LqrMode.correctivePitch:
+        elif lqrMode == PdMode.correctivePitch:
             # Overwrite target with current position, and override pitch to zero.
             ypr = quat2ypr(q)
             ypr[1] = 0
             newTarget = ypr2quat(ypr)
             return getQuatError(q, newTarget)
         
-        elif lqrMode == LqrMode.yawSweep:
+        elif lqrMode == PdMode.yawSweep:
             #Override pitch to zero
             ypr = quat2ypr(qTarget)
             ypr[1] = 0
             newTarget = ypr2quat(ypr)
             return getQuatError(q, newTarget)
         
-        elif lqrMode == LqrMode.yawSweepLockRoll:
+        elif lqrMode == PdMode.yawSweepLockRoll:
             #Override pitch to zero, set target roll to body roll.
             yprTarget = quat2ypr(qTarget)
             yprPrudentia = quat2ypr(q)
@@ -285,44 +275,42 @@ class ControlLawSingleton:
 
         if pitchInertial > self.correctivePitchThreshold:
             #Override target pitch to 0
-            return LqrMode.correctivePitch
+            return PdMode.correctivePitch
 
         elif yawErrorAbs > self.yawSweepThreshold:
 
             if rollErrorAbs > self.rollSweepThreshold:
                 #Override target pitch to 0, AND roll to bodyRoll
-                return LqrMode.yawSweepLockRoll
+                return PdMode.yawSweepLockRoll
             else:
                 #Override target pitch to 0
-                return LqrMode.yawSweep
+                return PdMode.yawSweep
         else:
-            return LqrMode.nominal
+            return PdMode.nominal
 
     def getTorque(self, lqrMode, qError, w):
-        qHatError = qError[:3]
-        xbar = np.concatenate((qHatError, w), axis=0)
-        if lqrMode == LqrMode.nominal:
-            K = self.K_nominal
-        
-        elif lqrMode == LqrMode.correctivePitch:
-            K = self.K_correctivePitch
-        
-        elif lqrMode == LqrMode.yawSweep or lqrMode == LqrMode.yawSweepLockRoll:
-            K = self.K_yawSweep
 
-        else:
-            log("Error in getTorque! lqrMode was not set to an expected value! lqrMode: %s " % lqrMode)
-            K = self.K_nominal
+        derivativeTorque = -((self.kd/np.diag(self.I))*w) 
+        proportionalTorque = -((self.kp/np.diag(self.I)*qError[0:3])*np.diag(self.I))
         
-        return np.dot(K, xbar)
+        torque = derivativeTorque + proportionalTorque
+
+        if self.enableSaturation:
+            for i in range(3):
+                if torque[i] > self.maxTorque[i]:
+                    torque[i] = self.maxTorque[i]
+                elif torque[i] < - self.maxTorque[i]:
+                    torque[i] = - self.maxTorque[i]
+
+        return torque
 
 
 if __name__ == "__main__":
     cls = ControlLawSingleton()
 
-    q = ypr2quat(np.radians([0,0,0]))
-    w = np.array([0, 0, 0])
-    qTarget = ypr2quat(np.radians([30, 0, 0]))
+    q = ypr2quat(np.radians([0, 0, 0]))
+    w = np.array([0.33, -0.33, 0.33])
+    qTarget = ypr2quat(np.radians([0, 0, 0]))
  
     res = cls.routineAttitudeInput(q, w, qTarget)
      
