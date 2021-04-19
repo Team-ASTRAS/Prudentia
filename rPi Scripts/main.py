@@ -1,3 +1,4 @@
+import sys
 import time
 from threading import Thread
 from utilities import log
@@ -10,16 +11,19 @@ from controlLaw import ControlRoutine, ypr2quat, quat2ypr
 
 log('Hello world from Prudentia!')
 
-enableImu = False
+enableImu = True
 #When set to False, the IMU is emulated with random data.
 
-enableMotors = False
+enableMotors = True
 #When set to False, motor input and output is ignored.
 
 enableCamera = False
 #When set to False, the camera is not initialized and is unused.
 
-internalWebsocket = True
+enableStop = True
+#When set to False, emergency stop button is ignored.
+
+internalWebsocket = False
 #This should be set to True when testing on the same machine the script is running on. When set
 #to True, the websocket is exposed at the address 'localhost'. Otherwise, static ip is used.
 
@@ -30,7 +34,7 @@ if internalWebsocket:
     ip = '127.0.0.1' #Local Machine
     log("WARNING: internal websocket in use. GUI is only accessible through localhost:8009")
 else:
-    ip = '172.30.135.229' #Static external IP
+    ip = '172.30.0.20' #Static external IP
 
 imuPortName = '/dev/ttyUSB0'
 #imuPortName = 'com3'
@@ -101,6 +105,20 @@ if enableCamera:
 else:
     log("WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py")
 
+## STOP Setup
+if enableStop:
+    log("Initializing emergency stop")
+    import RPi.GPIO as GPIO
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setwarnings(False)
+    
+    switchPin = 27
+    GPIO.setup(switchPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+else:
+    log("WARNING: Emergency stop functionality disabled. To reverse this, set 'enableStop = True' in main.py")
+
+
+
 def processCommands():
     while not sharedData.commandQueue.empty():
         msgJSON = sharedData.commandQueue.get()
@@ -167,6 +185,12 @@ while True:
     #Check sharedData.commandQueue for any incoming commands
     processCommands()
 
+    if enableStop:
+        isAlive = GPIO.input(switchPin)
+        if not isAlive:
+            print("Emergency stop triggered. Shutting down.")
+            sharedData.state = State.shutdown
+
     # If state changes, update and log
     if sharedData.state != lastState:
         log("Mode changed from %s to %s." % (lastState, sharedData.state))
@@ -185,7 +209,7 @@ while True:
         log("HTML Server shut down.")
 
         log("Main thread shutting down.")
-        break #If disabled, end program
+        sys.exit()
 
     if (sharedData.state and State.standby) or (sharedData.state and State.running):
         #Set IMU data
@@ -255,6 +279,7 @@ while True:
             # Use response to actuate motors
             if enableMotors:
                 Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
+                #print(response.motorAccels * 60 / (2 * np.pi))
                
                 sharedData.duty = Motors.duty
 

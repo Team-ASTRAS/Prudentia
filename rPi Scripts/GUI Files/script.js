@@ -47,7 +47,7 @@ var dataMode = document.querySelector('.DataMode'),
     searchmode = document.querySelector('.SearchButton');
 
 //Connect to RPi here
-ip = "ws://172.30.90.13:8010/";
+ip = "ws://172.30.0.20:8010/";
 start(ip);
 
 dataUpdate =  100;

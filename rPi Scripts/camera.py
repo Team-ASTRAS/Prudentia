@@ -120,12 +120,12 @@ def findLocation():
     
     startTime = time.time()       
     # Target Calculation 
-    template_gray = cv2.imread('target_00.bmp',0) # 0 makes it read in gray instead of color
+    template_gray = cv2.imread('circle_target.bmp',0) # 0 makes it read in gray instead of color
     img = cv2.imread('/home/pi/Desktop/Prudentia/rPi Scripts/images/image3.bmp') # reads in image taken
     img_gray = cv2.imread('/home/pi/Desktop/Prudentia/rPi Scripts/images/image3.bmp',0) # makes it gray
     #imgOutput = cv2.cvtColor(imgOutput, cv2.COLOR_BGR2GRAY)
     res = cv2.matchTemplate(img_gray,template_gray,cv2.TM_CCOEFF_NORMED) #matches using cv2 in gray scale images
-    threshold = 0.6
+    threshold = 0.8
     loc = np.where(res>=threshold)
     
         
@@ -152,7 +152,7 @@ def findLocation():
         
         endTime = time.time()
         print("Find location time taken: %s" % (endTime - startTime))
-        return [theta_x,theta_y,x_pixel, y_pixel]
+        return [theta_x,theta_y,x_pixels, y_pixels]
     else:
         #Nothing was found
         endTime = time.time()

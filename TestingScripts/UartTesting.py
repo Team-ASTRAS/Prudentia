@@ -41,7 +41,7 @@ timeNow = time.time()
 c = 0
 allowedTime = 1/20
 
-dutyCyclePerStep = 0.008
+dutyCyclePerStep = 0.001  #was 0.008
 
 
 while timeNow - startTime < 300:
@@ -70,6 +70,7 @@ while timeNow - startTime < 300:
             f.write("%s,%s,%s\n" % (round(timeNow, 4), RPM.rpm, dc))
             f.close()
         vescs[i].set_duty_cycle(dc)
+        #print(dc)
     
     
 
