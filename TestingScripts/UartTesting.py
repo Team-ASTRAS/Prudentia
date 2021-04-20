@@ -41,7 +41,7 @@ timeNow = time.time()
 c = 0
 allowedTime = 1/20
 
-dutyCyclePerStep = 0.001  #was 0.008
+dutyCyclePerStep = 0.004  #was 0.008
 
 
 while timeNow - startTime < 300:
@@ -64,13 +64,13 @@ while timeNow - startTime < 300:
     
     
     for i in range(4):
-        if i == 3:
+        if i == 0:
             print("Time:[%s], RPM:[%s], DC:[%s]" % (round(timeNow, 4), RPM.rpm, dc))
             f = open("testData.csv", "a")
             f.write("%s,%s,%s\n" % (round(timeNow, 4), RPM.rpm, dc))
             f.close()
         vescs[i].set_duty_cycle(dc)
-        #print(dc)
+        
     
     
 

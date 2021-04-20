@@ -20,11 +20,11 @@ for i in range(len(serialPorts)):
 
 
 currentRpm = [0, 0, 0, 0]
-targets = [0.9, 0.9, 0.9, 0.9]
+targets = [-0.9, 0.0, 0.9, 0.0]
 #[0, +, 0, -] => -z
 #[0, +, 0, -] => +z
 setRpms = [0, 0, 0, 0]
-step = 0.01
+step = 0.0015
 startTime = time.time()
 
 

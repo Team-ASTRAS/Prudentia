@@ -1,0 +1,1001 @@
+0.33564235497849626
+IMU Pitch: 19.23089036609963, Control Mode: nominal
+0.33722070149313504
+IMU Pitch: 19.32132295999762, Control Mode: nominal
+0.3383138819570431
+IMU Pitch: 19.3839575868257, Control Mode: nominal
+0.3399913937119231
+IMU Pitch: 19.480071930463914, Control Mode: nominal
+0.34109905765882087
+IMU Pitch: 19.543536399739953, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001989 ms], MAX: [0.00296 ms], Processing %: [3.98%]
+Total Runtime: 12.0008 (loop 240), Total Average Frequency: 19.9987 Hz
+0.34276915963728116
+IMU Pitch: 19.639226194462175, Control Mode: nominal
+0.3443787722294343
+IMU Pitch: 19.731450202643664, Control Mode: nominal
+0.3454579446452904
+IMU Pitch: 19.793282227439153, Control Mode: nominal
+0.34646332501469806
+IMU Pitch: 19.850886279411522, Control Mode: nominal
+0.3480267560261397
+IMU Pitch: 19.940464277926992, Control Mode: nominal
+0.34906355242863496
+IMU Pitch: 19.99986833600432, Control Mode: nominal
+0.3507080462895085
+HELLO?
+IMU Pitch: 20.094090893667545, Control Mode: nominal
+0.3517603791012839
+HELLO?
+IMU Pitch: 20.15438512242541, Control Mode: nominal
+0.35330041161065023
+HELLO?
+IMU Pitch: 20.242622485525047, Control Mode: nominal
+0.35482981312041495
+HELLO?
+IMU Pitch: 20.3302507372155, Control Mode: nominal
+0.3558392123506456
+HELLO?
+IMU Pitch: 20.38808505295147, Control Mode: nominal
+0.35691709034402974
+HELLO?
+IMU Pitch: 20.449842912802414, Control Mode: nominal
+0.3584824313735916
+HELLO?
+IMU Pitch: 20.53953034729497, Control Mode: nominal
+0.35946110969580225
+HELLO?
+IMU Pitch: 20.595604484658587, Control Mode: nominal
+0.36099902322211813
+HELLO?
+IMU Pitch: 20.683720438972564, Control Mode: nominal
+0.36199684995078
+HELLO?
+IMU Pitch: 20.740891699210238, Control Mode: nominal
+0.36352205873079924
+HELLO?
+IMU Pitch: 20.828279725181634, Control Mode: nominal
+0.36488175181087296
+HELLO?
+IMU Pitch: 20.906184400103005, Control Mode: nominal
+0.3658746790511897
+HELLO?
+IMU Pitch: 20.963074940336725, Control Mode: nominal
+0.3668852279982566
+HELLO?
+IMU Pitch: 21.02097512999505, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.00202 ms], MAX: [0.002414 ms], Processing %: [4.04%]
+Total Runtime: 13.001 (loop 260), Total Average Frequency: 19.9985 Hz
+0.36834893393730467
+HELLO?
+IMU Pitch: 21.104839302750733, Control Mode: nominal
+0.3693318407340475
+HELLO?
+IMU Pitch: 21.161155713858825, Control Mode: nominal
+0.37087085733099384
+HELLO?
+IMU Pitch: 21.24933486946443, Control Mode: nominal
+0.371842916241368
+HELLO?
+IMU Pitch: 21.305029742466957, Control Mode: nominal
+0.37331835391855045
+HELLO?
+IMU Pitch: 21.389566094304097, Control Mode: nominal
+0.3747422273613295
+HELLO?
+IMU Pitch: 21.471148033136096, Control Mode: nominal
+0.37573263671350976
+HELLO?
+IMU Pitch: 21.527894309006314, Control Mode: nominal
+0.37671543801850443
+HELLO?
+IMU Pitch: 21.584204675882454, Control Mode: nominal
+0.3781156301995279
+HELLO?
+IMU Pitch: 21.66442977836232, Control Mode: nominal
+0.3790613216492039
+HELLO?
+IMU Pitch: 21.718613907150367, Control Mode: nominal
+0.38050281987379114
+HELLO?
+IMU Pitch: 21.801205671594815, Control Mode: nominal
+0.3814708661797342
+HELLO?
+IMU Pitch: 21.85667063929859, Control Mode: nominal
+0.382923353773639
+HELLO?
+IMU Pitch: 21.93989204822444, Control Mode: nominal
+0.38429875680629094
+HELLO?
+IMU Pitch: 22.01869683712489, Control Mode: nominal
+0.385282089008764
+HELLO?
+IMU Pitch: 22.075037622185903, Control Mode: nominal
+0.38623501854233716
+HELLO?
+IMU Pitch: 22.129636462633016, Control Mode: nominal
+0.3876607604104247
+HELLO?
+IMU Pitch: 22.211325454349527, Control Mode: nominal
+0.3885623894485794
+HELLO?
+IMU Pitch: 22.262984992922227, Control Mode: nominal
+0.38995673004610265
+HELLO?
+IMU Pitch: 22.342874824364063, Control Mode: nominal
+0.39084121644154696
+HELLO?
+IMU Pitch: 22.39355216185976, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.002849 ms], MAX: [0.005658 ms], Processing %: [5.7%]
+Total Runtime: 14.0018 (loop 280), Total Average Frequency: 19.9975 Hz
+0.39219522615852265
+HELLO?
+IMU Pitch: 22.471131204062168, Control Mode: nominal
+0.39349012108985254
+HELLO?
+IMU Pitch: 22.545323218540258, Control Mode: nominal
+0.3944136402938541
+HELLO?
+IMU Pitch: 22.59823697122883, Control Mode: nominal
+0.395328861324605
+HELLO?
+IMU Pitch: 22.65067527361246, Control Mode: nominal
+0.39661156442553414
+HELLO?
+IMU Pitch: 22.724168747664045, Control Mode: nominal
+0.39749552075111494
+HELLO?
+IMU Pitch: 22.77481571439372, Control Mode: nominal
+0.39882755217045096
+HELLO?
+IMU Pitch: 22.851135492900497, Control Mode: nominal
+0.39970122245998835
+HELLO?
+IMU Pitch: 22.901193113176962, Control Mode: nominal
+0.40102540661311326
+HELLO?
+IMU Pitch: 22.977063276449122, Control Mode: nominal
+0.4023591357618856
+HELLO?
+IMU Pitch: 23.05348032768735, Control Mode: nominal
+0.4032313878308222
+HELLO?
+IMU Pitch: 23.103456689908977, Control Mode: nominal
+0.40409385286093413
+HELLO?
+IMU Pitch: 23.152872296112005, Control Mode: nominal
+0.4053422248021709
+HELLO?
+IMU Pitch: 23.224398739607434, Control Mode: nominal
+0.4061135363667984
+HELLO?
+IMU Pitch: 23.268591636950223, Control Mode: nominal
+0.40698815806953287
+HELLO?
+IMU Pitch: 23.31870376918745, Control Mode: nominal
+0.40865184498174445
+HELLO?
+IMU Pitch: 23.41402600768833, Control Mode: nominal
+0.4095006501766776
+HELLO?
+IMU Pitch: 23.462658962986772, Control Mode: nominal
+0.41033862211900163
+HELLO?
+IMU Pitch: 23.51067121863232, Control Mode: nominal
+0.41158451136435453
+HELLO?
+IMU Pitch: 23.582055414131784, Control Mode: nominal
+0.412382402281705
+HELLO?
+IMU Pitch: 23.627771196207785, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.002827 ms], MAX: [0.00453 ms], Processing %: [5.65%]
+Total Runtime: 15.0013 (loop 300), Total Average Frequency: 19.9983 Hz
+0.41363003541511806
+HELLO?
+IMU Pitch: 23.69925530913303, Control Mode: nominal
+0.4144986165977301
+HELLO?
+IMU Pitch: 23.749021345061188, Control Mode: nominal
+0.4153089693305818
+HELLO?
+IMU Pitch: 23.795451136570488, Control Mode: nominal
+0.4168532613472288
+HELLO?
+IMU Pitch: 23.883932551460102, Control Mode: nominal
+0.4176618919331654
+HELLO?
+IMU Pitch: 23.93026367121946, Control Mode: nominal
+0.41847962917492637
+HELLO?
+IMU Pitch: 23.97711656392303, Control Mode: nominal
+0.419606046199778
+HELLO?
+IMU Pitch: 24.04165550541871, Control Mode: nominal
+0.42034265896642253
+HELLO?
+IMU Pitch: 24.083860308082894, Control Mode: nominal
+0.4214743683410701
+HELLO?
+IMU Pitch: 24.148702478885596, Control Mode: nominal
+0.42226302695350215
+HELLO?
+IMU Pitch: 24.193889288854596, Control Mode: nominal
+0.4229693073976944
+HELLO?
+IMU Pitch: 24.234356177459443, Control Mode: nominal
+0.4242705945705467
+HELLO?
+IMU Pitch: 24.308914440398382, Control Mode: nominal
+0.4249655610064021
+HELLO?
+IMU Pitch: 24.348733084076148, Control Mode: nominal
+0.42569686100464954
+HELLO?
+IMU Pitch: 24.390633487533652, Control Mode: nominal
+0.42669393792691257
+HELLO?
+IMU Pitch: 24.44776178702922, Control Mode: nominal
+0.4273863945321478
+HELLO?
+IMU Pitch: 24.487436628005153, Control Mode: nominal
+0.42838658134172636
+HELLO?
+IMU Pitch: 24.544743110918663, Control Mode: nominal
+0.42905832222843127
+HELLO?
+IMU Pitch: 24.583231028653223, Control Mode: nominal
+0.42971154682549617
+HELLO?
+IMU Pitch: 24.620658041139176, Control Mode: nominal
+0.4310600642255383
+HELLO?
+IMU Pitch: 24.697922396761545, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.00294 ms], MAX: [0.007587 ms], Processing %: [5.88%]
+Total Runtime: 16.0009 (loop 320), Total Average Frequency: 19.9989 Hz
+0.43172270305752014
+HELLO?
+IMU Pitch: 24.735888805175584, Control Mode: nominal
+0.4323256928542267
+HELLO?
+IMU Pitch: 24.77043757561632, Control Mode: nominal
+0.4333159253707737
+HELLO?
+IMU Pitch: 24.827173719551084, Control Mode: nominal
+0.4339386926399669
+HELLO?
+IMU Pitch: 24.862855655694744, Control Mode: nominal
+0.43480170223313863
+HELLO?
+IMU Pitch: 24.912302463062783, Control Mode: nominal
+0.43542680712158616
+HELLO?
+IMU Pitch: 24.94811833492382, Control Mode: nominal
+0.43602142688138307
+HELLO?
+IMU Pitch: 24.982187537575275, Control Mode: nominal
+0.43698447343471675
+HELLO?
+IMU Pitch: 25.03736604055591, Control Mode: nominal
+0.43785707156892956
+HELLO?
+IMU Pitch: 25.087362230857295, Control Mode: nominal
+0.43842104017971095
+HELLO?
+IMU Pitch: 25.119675252032927, Control Mode: nominal
+0.4392724586071927
+HELLO?
+IMU Pitch: 25.168457934527297, Control Mode: nominal
+0.43987206822590197
+HELLO?
+IMU Pitch: 25.20281303503478, Control Mode: nominal
+0.44074090508368036
+HELLO?
+IMU Pitch: 25.252593720070898, Control Mode: nominal
+0.4413326397364253
+HELLO?
+IMU Pitch: 25.286497618264818, Control Mode: nominal
+0.4419043205128656
+HELLO?
+IMU Pitch: 25.319252513983606, Control Mode: nominal
+0.44301666769609976
+HELLO?
+IMU Pitch: 25.38298531293619, Control Mode: nominal
+0.4435266307861973
+HELLO?
+IMU Pitch: 25.41220404570623, Control Mode: nominal
+0.44402056753130537
+HELLO?
+IMU Pitch: 25.440504536547348, Control Mode: nominal
+0.4447887277998301
+HELLO?
+IMU Pitch: 25.484516877923458, Control Mode: nominal
+0.44528442974657423
+HELLO?
+IMU Pitch: 25.512918507368312, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.00305 ms], MAX: [0.005213 ms], Processing %: [6.1%]
+Total Runtime: 17.0014 (loop 340), Total Average Frequency: 19.9984 Hz
+0.44610016304158817
+HELLO?
+IMU Pitch: 25.55965658238091, Control Mode: nominal
+0.44657240194611364
+HELLO?
+IMU Pitch: 25.586713878532098, Control Mode: nominal
+0.4470946502042078
+HELLO?
+IMU Pitch: 25.616636499578956, Control Mode: nominal
+0.44784303383885105
+HELLO?
+IMU Pitch: 25.65951572330067, Control Mode: nominal
+0.4485205534440869
+HELLO?
+IMU Pitch: 25.698334737218058, Control Mode: nominal
+0.4489309274948673
+HELLO?
+IMU Pitch: 25.721847438349464, Control Mode: nominal
+0.4495923073395087
+HELLO?
+IMU Pitch: 25.759741712102436, Control Mode: nominal
+0.4500689626453273
+HELLO?
+IMU Pitch: 25.787052049408352, Control Mode: nominal
+0.4507568760851374
+HELLO?
+IMU Pitch: 25.82646658617981, Control Mode: nominal
+0.45117341484564155
+HELLO?
+IMU Pitch: 25.850332499160302, Control Mode: nominal
+0.4516106279334163
+HELLO?
+IMU Pitch: 25.875382963837676, Control Mode: nominal
+0.45227013568698793
+HELLO?
+IMU Pitch: 25.91316997467349, Control Mode: nominal
+0.45284429140829424
+HELLO?
+IMU Pitch: 25.946066674287625, Control Mode: nominal
+0.45325370206504534
+HELLO?
+IMU Pitch: 25.96952417700715, Control Mode: nominal
+0.4538161685259319
+HELLO?
+IMU Pitch: 26.001751131333602, Control Mode: nominal
+0.4541817462301933
+HELLO?
+IMU Pitch: 26.022697190871856, Control Mode: nominal
+0.45473089107312004
+HELLO?
+IMU Pitch: 26.05416087271294, Control Mode: nominal
+0.45507542409041213
+HELLO?
+IMU Pitch: 26.07390116050668, Control Mode: nominal
+0.45539081955505606
+HELLO?
+IMU Pitch: 26.091971989508348, Control Mode: nominal
+0.4560993633240264
+HELLO?
+IMU Pitch: 26.13256855707064, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.002678 ms], MAX: [0.003863 ms], Processing %: [5.36%]
+Total Runtime: 18.0011 (loop 360), Total Average Frequency: 19.9988 Hz
+0.4564395466274663
+HELLO?
+IMU Pitch: 26.152059624618563, Control Mode: nominal
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Python 3.7.3 (/usr/bin/python3)
+>>> %Run main.py
+Hello world from Prudentia!
+Setting up GUI server. Accessible on LAN through "172.30.0.20:8009"
+Data will be exchanged via websockets on LAN through "172.30.0.20:8010"
+Loading Gui Files from directory: "/home/pi/Desktop/Prudentia/rPi Scripts/GUI Files"Websocket server started on port 8010
+
+Initializing imu.py
+WARNING: Motor functionality disabled. To reverse this, set 'enableMotors = True' in main.py
+WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py
+Initializing emergency stop
+Starting in 2 seconds...
+Traceback (most recent call last):
+  File "/home/pi/Desktop/Prudentia/rPi Scripts/main.py", line 265, in <module>
+    response = ControlLaw.routineAttitudeInput(Imu.q, Imu.w, qTarget)
+  File "/home/pi/Desktop/Prudentia/rPi Scripts/controlLaw.py", line 135, in routineAttitudeInput
+    qErrorAdjusted = self.adjustAttitude(lqrMode, q, qTarget, qError)
+NameError: name 'lqrMode' is not defined
+>>> %cd '/home/pi/Desktop/Prudentia/rPi Scripts'
+>>> %Run main.py
+Hello world from Prudentia!
+Setting up GUI server. Accessible on LAN through "172.30.0.20:8009"
+Data will be exchanged via websockets on LAN through "172.30.0.20:8010"
+Loading Gui Files from directory: "/home/pi/Desktop/Prudentia/rPi Scripts/GUI Files"Websocket server started on port 8010
+
+Initializing imu.py
+WARNING: Motor functionality disabled. To reverse this, set 'enableMotors = True' in main.py
+WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py
+Initializing emergency stop
+Starting in 2 seconds...
+IMU Pitch: -0.26556151916725385, Control Mode: yawSweep
+IMU Pitch: -0.27001849921405857, Control Mode: yawSweep
+IMU Pitch: -0.27062553292621466, Control Mode: yawSweep
+IMU Pitch: -0.2792664944826169, Control Mode: yawSweep
+IMU Pitch: -0.27948241662852175, Control Mode: yawSweep
+IMU Pitch: -0.28165328305299325, Control Mode: yawSweep
+IMU Pitch: -0.2858647375290354, Control Mode: yawSweep
+IMU Pitch: -0.2902159167902071, Control Mode: yawSweep
+IMU Pitch: -0.29267244617790755, Control Mode: yawSweep
+IMU Pitch: -0.29334123947099533, Control Mode: yawSweep
+IMU Pitch: -0.29819735091188937, Control Mode: yawSweep
+IMU Pitch: -0.3004171839165291, Control Mode: yawSweep
+IMU Pitch: -0.30058011882134816, Control Mode: yawSweep
+IMU Pitch: -0.30611888493961203, Control Mode: yawSweep
+IMU Pitch: -0.31049103374706066, Control Mode: yawSweep
+IMU Pitch: -0.3127795030935103, Control Mode: yawSweep
+IMU Pitch: -0.3140538732461528, Control Mode: yawSweep
+IMU Pitch: -0.3164015744712323, Control Mode: yawSweep
+IMU Pitch: -0.3143262098727922, Control Mode: yawSweep
+IMU Pitch: -0.3173249191575422, Control Mode: yawSweep
+----------------------------------------
+Loop Times for last second: AVG: [0.001865 ms], MAX: [0.003572 ms], Processing %: [3.73%]
+Total Runtime: 1.001 (loop 20), Total Average Frequency: 19.9804 Hz
+IMU Pitch: -0.3188372536690544, Control Mode: yawSweep
+IMU Pitch: -0.31971099952625615, Control Mode: yawSweep
+IMU Pitch: -0.31932986080340076, Control Mode: yawSweep
+IMU Pitch: -0.3208185379395681, Control Mode: yawSweep
+IMU Pitch: -0.32351608779362806, Control Mode: yawSweep
+IMU Pitch: -0.3245362920439005, Control Mode: yawSweep
+IMU Pitch: -0.32480374353232827, Control Mode: yawSweep
+IMU Pitch: -0.32456783310901727, Control Mode: yawSweep
+IMU Pitch: -0.32501875364919774, Control Mode: yawSweep
+IMU Pitch: -0.323247487478925, Control Mode: yawSweep
+IMU Pitch: -0.3208524243819079, Control Mode: yawSweep
+IMU Pitch: -0.31539010918067073, Control Mode: yawSweep
+IMU Pitch: -0.31853234733993413, Control Mode: yawSweep
+IMU Pitch: -0.316220585221872, Control Mode: yawSweep
+IMU Pitch: -0.3161979964396529, Control Mode: yawSweep
+IMU Pitch: -0.3129526045103388, Control Mode: yawSweep
+IMU Pitch: -0.3127260909915056, Control Mode: yawSweep
+IMU Pitch: -0.31098570037101453, Control Mode: yawSweep
+IMU Pitch: -0.3085177566994315, Control Mode: yawSweep
+IMU Pitch: -0.30540407424114707, Control Mode: yawSweep
+----------------------------------------
+Loop Times for last second: AVG: [0.001702 ms], MAX: [0.002046 ms], Processing %: [3.4%]
+Total Runtime: 2.001 (loop 40), Total Average Frequency: 19.9902 Hz
+IMU Pitch: -0.30757410448060907, Control Mode: yawSweep
+IMU Pitch: -0.30729017934930125, Control Mode: yawSweep
+IMU Pitch: -0.3035641808448618, Control Mode: yawSweep
+IMU Pitch: -0.300724911556715, Control Mode: yawSweep
+IMU Pitch: -0.2977550282059584, Control Mode: yawSweep
+IMU Pitch: -0.29520045467164646, Control Mode: yawSweep
+IMU Pitch: -0.2887516113340071, Control Mode: yawSweep
+IMU Pitch: -0.2855897661939997, Control Mode: yawSweep
+IMU Pitch: -0.2769204286011301, Control Mode: yawSweep
+IMU Pitch: -0.2693561393676622, Control Mode: yawSweep
+IMU Pitch: -0.2647651380603852, Control Mode: yawSweep
+IMU Pitch: -0.2608831951725689, Control Mode: yawSweep
+IMU Pitch: -0.25655473780886506, Control Mode: yawSweep
+IMU Pitch: -0.2509974764255745, Control Mode: yawSweep
+IMU Pitch: -0.24047833271273375, Control Mode: yawSweep
+IMU Pitch: -0.23858292114986984, Control Mode: yawSweep
+IMU Pitch: -0.23465248911863137, Control Mode: yawSweep
+IMU Pitch: -0.22505433067245065, Control Mode: yawSweep
+IMU Pitch: -0.22413135759531, Control Mode: yawSweep
+IMU Pitch: -0.21302902696948078, Control Mode: yawSweep
+----------------------------------------
+Loop Times for last second: AVG: [0.001818 ms], MAX: [0.002769 ms], Processing %: [3.64%]
+Total Runtime: 3.0016 (loop 60), Total Average Frequency: 19.9894 Hz
+IMU Pitch: -0.21013368317807452, Control Mode: yawSweep
+IMU Pitch: -0.20451327673211606, Control Mode: yawSweep
+IMU Pitch: -0.19525637678228794, Control Mode: yawSweep
+IMU Pitch: -0.18636723759887752, Control Mode: yawSweep
+IMU Pitch: -0.1790941464405445, Control Mode: yawSweep
+IMU Pitch: -0.17070128979765642, Control Mode: yawSweep
+IMU Pitch: -0.16633691736902007, Control Mode: yawSweep
+IMU Pitch: -0.1544586384777173, Control Mode: yawSweep
+IMU Pitch: -0.14600833639830643, Control Mode: yawSweep
+IMU Pitch: -0.13822092753632498, Control Mode: nominal
+IMU Pitch: -0.12735079771770091, Control Mode: nominal
+IMU Pitch: -0.12244683408002152, Control Mode: nominal
+IMU Pitch: -0.10698278378740869, Control Mode: nominal
+IMU Pitch: -0.09260158044946731, Control Mode: nominal
+IMU Pitch: -0.0884321142834185, Control Mode: nominal
+IMU Pitch: -0.07734686131732538, Control Mode: nominal
+IMU Pitch: -0.07092307663782273, Control Mode: nominal
+IMU Pitch: -0.059580984123668246, Control Mode: nominal
+IMU Pitch: -0.04323868855253354, Control Mode: nominal
+IMU Pitch: -0.033268101856299505, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001601 ms], MAX: [0.002322 ms], Processing %: [3.2%]
+Total Runtime: 4.0008 (loop 80), Total Average Frequency: 19.9958 Hz
+IMU Pitch: -0.021362483914865976, Control Mode: nominal
+IMU Pitch: -0.005266998738426744, Control Mode: nominal
+IMU Pitch: 0.007892237028230796, Control Mode: nominal
+IMU Pitch: 0.022963016784048693, Control Mode: nominal
+IMU Pitch: 0.03207583662240043, Control Mode: nominal
+IMU Pitch: 0.04066082786389028, Control Mode: nominal
+IMU Pitch: 0.05809938833309892, Control Mode: nominal
+IMU Pitch: 0.07136249178761121, Control Mode: nominal
+IMU Pitch: 0.08724242276725047, Control Mode: nominal
+IMU Pitch: 0.10322043090806406, Control Mode: nominal
+IMU Pitch: 0.10942256256972992, Control Mode: nominal
+IMU Pitch: 0.1292770960898986, Control Mode: nominal
+IMU Pitch: 0.14204794973887236, Control Mode: nominal
+IMU Pitch: 0.1566642705704631, Control Mode: nominal
+IMU Pitch: 0.17126558842141046, Control Mode: nominal
+IMU Pitch: 0.18419867011540353, Control Mode: nominal
+IMU Pitch: 0.20172340545834888, Control Mode: nominal
+IMU Pitch: 0.22024471082420122, Control Mode: nominal
+IMU Pitch: 0.23278049571491927, Control Mode: nominal
+IMU Pitch: 0.25424657753297253, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001368 ms], MAX: [0.001637 ms], Processing %: [2.74%]
+Total Runtime: 5.0009 (loop 100), Total Average Frequency: 19.9964 Hz
+IMU Pitch: 0.27067090801561355, Control Mode: nominal
+IMU Pitch: 0.2835911002647371, Control Mode: nominal
+IMU Pitch: 0.3034379644364956, Control Mode: nominal
+IMU Pitch: 0.3144418307060422, Control Mode: nominal
+IMU Pitch: 0.3365551187262715, Control Mode: nominal
+IMU Pitch: 0.3603761983516707, Control Mode: nominal
+IMU Pitch: 0.3791010479893922, Control Mode: nominal
+IMU Pitch: 0.4028229374195679, Control Mode: nominal
+IMU Pitch: 0.4173896182858111, Control Mode: nominal
+IMU Pitch: 0.43425421851701895, Control Mode: nominal
+IMU Pitch: 0.4606608296696778, Control Mode: nominal
+IMU Pitch: 0.4734788049939915, Control Mode: nominal
+IMU Pitch: 0.4958347465982127, Control Mode: nominal
+IMU Pitch: 0.5185617737012138, Control Mode: nominal
+IMU Pitch: 0.5344695531471447, Control Mode: nominal
+IMU Pitch: 0.5583352719813333, Control Mode: nominal
+IMU Pitch: 0.5754544240515206, Control Mode: nominal
+IMU Pitch: 0.5900418612022297, Control Mode: nominal
+IMU Pitch: 0.6165164290883404, Control Mode: nominal
+IMU Pitch: 0.6306551387086783, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001456 ms], MAX: [0.001902 ms], Processing %: [2.91%]
+Total Runtime: 6.001 (loop 120), Total Average Frequency: 19.9966 Hz
+IMU Pitch: 0.6624691982311222, Control Mode: nominal
+IMU Pitch: 0.6910334761404173, Control Mode: nominal
+IMU Pitch: 0.7109446672318579, Control Mode: nominal
+IMU Pitch: 0.7366428837955407, Control Mode: nominal
+IMU Pitch: 0.7551699677871387, Control Mode: nominal
+IMU Pitch: 0.7717156617927058, Control Mode: nominal
+IMU Pitch: 0.8040032416986502, Control Mode: nominal
+IMU Pitch: 0.8212113764298152, Control Mode: nominal
+IMU Pitch: 0.8533808252734858, Control Mode: nominal
+IMU Pitch: 0.8806339394903455, Control Mode: nominal
+IMU Pitch: 0.9006579894579644, Control Mode: nominal
+IMU Pitch: 0.9289825327644607, Control Mode: nominal
+IMU Pitch: 0.9467764446529217, Control Mode: nominal
+IMU Pitch: 0.9651946620902753, Control Mode: nominal
+IMU Pitch: 0.9989730205211593, Control Mode: nominal
+IMU Pitch: 1.0201895707356872, Control Mode: nominal
+IMU Pitch: 1.0502422178948887, Control Mode: nominal
+IMU Pitch: 1.0801744317749533, Control Mode: nominal
+IMU Pitch: 1.1034950258662848, Control Mode: nominal
+IMU Pitch: 1.1373035039432375, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001442 ms], MAX: [0.002026 ms], Processing %: [2.88%]
+Total Runtime: 7.001 (loop 140), Total Average Frequency: 19.9971 Hz
+IMU Pitch: 1.1619688096586716, Control Mode: nominal
+IMU Pitch: 1.1822595185947928, Control Mode: nominal
+IMU Pitch: 1.2147816814227574, Control Mode: nominal
+IMU Pitch: 1.2365832984258267, Control Mode: nominal
+IMU Pitch: 1.2691162071832096, Control Mode: nominal
+IMU Pitch: 1.3025120662128558, Control Mode: nominal
+IMU Pitch: 1.3236142517350988, Control Mode: nominal
+IMU Pitch: 1.3551374846040252, Control Mode: nominal
+IMU Pitch: 1.3784027307122177, Control Mode: nominal
+IMU Pitch: 1.3991545496961046, Control Mode: nominal
+IMU Pitch: 1.4338891644028835, Control Mode: nominal
+IMU Pitch: 1.455867677721006, Control Mode: nominal
+IMU Pitch: 1.490166952489372, Control Mode: nominal
+IMU Pitch: 1.5243750572031944, Control Mode: nominal
+IMU Pitch: 1.5441716077098095, Control Mode: nominal
+IMU Pitch: 1.5794555971037998, Control Mode: nominal
+IMU Pitch: 1.6019234479559772, Control Mode: nominal
+IMU Pitch: 1.6234600885131272, Control Mode: nominal
+IMU Pitch: 1.6605383912809426, Control Mode: nominal
+IMU Pitch: 1.6837471637594827, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.00167 ms], MAX: [0.003042 ms], Processing %: [3.34%]
+Total Runtime: 8.0011 (loop 160), Total Average Frequency: 19.9972 Hz
+IMU Pitch: 1.7182277494308758, Control Mode: nominal
+IMU Pitch: 1.7552999746602338, Control Mode: nominal
+IMU Pitch: 1.7823554175513923, Control Mode: nominal
+IMU Pitch: 1.81732431779694, Control Mode: nominal
+IMU Pitch: 1.8415672477955374, Control Mode: nominal
+IMU Pitch: 1.8654792374417097, Control Mode: nominal
+IMU Pitch: 1.9024015165295993, Control Mode: nominal
+IMU Pitch: 1.9278003047537227, Control Mode: nominal
+IMU Pitch: 1.968501490761895, Control Mode: nominal
+IMU Pitch: 2.0080142336022666, Control Mode: nominal
+IMU Pitch: 2.036583738933246, Control Mode: nominal
+IMU Pitch: 2.0825529112734196, Control Mode: nominal
+IMU Pitch: 2.10867663865841, Control Mode: nominal
+IMU Pitch: 2.1361478566255476, Control Mode: nominal
+IMU Pitch: 2.1721369409160554, Control Mode: nominal
+IMU Pitch: 2.1984773589612474, Control Mode: nominal
+IMU Pitch: 2.2355342253623705, Control Mode: nominal
+IMU Pitch: 2.2744499337109794, Control Mode: nominal
+IMU Pitch: 2.302075491903206, Control Mode: nominal
+IMU Pitch: 2.344561807429387, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001474 ms], MAX: [0.001977 ms], Processing %: [2.95%]
+Total Runtime: 9.0012 (loop 180), Total Average Frequency: 19.9973 Hz
+IMU Pitch: 2.3765004500846802, Control Mode: nominal
+IMU Pitch: 2.4070459607391794, Control Mode: nominal
+IMU Pitch: 2.4520338582881953, Control Mode: nominal
+IMU Pitch: 2.480452484588251, Control Mode: nominal
+IMU Pitch: 2.518862898533959, Control Mode: nominal
+IMU Pitch: 2.5609884401944645, Control Mode: nominal
+IMU Pitch: 2.5883564762265983, Control Mode: nominal
+IMU Pitch: 2.6322752071459097, Control Mode: nominal
+IMU Pitch: 2.659388355973543, Control Mode: nominal
+IMU Pitch: 2.687413182726003, Control Mode: nominal
+IMU Pitch: 2.7328154746103035, Control Mode: nominal
+IMU Pitch: 2.762842249938628, Control Mode: nominal
+IMU Pitch: 2.8048769253501664, Control Mode: nominal
+IMU Pitch: 2.8471637302960815, Control Mode: nominal
+IMU Pitch: 2.879137235187273, Control Mode: nominal
+IMU Pitch: 2.9243570427040564, Control Mode: nominal
+IMU Pitch: 2.954877796104913, Control Mode: nominal
+IMU Pitch: 2.98458186314621, Control Mode: nominal
+IMU Pitch: 3.0298176723176082, Control Mode: nominal
+IMU Pitch: 3.0599123083729016, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001578 ms], MAX: [0.002136 ms], Processing %: [3.16%]
+Total Runtime: 10.0011 (loop 200), Total Average Frequency: 19.9979 Hz
+IMU Pitch: 3.1040757738509606, Control Mode: nominal
+IMU Pitch: 3.1383178268749754, Control Mode: nominal
+IMU Pitch: 3.116202816668072, Control Mode: nominal
+IMU Pitch: 3.0328774286753384, Control Mode: nominal
+IMU Pitch: 2.9515276388802523, Control Mode: nominal
+IMU Pitch: 2.8264346654457357, Control Mode: nominal
+IMU Pitch: 2.474994749602728, Control Mode: nominal
+IMU Pitch: 2.127655718797725, Control Mode: nominal
+IMU Pitch: 1.480346830950994, Control Mode: nominal
+IMU Pitch: 0.6321475085437418, Control Mode: nominal
+IMU Pitch: -0.06923604430849488, Control Mode: nominal
+IMU Pitch: -1.3025421955229355, Control Mode: nominal
+IMU Pitch: -2.2389823261459965, Control Mode: nominal
+IMU Pitch: -3.2573670609894343, Control Mode: nominal
+IMU Pitch: -4.936935907045262, Control Mode: nominal
+IMU Pitch: -6.161965037161462, Control Mode: nominal
+IMU Pitch: -8.12535224769415, Control Mode: nominal
+IMU Pitch: -10.187672587952878, Control Mode: nominal
+IMU Pitch: -11.605799184803208, Control Mode: nominal
+IMU Pitch: -13.80946178492767, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.002095 ms], MAX: [0.006305 ms], Processing %: [4.19%]
+Total Runtime: 11.001 (loop 220), Total Average Frequency: 19.9981 Hz
+IMU Pitch: -15.324956212184874, Control Mode: nominal
+IMU Pitch: -16.86836400728619, Control Mode: nominal
+IMU Pitch: -19.193328548644608, Control Mode: nominal
+IMU Pitch: -20.72945553373555, Control Mode: correctivePitch
+IMU Pitch: -23.025987675308457, Control Mode: correctivePitch
+IMU Pitch: -25.340721991323065, Control Mode: correctivePitch
+IMU Pitch: -26.908194653025955, Control Mode: correctivePitch
+IMU Pitch: -29.30043711134111, Control Mode: correctivePitch
+IMU Pitch: -30.908204879180115, Control Mode: correctivePitch
+IMU Pitch: -32.51298325881793, Control Mode: correctivePitch
+IMU Pitch: -34.83529358343356, Control Mode: correctivePitch
+IMU Pitch: -36.29487024607259, Control Mode: correctivePitch
+IMU Pitch: -38.37884096701215, Control Mode: correctivePitch
+IMU Pitch: -40.346647630087034, Control Mode: correctivePitch
+IMU Pitch: -41.58002428802456, Control Mode: correctivePitch
+IMU Pitch: -43.34814747808313, Control Mode: correctivePitch
+IMU Pitch: -44.48544926719729, Control Mode: correctivePitch
+IMU Pitch: -45.58269552049881, Control Mode: correctivePitch
+IMU Pitch: -47.160706664148, Control Mode: correctivePitch
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Python 3.7.3 (/usr/bin/python3)
+>>> %Run main.py
+Hello world from Prudentia!
+Setting up GUI server. Accessible on LAN through "172.30.0.20:8009"
+Data will be exchanged via websockets on LAN through "172.30.0.20:8010"
+Loading Gui Files from directory: "/home/pi/Desktop/Prudentia/rPi Scripts/GUI Files"Websocket server started on port 8010
+
+Initializing imu.py
+WARNING: Motor functionality disabled. To reverse this, set 'enableMotors = True' in main.py
+WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py
+Initializing emergency stop
+Starting in 2 seconds...
+IMU Pitch: 0.12849925918229957, Control Mode: nominal
+IMU Pitch: 0.1315535076907513, Control Mode: nominal
+IMU Pitch: 0.1388197441620828, Control Mode: nominal
+IMU Pitch: 0.15160548809808763, Control Mode: nominal
+IMU Pitch: 0.16132620661857267, Control Mode: nominal
+IMU Pitch: 0.16886917627851986, Control Mode: nominal
+IMU Pitch: 0.16976894858579544, Control Mode: nominal
+IMU Pitch: 0.16586621158670814, Control Mode: nominal
+IMU Pitch: 0.15443878201369973, Control Mode: nominal
+IMU Pitch: 0.1424044857787973, Control Mode: nominal
+IMU Pitch: 0.12813523013274492, Control Mode: nominal
+IMU Pitch: 0.1050533890071472, Control Mode: nominal
+IMU Pitch: 0.09093843528541498, Control Mode: nominal
+IMU Pitch: 0.07483941698305319, Control Mode: nominal
+IMU Pitch: 0.07419359969597016, Control Mode: nominal
+IMU Pitch: 0.07679841630673617, Control Mode: nominal
+IMU Pitch: 0.09334464249920714, Control Mode: nominal
+IMU Pitch: 0.12462618549302908, Control Mode: nominal
+IMU Pitch: 0.15237609375502367, Control Mode: nominal
+IMU Pitch: 0.20173829007949157, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001855 ms], MAX: [0.00324 ms], Processing %: [3.71%]
+Total Runtime: 1.0009 (loop 20), Total Average Frequency: 19.9816 Hz
+IMU Pitch: 0.23163148551508697, Control Mode: nominal
+IMU Pitch: 0.2681039050067386, Control Mode: nominal
+IMU Pitch: 0.28764519646614917, Control Mode: nominal
+IMU Pitch: 0.2995602892403791, Control Mode: nominal
+IMU Pitch: 0.29932017382357956, Control Mode: nominal
+IMU Pitch: 0.2875243855115591, Control Mode: nominal
+IMU Pitch: 0.2793010973657246, Control Mode: nominal
+IMU Pitch: 0.26136073391277287, Control Mode: nominal
+IMU Pitch: 0.2510026242436836, Control Mode: nominal
+IMU Pitch: 0.2413158287380095, Control Mode: nominal
+IMU Pitch: 0.2289665868681687, Control Mode: nominal
+IMU Pitch: 0.22050860573785183, Control Mode: nominal
+IMU Pitch: 0.2152881173664291, Control Mode: nominal
+IMU Pitch: 0.20700374415674155, Control Mode: nominal
+IMU Pitch: 0.2002231767787767, Control Mode: nominal
+IMU Pitch: 0.1933722653101163, Control Mode: nominal
+IMU Pitch: 0.18911847344754804, Control Mode: nominal
+IMU Pitch: 0.18078603021738987, Control Mode: nominal
+IMU Pitch: 0.17745767811232732, Control Mode: nominal
+IMU Pitch: 0.1771697100714968, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001407 ms], MAX: [0.001541 ms], Processing %: [2.81%]
+Total Runtime: 2.001 (loop 40), Total Average Frequency: 19.9898 Hz
+IMU Pitch: 0.16782102646449343, Control Mode: nominal
+IMU Pitch: 0.16794857850639722, Control Mode: nominal
+IMU Pitch: 0.16986439998234354, Control Mode: nominal
+IMU Pitch: 0.1721063913970505, Control Mode: nominal
+IMU Pitch: 0.17278784935713276, Control Mode: nominal
+IMU Pitch: 0.17545713491361214, Control Mode: nominal
+IMU Pitch: 0.1763487627624805, Control Mode: nominal
+IMU Pitch: 0.1777627095255491, Control Mode: nominal
+IMU Pitch: 0.17459343837083113, Control Mode: nominal
+IMU Pitch: 0.1748957067547686, Control Mode: nominal
+IMU Pitch: 0.1719240598416778, Control Mode: nominal
+IMU Pitch: 0.17431782289220238, Control Mode: nominal
+IMU Pitch: 0.1760707291538482, Control Mode: nominal
+IMU Pitch: 0.1821066023732054, Control Mode: nominal
+IMU Pitch: 0.1910139884776282, Control Mode: nominal
+IMU Pitch: 0.19794936902102467, Control Mode: nominal
+IMU Pitch: 0.21006040220907723, Control Mode: nominal
+IMU Pitch: 0.2150763692412658, Control Mode: nominal
+IMU Pitch: 0.22007304737630592, Control Mode: nominal
+IMU Pitch: 0.22213481506658866, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.00136 ms], MAX: [0.001485 ms], Processing %: [2.72%]
+Total Runtime: 3.0008 (loop 60), Total Average Frequency: 19.9947 Hz
+IMU Pitch: 0.21768421176194896, Control Mode: nominal
+IMU Pitch: 0.20332288688736716, Control Mode: nominal
+IMU Pitch: 0.1892257031211893, Control Mode: nominal
+IMU Pitch: 0.1763612545533418, Control Mode: nominal
+IMU Pitch: 0.15474160066750672, Control Mode: nominal
+IMU Pitch: 0.1335402952805934, Control Mode: nominal
+IMU Pitch: 0.09594471169514834, Control Mode: nominal
+IMU Pitch: 0.04252417442581034, Control Mode: nominal
+IMU Pitch: -0.008326318194773986, Control Mode: nominal
+IMU Pitch: -0.13436348207351753, Control Mode: nominal
+IMU Pitch: -0.262442426704669, Control Mode: nominal
+IMU Pitch: -0.43337265507460454, Control Mode: nominal
+IMU Pitch: -0.7798522792659246, Control Mode: nominal
+IMU Pitch: -1.2392286009960773, Control Mode: nominal
+IMU Pitch: -1.597457435087475, Control Mode: nominal
+IMU Pitch: -2.208314354215876, Control Mode: nominal
+IMU Pitch: -2.6570981865855994, Control Mode: nominal
+IMU Pitch: -3.3809397993851027, Control Mode: nominal
+IMU Pitch: -3.902292123954631, Control Mode: nominal
+IMU Pitch: -4.448556791930268, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001504 ms], MAX: [0.002386 ms], Processing %: [3.01%]
+Total Runtime: 4.0013 (loop 80), Total Average Frequency: 19.9936 Hz
+IMU Pitch: -5.311296041063122, Control Mode: nominal
+IMU Pitch: -6.2326242146653, Control Mode: nominal
+IMU Pitch: -6.87673271750646, Control Mode: nominal
+IMU Pitch: -7.8827889983762365, Control Mode: nominal
+IMU Pitch: -8.571296482359909, Control Mode: nominal
+IMU Pitch: -9.65490928105314, Control Mode: nominal
+IMU Pitch: -10.397321208570103, Control Mode: nominal
+IMU Pitch: -11.155530019437824, Control Mode: nominal
+IMU Pitch: -12.319277766104564, Control Mode: nominal
+IMU Pitch: -13.510128057070089, Control Mode: nominal
+IMU Pitch: -14.31616180276143, Control Mode: nominal
+IMU Pitch: -15.536039134798544, Control Mode: yawSweep
+IMU Pitch: -16.355131789216724, Control Mode: yawSweep
+IMU Pitch: -17.593037840058347, Control Mode: yawSweep
+IMU Pitch: -18.41420029306291, Control Mode: yawSweep
+IMU Pitch: -19.231820409031684, Control Mode: yawSweep
+IMU Pitch: -20.45852128909544, Control Mode: correctivePitch
+IMU Pitch: -21.673246172761363, Control Mode: correctivePitch
+IMU Pitch: -22.478568189262916, Control Mode: correctivePitch
+IMU Pitch: -23.66628890054393, Control Mode: correctivePitch
+----------------------------------------
+Loop Times for last second: AVG: [0.001601 ms], MAX: [0.002717 ms], Processing %: [3.2%]
+Total Runtime: 5.0008 (loop 100), Total Average Frequency: 19.9967 Hz
+IMU Pitch: -24.43989085247053, Control Mode: correctivePitch
+IMU Pitch: -25.563719117392523, Control Mode: correctivePitch
+IMU Pitch: -26.27350871901572, Control Mode: correctivePitch
+IMU Pitch: -26.949350482673825, Control Mode: correctivePitch
+IMU Pitch: -27.77896762773165, Control Mode: correctivePitch
+IMU Pitch: -28.113558616077086, Control Mode: correctivePitch
+IMU Pitch: -27.99480154934141, Control Mode: correctivePitch
+IMU Pitch: -27.54128215134928, Control Mode: correctivePitch
+IMU Pitch: -27.224675264959302, Control Mode: correctivePitch
+IMU Pitch: -26.900964203693388, Control Mode: correctivePitch
+IMU Pitch: -26.82397852067304, Control Mode: correctivePitch
+IMU Pitch: -26.867223874805642, Control Mode: correctivePitch
+IMU Pitch: -27.124240043214705, Control Mode: correctivePitch
+IMU Pitch: -27.506386072791965, Control Mode: correctivePitch
+IMU Pitch: -27.745058455000347, Control Mode: correctivePitch
+IMU Pitch: -27.933975744477245, Control Mode: correctivePitch
+IMU Pitch: -27.893623796586937, Control Mode: correctivePitch
+IMU Pitch: -27.663530160268248, Control Mode: correctivePitch
+IMU Pitch: -27.47010740546809, Control Mode: correctivePitch
+IMU Pitch: -27.30294141304084, Control Mode: correctivePitch
+----------------------------------------
+Loop Times for last second: AVG: [0.001761 ms], MAX: [0.002483 ms], Processing %: [3.52%]
+Total Runtime: 6.0009 (loop 120), Total Average Frequency: 19.9971 Hz
+IMU Pitch: -27.140129379044293, Control Mode: correctivePitch
+IMU Pitch: -27.108360045689455, Control Mode: correctivePitch
+IMU Pitch: -27.156734821372048, Control Mode: correctivePitch
+IMU Pitch: -27.309497676602593, Control Mode: correctivePitch
+IMU Pitch: -27.43815890713717, Control Mode: correctivePitch
+IMU Pitch: -27.60221910263821, Control Mode: correctivePitch
+IMU Pitch: -27.663309246541132, Control Mode: correctivePitch
+IMU Pitch: -27.674001007332862, Control Mode: correctivePitch
+IMU Pitch: -27.604162403414872, Control Mode: correctivePitch
+IMU Pitch: -27.48323642210568, Control Mode: correctivePitch
+IMU Pitch: -27.401555689598652, Control Mode: correctivePitch
+IMU Pitch: -27.328909438155588, Control Mode: correctivePitch
+IMU Pitch: -27.316594700890775, Control Mode: correctivePitch
+IMU Pitch: -27.3582837132771, Control Mode: correctivePitch
+IMU Pitch: -27.407311610449426, Control Mode: correctivePitch
+IMU Pitch: -27.46071409655112, Control Mode: correctivePitch
+IMU Pitch: -27.526814278110436, Control Mode: correctivePitch
+IMU Pitch: -27.540897241426347, Control Mode: correctivePitch
+IMU Pitch: -27.524157544796502, Control Mode: correctivePitch
+IMU Pitch: -27.47558731850393, Control Mode: correctivePitch
+----------------------------------------
+Loop Times for last second: AVG: [0.001864 ms], MAX: [0.002761 ms], Processing %: [3.73%]
+Total Runtime: 7.0016 (loop 140), Total Average Frequency: 19.9954 Hz
+IMU Pitch: -27.438664664953713, Control Mode: correctivePitch
+IMU Pitch: -27.39540154137289, Control Mode: correctivePitch
+IMU Pitch: -27.384254465235674, Control Mode: correctivePitch
+IMU Pitch: -27.38880753641632, Control Mode: correctivePitch
+IMU Pitch: -27.406537848682056, Control Mode: correctivePitch
+IMU Pitch: -27.433066583114424, Control Mode: correctivePitch
+IMU Pitch: -27.44851756288491, Control Mode: correctivePitch
+IMU Pitch: -27.447722851715824, Control Mode: correctivePitch
+IMU Pitch: -27.43456039567461, Control Mode: correctivePitch
+IMU Pitch: -27.41239030590417, Control Mode: correctivePitch
+IMU Pitch: -27.40108738107215, Control Mode: correctivePitch
+IMU Pitch: -27.38925900525539, Control Mode: correctivePitch
+IMU Pitch: -27.380025015007885, Control Mode: correctivePitch
+IMU Pitch: -27.381398947542795, Control Mode: correctivePitch
+IMU Pitch: -27.382893693569777, Control Mode: correctivePitch
+IMU Pitch: -27.385605181132505, Control Mode: correctivePitch
+IMU Pitch: -27.38502648556218, Control Mode: correctivePitch
+IMU Pitch: -27.383172694813055, Control Mode: correctivePitch
+IMU Pitch: -27.372685654507208, Control Mode: correctivePitch
+IMU Pitch: -27.368382686594842, Control Mode: correctivePitch
+----------------------------------------
+Loop Times for last second: AVG: [0.002194 ms], MAX: [0.004201 ms], Processing %: [4.39%]
+Total Runtime: 8.0016 (loop 160), Total Average Frequency: 19.9959 Hz
+IMU Pitch: -27.36264828774436, Control Mode: correctivePitch
+IMU Pitch: -27.35415094560844, Control Mode: correctivePitch
+IMU Pitch: -27.348047436952804, Control Mode: correctivePitch
+IMU Pitch: -27.332943724350326, Control Mode: correctivePitch
+IMU Pitch: -27.309448066794367, Control Mode: correctivePitch
+IMU Pitch: -27.274150191779892, Control Mode: correctivePitch
+IMU Pitch: -27.171277717225223, Control Mode: correctivePitch
+IMU Pitch: -27.066048346207744, Control Mode: correctivePitch
+IMU Pitch: -26.836371124488277, Control Mode: correctivePitch
+IMU Pitch: -26.52842475018365, Control Mode: correctivePitch
+IMU Pitch: -26.27783093626004, Control Mode: correctivePitch
+IMU Pitch: -25.83265068721968, Control Mode: correctivePitch
+IMU Pitch: -25.49327513043257, Control Mode: correctivePitch
+IMU Pitch: -25.11918040910978, Control Mode: correctivePitch
+IMU Pitch: -24.511947573811067, Control Mode: correctivePitch
+IMU Pitch: -24.07320798607621, Control Mode: correctivePitch
+IMU Pitch: -23.37460927767276, Control Mode: correctivePitch
+IMU Pitch: -22.621926796141974, Control Mode: correctivePitch
+IMU Pitch: -22.093736632841846, Control Mode: correctivePitch
+IMU Pitch: -21.26447261444459, Control Mode: correctivePitch
+----------------------------------------
+Loop Times for last second: AVG: [0.001731 ms], MAX: [0.003014 ms], Processing %: [3.46%]
+Total Runtime: 9.0008 (loop 180), Total Average Frequency: 19.9983 Hz
+IMU Pitch: -20.67711870475419, Control Mode: correctivePitch
+IMU Pitch: -20.048911478374198, Control Mode: correctivePitch
+IMU Pitch: -19.021892020376814, Control Mode: nominal
+IMU Pitch: -18.279713575648987, Control Mode: nominal
+IMU Pitch: -17.08673040199251, Control Mode: nominal
+IMU Pitch: -15.812174505870368, Control Mode: nominal
+IMU Pitch: -14.926209306517043, Control Mode: nominal
+IMU Pitch: -13.565753033712086, Control Mode: nominal
+IMU Pitch: -12.637413963999185, Control Mode: nominal
+IMU Pitch: -11.700159428525533, Control Mode: nominal
+IMU Pitch: -10.277635681181726, Control Mode: nominal
+IMU Pitch: -9.315956776480808, Control Mode: nominal
+IMU Pitch: -7.858373339389195, Control Mode: nominal
+IMU Pitch: -6.366902196139452, Control Mode: nominal
+IMU Pitch: -5.351564885063216, Control Mode: nominal
+IMU Pitch: -3.805400771378399, Control Mode: nominal
+IMU Pitch: -2.7565012600236525, Control Mode: nominal
+IMU Pitch: -1.6911215490732756, Control Mode: nominal
+IMU Pitch: -0.07042177518625742, Control Mode: nominal
+IMU Pitch: 1.0128747808030043, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.001368 ms], MAX: [0.001665 ms], Processing %: [2.74%]
+Total Runtime: 10.001 (loop 200), Total Average Frequency: 19.998 Hz
+IMU Pitch: 2.63066247226967, Control Mode: yawSweep
+IMU Pitch: 4.232665879636802, Control Mode: nominal
+IMU Pitch: 5.281832060975997, Control Mode: nominal
+IMU Pitch: 6.8291195331649615, Control Mode: nominal
+IMU Pitch: 7.835760055165885, Control Mode: nominal
+IMU Pitch: 8.825799084774017, Control Mode: nominal
+IMU Pitch: 10.276635425609198, Control Mode: nominal
+IMU Pitch: 11.215494876283243, Control Mode: nominal
+IMU Pitch: 12.576198126974738, Control Mode: nominal
+IMU Pitch: 13.863558373384974, Control Mode: nominal
+IMU Pitch: 14.670036678930002, Control Mode: nominal
+IMU Pitch: 15.795449727188426, Control Mode: nominal
+IMU Pitch: 16.492896011515974, Control Mode: nominal
+IMU Pitch: 17.141174074810834, Control Mode: nominal
+IMU Pitch: 18.025436250544903, Control Mode: nominal
+IMU Pitch: 18.557729936750555, Control Mode: nominal
+IMU Pitch: 19.286210784327846, Control Mode: nominal
+IMU Pitch: 19.92652029716952, Control Mode: nominal
+IMU Pitch: 20.306790378971197, Control Mode: correctivePitch
+IMU Pitch: 20.815708806347192, Control Mode: correctivePitch
+----------------------------------------
+Loop Times for last second: AVG: [0.001521 ms], MAX: [0.002045 ms], Processing %: [3.04%]
+Total Runtime: 11.0009 (loop 220), Total Average Frequency: 19.9983 Hz
+IMU Pitch: 21.11394242557475, Control Mode: correctivePitch
+IMU Pitch: 21.392407754612737, Control Mode: correctivePitch
+IMU Pitch: 21.77519029333003, Control Mode: correctivePitch
+IMU Pitch: 22.013525776149603, Control Mode: correctivePitch
+IMU Pitch: 22.357653507718208, Control Mode: correctivePitch
+IMU Pitch: 22.684123444464817, Control Mode: correctivePitch
+IMU Pitch: 22.897495473721612, Control Mode: correctivePitch
+IMU Pitch: 23.203121933386058, Control Mode: correctivePitch
+IMU Pitch: 23.404164297080953, Control Mode: correctivePitch
+IMU Pitch: 23.607850321075848, Control Mode: correctivePitch
+IMU Pitch: 23.91513515293583, Control Mode: correctivePitch
+IMU Pitch: 24.12570417487476, Control Mode: correctivePitch
+IMU Pitch: 24.445640794530636, Control Mode: correctivePitch
+IMU Pitch: 24.78412658559349, Control Mode: correctivePitch
+IMU Pitch: 25.026876868149706, Control Mode: correctivePitch
+IMU Pitch: 25.401517913453866, Control Mode: correctivePitch
+IMU Pitch: 25.65617549779144, Control Mode: correctivePitch
+IMU Pitch: 25.922436928210338, Control Mode: correctivePitch
+IMU Pitch: 26.328490201182845, Control Mode: correctivePitch
+IMU Pitch: 26.601226624454835, Control Mode: correctivePitch
+----------------------------------------
+Loop Times for last second: AVG: [0.001746 ms], MAX: [0.002144 ms], Processing %: [3.49%]
+Total Runtime: 12.0009 (loop 240), Total Average Frequency: 19.9985 Hz
+IMU Pitch: 27.032059322060807, Control Mode: correctivePitch
+IMU Pitch: 27.482002656033846, Control Mode: correctivePitch
+IMU Pitch: 27.799983223267677, Control Mode: correctivePitch
+IMU Pitch: 28.27864849424987, Control Mode: correctivePitch
+IMU Pitch: 28.53059297746826, Control Mode: correctivePitch
+IMU Pitch: 28.67274002159695, Control Mode: correctivePitch
+IMU Pitch: 28.654828451103878, Control Mode: correctivePitch
+IMU Pitch: 28.51995440412612, Control Mode: correctivePitch
+IMU Pitch: 28.24849217513054, Control Mode: correctivePitch
+IMU Pitch: 28.013182946514537, Control Mode: correctivePitch
+IMU Pitch: 27.910364733613253, Control Mode: correctivePitch
+IMU Pitch: 27.855314694881855, Control Mode: correctivePitch
+IMU Pitch: 27.875732856105586, Control Mode: correctivePitch
+IMU Pitch: 27.94430568093322, Control Mode: correctivePitch
+IMU Pitch: 28.101468247448107, Control Mode: correctivePitch
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Python 3.7.3 (/usr/bin/python3)
+>>> 

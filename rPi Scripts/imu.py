@@ -116,6 +116,8 @@ class ImuSingleton:
 
         #print(self.a)
 
+        #print(self.w)
+
         #print("Average Gyro Values: %s, %s, %s" % (np.mean(self.tempGyroX), np.mean(self.tempGyroY), np.mean(self.tempGyroZ)))
 
         self.propogateQuaternion()

@@ -14,7 +14,8 @@ class MotorsSingleton:
     targetRpm = np.array([0, 0, 0, 0], dtype=float)
     
     #accelLimit = 150 #rad/s^2. Accel of 246.53 rad/s^2 caused a back EMF overvoltage of 60V. 63V+ overvoltage may cause capacitor explosion.
-    dutyLimit = 0.05 #Max duty change per loop
+    dutyLimit = 0.165 #Max duty change per second
+    loopSpeed = 20
     
     lastLoopTime = time.time()
     
@@ -35,57 +36,37 @@ class MotorsSingleton:
 
     # This function expects an array of motor delta RPMs ex: [1000.2, -1820, 3000, -3000]
     def setAllMotorRpm(self, deltaRpmArray):
-        if len(deltaRpmArray) != 4:
-            log("Error! setAllMotorRpm expected argument of length 4, got %s instead" % len(motorArray))
-            return
-            
-        deltaDutyArray = [0]*4
+        
+        self.targetRpm = self.currentRpm + deltaRpmArray
         
         for i in range(len(self.vescs)):
             
-            newRpm = self.currentRpm[i] + deltaRpmArray[i]
+            newDuty = self.getDutyFromRpm(self.targetRpm[i])
             
-            newDuty = self.getDutyFromRpm(newRpm)
-            
-            if abs(newDuty - self.duty[i]) > self.dutyLimit:
-                log("WARNING - Duty cycle limit of %s per loop reached." % self.dutyLimit)
-            else:
+#             if abs(newDuty - self.duty[i]) > self.dutyLimit / self.loopSpeed:
+#                 log("WARNING - Duty cycle limit of %s per loop reached. Capping duty cycle." % self.dutyLimit)
+#                 newDuty = self.dutyLimit / self.loopSpeed
+#             else:
                     
-                if newDuty > 0.8 or newDuty < -0.8:
-                    log("WARNING - Motor %s may be oversatured. New duty cycle request ignored: Over 80%% limit(%s%%)." % (i, round(newDuty*100, 2)))
-                else:
-                    self.targetRpm[i] = newRpm
-                    self.duty[i] = newDuty
+            if newDuty > 0.85 or newDuty < -0.85:
+                log("WARNING - Motor %s is oversatured. New duty cycle request ignored: Over 80%% limit(%s%%)." % (i, round(newDuty*100, 2)))
+            else:
+                self.duty[i] = newDuty
                 
             self.vescs[i].set_duty_cycle(self.duty[i])
-            deltaDutyArray[i] = self.duty[i]
-        
-        return deltaDutyArray
 
     #This function converts desired rpm change to duty cycle change
-    def getDutyFromRpm(self, deltaRpm):
-        return (deltaRpm*10 + 267.34) / 524.55 / 100.0
+    def getDutyFromRpm(self, rpm):
+        #return (rpm*10 + 267.34) / 524.55 / 100.0 #OLD
+        return 0.00019087 * rpm# + 0.026 #Setting y intercept to zero.
 
 if __name__ == "__main__":
     Motors = MotorsSingleton()
     
-    Motors.setAllMotorRpm([1000, 0, 0, 0])
-    print(Motors.currentDC)
-    time.sleep(2)
-    
-    Motors.setAllMotorRpm([1000, 0, 0, 0])
-    print(Motors.currentDC)
-    time.sleep(2)
-    
-    Motors.setAllMotorRpm([1000, 0, 0, 0])
-    print(Motors.currentDC)
-    time.sleep(2)
-    
-    Motors.setAllMotorRpm([1000, 0, 0, 0])
-    print(Motors.currentDC)
-    time.sleep(2)
-    
-    Motors.setAllMotorRpm([1000, 0, 0, 0])
-    print(Motors.currentDC)
-    time.sleep(2)
+    print(Motors.getDutyFromRpm(0))
+    print(Motors.getDutyFromRpm(1000))
+    print(Motors.getDutyFromRpm(4100))
+    print(Motors.getDutyFromRpm(-1000))
+    print(Motors.getDutyFromRpm(-4100))
+    print(Motors.getDutyFromRpm(819))
     

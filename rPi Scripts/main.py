@@ -48,7 +48,7 @@ sharedData.state = State.running
 sharedData.controlRoutine = ControlRoutine.attitudeInput
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
-sharedData.target = [0, 0, 0]
+sharedData.target = [45, 0, 0]
 
 log('Setting up GUI server. Accessible on LAN through \"%s:%s\"' % (ip, htmlPort))
 log('Data will be exchanged via websockets on LAN through \"%s:%s\"' % (ip, websocketPort))
@@ -252,7 +252,7 @@ while True:
 
             # Use response to actuate motors
             if enableMotors:
-                Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
+                Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi) / loopSpeed)
                
                 sharedData.duty = Motors.duty
 
@@ -276,10 +276,12 @@ while True:
             sharedData.motorTorque = response.motorTorques.tolist()
             sharedData.motorAccels = response.motorAccels.tolist()
 
+            print("IMU Pitch: %s, Control Mode: %s" % (np.degrees(ypr)[1], sharedData.pdMode))
+            
             # Use response to actuate motors
             if enableMotors:
                 Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
-                #print(response.motorAccels * 60 / (2 * np.pi))
+                print(response.motorAccels * 60 / (2 * np.pi))
                
                 sharedData.duty = Motors.duty
 
@@ -319,7 +321,7 @@ while True:
 
         #Report times
         #Instead of reporting 20 times per second, lets report an average over a second.
-        if loopNumber % 20 == 0:
+        if loopNumber % loopSpeed == 0:
             tavg = round(np.average(times), 6) # Get average
             tmax = round(np.max(times), 6) # Get max
             processingPercent = round(tavg/allowedTime*100, 2) # Get percent of time used

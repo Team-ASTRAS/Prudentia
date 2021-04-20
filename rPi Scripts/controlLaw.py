@@ -20,10 +20,10 @@ class PdMode(Enum):
 
 class routineReport:
     
-    def __init__(self, qError, qErrorAdjusted, lqrMode, inertialTorque, motorAccels, motorTorques):
+    def __init__(self, qError, qErrorAdjusted, pdMode, inertialTorque, motorAccels, motorTorques):
         self.qError = qError
         self.qErrorAdjusted = qErrorAdjusted
-        self.lqrMode = lqrMode
+        self.pdMode = pdMode
         self.inertialTorque = inertialTorque
         self.motorAccels = motorAccels
         self.motorTorques = motorTorques
@@ -103,7 +103,7 @@ class ControlLawSingleton:
     correctivePitchThreshold = np.radians(20)
     
     enableSaturation = True
-    maxTorque = [0.055, 0.055, 0.055]
+    maxTorque = np.array([0.055, 0.055, 0.055]) * 0.75
     loopFrequency = 20
 
     I = np.array([[ 0.27021632, -0.00050396, -0.00034281],
@@ -113,8 +113,8 @@ class ControlLawSingleton:
     Irw = 0.000453158
     motorAngle = 45
 
-    overshoot = 0.1 # arbitrary percent OS
-    ts = 30 # seconds, arbitrary settling time
+    overshoot = 0.25 # arbitrary percent OS
+    ts = 120 # seconds, arbitrary settling time
 
     #Functions named with the format routineName are functions that are called
     #by main.py when the state machine is set to run a particular routine
@@ -130,17 +130,17 @@ class ControlLawSingleton:
         
         qError = getQuatError(q, qTarget)
 
-        lqrMode = self.getControllerType(q, qError)
+        pdMode = self.getControllerType(q, qError)
         
-        qErrorAdjusted = self.adjustAttitude(lqrMode, q, qTarget, qError)
+        qErrorAdjusted = self.adjustAttitude(pdMode, q, qTarget, qError)
         
-        inertialTorque = self.getTorque(lqrMode, qErrorAdjusted, w)
+        inertialTorque = self.getTorque(pdMode, qErrorAdjusted, w)
         
         motorAccels = self.getMotorAccels(inertialTorque)
         
         motorTorques = motorAccels * self.Irw
         
-        results = routineReport(qError, qErrorAdjusted, lqrMode, inertialTorque, motorAccels, motorTorques)
+        results = routineReport(qError, qErrorAdjusted, pdMode, inertialTorque, motorAccels, motorTorques)
         
         return results
     
@@ -272,7 +272,7 @@ class ControlLawSingleton:
         rollErrorAbs = np.abs(yprError[2])
 
         pitchInertial = np.abs(quat2ypr(qObserved)[1])
-
+        
         if pitchInertial > self.correctivePitchThreshold:
             #Override target pitch to 0
             return PdMode.correctivePitch
@@ -309,8 +309,8 @@ if __name__ == "__main__":
     cls = ControlLawSingleton()
 
     q = ypr2quat(np.radians([0, 0, 0]))
-    w = np.array([0.33, -0.33, 0.33])
-    qTarget = ypr2quat(np.radians([0, 0, 0]))
+    w = np.array([0, 0, 0])
+    qTarget = ypr2quat(np.radians([90, 0, 0]))
  
     res = cls.routineAttitudeInput(q, w, qTarget)
      

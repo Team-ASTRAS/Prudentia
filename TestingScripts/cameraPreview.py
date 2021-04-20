@@ -10,14 +10,5 @@ camera.resolution = (resolution, resolution) # if this changes then the FOV math
 camera.framerate = 24
 
 camera.start_preview()
-time.sleep(3)
-camera.capture('/home/pi/Desktop/Prudentia/rPi Scripts/images/image0.bmp')
-time.sleep(3)
-camera.capture('/home/pi/Desktop/Prudentia/rPi Scripts/images/image1.bmp')
-time.sleep(3)
-camera.capture('/home/pi/Desktop/Prudentia/rPi Scripts/images/image2.bmp')
-time.sleep(3)
-camera.capture('/home/pi/Desktop/Prudentia/rPi Scripts/images/image3.bmp')
-time.sleep(3)
-camera.capture('/home/pi/Desktop/Prudentia/rPi Scripts/images/image4.bmp')
+time.sleep(30)
 camera.stop_preview()

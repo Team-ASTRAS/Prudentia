@@ -1,0 +1,10 @@
+----------------------------------------
+Loop Times for last second: AVG: [0.004984 ms], MAX: [0.00742 ms], Processing %: [9.97%]
+Total Runtime: 4.0009 (loop 80), Total Average Frequency: 19.9953 Hz
+IMU Pitch: -23.250151616478746, Control Mode: correctivePitch
+[  79.5400  122.7616 -163.0256 -206.2471]
+Emergency stop triggered. Shutting down.
+Mode changed from State.running to State.shutdown.
+Websocket server shut down.
+HTML Server shut down.
+Main thread shutting down.
