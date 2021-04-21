@@ -48,7 +48,7 @@ sharedData.state = State.running
 sharedData.controlRoutine = ControlRoutine.attitudeInput
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
-sharedData.target = [45, 0, 0]
+sharedData.target = [0, 0, 0]
 
 log('Setting up GUI server. Accessible on LAN through \"%s:%s\"' % (ip, htmlPort))
 log('Data will be exchanged via websockets on LAN through \"%s:%s\"' % (ip, websocketPort))
@@ -276,12 +276,12 @@ while True:
             sharedData.motorTorque = response.motorTorques.tolist()
             sharedData.motorAccels = response.motorAccels.tolist()
 
-            print("IMU Pitch: %s, Control Mode: %s" % (np.degrees(ypr)[1], sharedData.pdMode))
+            #print("IMU Pitch: %s, Control Mode: %s" % (np.degrees(ypr)[1], sharedData.pdMode))
             
             # Use response to actuate motors
             if enableMotors:
                 Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
-                print(response.motorAccels * 60 / (2 * np.pi))
+                #print(response.motorAccels * 60 / (2 * np.pi))
                
                 sharedData.duty = Motors.duty
 

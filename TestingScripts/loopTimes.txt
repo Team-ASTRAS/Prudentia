@@ -1,0 +1,964 @@
+[41.7192 28.8991 40.5903 53.4104]
+IMU Pitch: 0.11674409212623797, Control Mode: nominal
+[68.7637 36.9000 23.5700 55.4336]
+IMU Pitch: 0.12161008271101431, Control Mode: nominal
+[54.2999 48.1119 36.3916 42.5796]
+IMU Pitch: 0.12494988602435055, Control Mode: nominal
+[60.9158 69.3567 26.2284 17.7874]
+IMU Pitch: 0.13269632812433269, Control Mode: nominal
+[73.5439 59.3265 13.6979 27.9154]
+IMU Pitch: 0.1348242344186411, Control Mode: nominal
+[58.1468 24.1817 28.2902 62.2553]
+IMU Pitch: 0.143182868507666, Control Mode: nominal
+[ 70.4230  -9.8912  22.4104 102.7245]
+IMU Pitch: 0.14829696509869325, Control Mode: nominal
+[58.4882 26.4011 14.3482 46.4353]
+IMU Pitch: 0.14958896728390358, Control Mode: nominal
+[62.4279 40.5275  9.6708 31.5712]
+IMU Pitch: 0.1517438180871234, Control Mode: nominal
+[45.7313 20.7142 19.9295 44.9466]
+IMU Pitch: 0.16030962762200435, Control Mode: nominal
+[75.2388 35.1540 -4.4014 35.6834]
+IMU Pitch: 0.16096813386920444, Control Mode: nominal
+[80.8155 18.3797 22.3344 84.7702]
+IMU Pitch: 0.16826579919002038, Control Mode: nominal
+[82.1660 37.9470 38.7482 82.9672]
+----------------------------------------
+Loop Times for last second: AVG: [0.004184 ms], MAX: [0.00852 ms], Processing %: [8.37%]
+Total Runtime: 12.0019 (loop 240), Total Average Frequency: 19.9969 Hz
+IMU Pitch: 0.1726073396506074, Control Mode: nominal
+[84.2190 31.2493  7.4461 60.4159]
+IMU Pitch: 0.17267615568264513, Control Mode: nominal
+[50.1593 32.9439 14.3243 31.5397]
+IMU Pitch: 0.17253649591146905, Control Mode: nominal
+[19.6186 39.7138 32.3375 12.2422]
+IMU Pitch: 0.17324826064292517, Control Mode: nominal
+[53.0679 52.6275 33.0607 33.5010]
+IMU Pitch: 0.1758329378163759, Control Mode: nominal
+[77.8490 79.5251 19.8527 18.1765]
+IMU Pitch: 0.17819383893784052, Control Mode: nominal
+[62.0249 28.8762 28.1491 61.2978]
+IMU Pitch: 0.18367945056202686, Control Mode: nominal
+[67.8843 31.8319 -3.3007 32.7517]
+IMU Pitch: 0.18685669019718326, Control Mode: nominal
+[48.9707 18.4320 10.6831 41.2218]
+IMU Pitch: 0.18772279255744267, Control Mode: nominal
+[43.4695 23.7990 19.9637 39.6343]
+IMU Pitch: 0.18798910794089443, Control Mode: nominal
+[58.0903 72.0905 41.5224 27.5222]
+IMU Pitch: 0.19250572473756555, Control Mode: nominal
+[73.1417 64.6219 28.7003 37.2201]
+IMU Pitch: 0.1922756570776231, Control Mode: nominal
+[59.9967 57.9238 25.2232 27.2961]
+IMU Pitch: 0.19405120309545568, Control Mode: nominal
+[39.0517 53.5138 31.8991 17.4369]
+IMU Pitch: 0.19571504326556194, Control Mode: nominal
+[50.1829 38.8890 25.4176 36.7115]
+IMU Pitch: 0.19521246207007373, Control Mode: nominal
+[48.1331 39.9919 38.0120 46.1532]
+IMU Pitch: 0.20003716351447898, Control Mode: nominal
+[ 70.1079  -0.2570  32.1392 102.5042]
+IMU Pitch: 0.20465743506217268, Control Mode: nominal
+[71.3998 30.9589 26.0308 66.4717]
+IMU Pitch: 0.2055346365343289, Control Mode: nominal
+[52.2357 51.4380 40.8127 41.6104]
+IMU Pitch: 0.21221122839148082, Control Mode: nominal
+[54.1697 14.7492 25.3729 64.7934]
+IMU Pitch: 0.21705065862205813, Control Mode: nominal
+[61.5551 13.9897 13.9985 61.5640]
+----------------------------------------
+Loop Times for last second: AVG: [0.004515 ms], MAX: [0.007637 ms], Processing %: [9.03%]
+Total Runtime: 13.001 (loop 260), Total Average Frequency: 19.9985 Hz
+IMU Pitch: 0.2201728350388593, Control Mode: nominal
+[68.4757  0.5903 12.3976 80.2830]
+IMU Pitch: 0.22122824626910703, Control Mode: nominal
+[53.7302 28.9971 35.7845 60.5176]
+IMU Pitch: 0.22278198603584468, Control Mode: nominal
+[57.2816  6.2520 24.6150 75.6446]
+IMU Pitch: 0.22480348359201427, Control Mode: nominal
+[50.7076 64.7150 36.6743 22.6668]
+IMU Pitch: 0.22800237070325316, Control Mode: nominal
+[55.0085 17.4469 26.9721 64.5337]
+IMU Pitch: 0.22925155446393858, Control Mode: nominal
+[40.1063 90.3130 47.1638 -3.0429]
+IMU Pitch: 0.2344946129448709, Control Mode: nominal
+[60.3470 44.8722 21.3246 36.7993]
+IMU Pitch: 0.23572083604842653, Control Mode: nominal
+[40.7413 68.6744 38.0402 10.1071]
+IMU Pitch: 0.23902492123798802, Control Mode: nominal
+[42.6456 72.6246 58.0253 28.0463]
+IMU Pitch: 0.24510400813308503, Control Mode: nominal
+[45.0125 54.9195 42.3398 32.4327]
+IMU Pitch: 0.24829998519233654, Control Mode: nominal
+[21.8912 61.2833 41.1742  1.7821]
+IMU Pitch: 0.2570568253809761, Control Mode: nominal
+[64.4125 29.4555 23.2553 58.2123]
+IMU Pitch: 0.2635972629499467, Control Mode: nominal
+[43.7891 69.6171 33.4912  7.6632]
+IMU Pitch: 0.27116703199030073, Control Mode: nominal
+[51.2058 40.8593 35.6270 45.9735]
+IMU Pitch: 0.2882872181486641, Control Mode: nominal
+[111.1549  11.1031 -14.8832  85.1686]
+IMU Pitch: 0.2921381435225403, Control Mode: nominal
+[78.3438 31.6333 23.7713 70.4818]
+IMU Pitch: 0.2944771621747228, Control Mode: nominal
+[36.2112 33.3131 49.1937 52.0917]
+IMU Pitch: 0.3005361472819289, Control Mode: nominal
+[64.6827 30.3976 20.6363 54.9215]
+IMU Pitch: 0.30298002144975217, Control Mode: nominal
+[38.8560  7.2175 22.8578 54.4963]
+IMU Pitch: 0.31089095871538347, Control Mode: nominal
+[63.0152 22.8411 24.4886 64.6627]
+----------------------------------------
+Loop Times for last second: AVG: [0.004508 ms], MAX: [0.006614 ms], Processing %: [9.02%]
+Total Runtime: 14.0019 (loop 280), Total Average Frequency: 19.9973 Hz
+IMU Pitch: 0.319628715815388, Control Mode: nominal
+[72.6969 39.4818 25.3718 58.5869]
+IMU Pitch: 0.32337777661203815, Control Mode: nominal
+[51.8082 29.5416 16.5553 38.8219]
+IMU Pitch: 0.3296375548851772, Control Mode: nominal
+[59.1614 46.0287 22.1870 35.3197]
+IMU Pitch: 0.3350148915614318, Control Mode: nominal
+[57.1595 22.2758 26.9093 61.7931]
+IMU Pitch: 0.34126590516137967, Control Mode: nominal
+[69.9683 -3.7910 23.1221 96.8814]
+IMU Pitch: 0.3477012322191973, Control Mode: nominal
+[58.5426 23.8215 31.0520 65.7731]
+IMU Pitch: 0.35453512973408685, Control Mode: nominal
+[72.4515 44.2282  6.1300 34.3532]
+IMU Pitch: 0.36253108377945426, Control Mode: nominal
+[57.9057 13.4732 -4.6532 39.7792]
+IMU Pitch: 0.3666522773016373, Control Mode: nominal
+[76.3436 27.6952 25.0351 73.6835]
+IMU Pitch: 0.3733157002322607, Control Mode: nominal
+[91.3353 51.7333 46.5040 86.1060]
+IMU Pitch: 0.3798225287008403, Control Mode: nominal
+[76.0513 61.3295 35.4609 50.1827]
+IMU Pitch: 0.38302386365268526, Control Mode: nominal
+[52.2276 38.9450  9.0274 22.3100]
+IMU Pitch: 0.3885413958568501, Control Mode: nominal
+[49.8226 -1.5493  6.6069 57.9788]
+IMU Pitch: 0.3953419673540814, Control Mode: nominal
+[47.8105 19.8682 10.2125 38.1548]
+IMU Pitch: 0.3962705165183753, Control Mode: nominal
+[63.0229 38.4577 25.1447 49.7099]
+IMU Pitch: 0.40299714203908, Control Mode: nominal
+[67.8719  7.7612 29.6278 89.7384]
+IMU Pitch: 0.40732074109344474, Control Mode: nominal
+[78.4308 61.3757 28.8847 45.9399]
+IMU Pitch: 0.4132249820878296, Control Mode: nominal
+[82.4722 67.4682  0.8562 15.8602]
+IMU Pitch: 0.4173000851737478, Control Mode: nominal
+[67.3953 53.3361  7.2133 21.2724]
+IMU Pitch: 0.4195919792302162, Control Mode: nominal
+[59.7106 13.1332 27.7462 74.3236]
+----------------------------------------
+Loop Times for last second: AVG: [0.004128 ms], MAX: [0.005689 ms], Processing %: [8.26%]
+Total Runtime: 15.001 (loop 300), Total Average Frequency: 19.9987 Hz
+IMU Pitch: 0.4242030721016812, Control Mode: nominal
+[65.5087 49.3073 -1.3966 14.8048]
+IMU Pitch: 0.42948280578052966, Control Mode: nominal
+[65.1465 25.6444 15.5625 55.0645]
+IMU Pitch: 0.431778483158882, Control Mode: nominal
+[58.3544 12.3221 33.4496 79.4818]
+IMU Pitch: 0.4365978899253063, Control Mode: nominal
+[81.1786 61.3393 18.3696 38.2090]
+IMU Pitch: 0.43936893383244185, Control Mode: nominal
+[71.8659 32.5742 22.1501 61.4417]
+IMU Pitch: 0.4431040705420836, Control Mode: nominal
+[62.0454  8.2702 21.2314 75.0066]
+IMU Pitch: 0.4471047320055699, Control Mode: nominal
+[69.7231 54.6330 23.8549 38.9450]
+IMU Pitch: 0.4494024213622201, Control Mode: nominal
+[71.3661 43.3616 27.2776 55.2820]
+IMU Pitch: 0.45189878373944703, Control Mode: nominal
+[68.3796 48.9229 16.6692 36.1258]
+IMU Pitch: 0.4551556693826372, Control Mode: nominal
+[68.3192 34.0951 20.6632 54.8873]
+IMU Pitch: 0.457922746233556, Control Mode: nominal
+[69.6333 62.1398 24.6425 32.1360]
+IMU Pitch: 0.46255559449050115, Control Mode: nominal
+[72.6172 26.6110 16.6638 62.6700]
+IMU Pitch: 0.4620369670009194, Control Mode: nominal
+[49.9232 23.1803 16.4404 43.1833]
+IMU Pitch: 0.4634102675009205, Control Mode: nominal
+[62.8027 52.4995 24.7710 35.0742]
+IMU Pitch: 0.4632062559902155, Control Mode: nominal
+[61.4083 42.3305 37.0559 56.1336]
+IMU Pitch: 0.4664842770376933, Control Mode: nominal
+[53.9577 38.0382 17.4519 33.3714]
+IMU Pitch: 0.4682283729991705, Control Mode: nominal
+[62.8246 42.3676 18.4928 38.9498]
+IMU Pitch: 0.46990690662143764, Control Mode: nominal
+[66.3370 44.8553 25.0072 46.4889]
+IMU Pitch: 0.47149673035840806, Control Mode: nominal
+[62.0752  9.2501 19.4550 72.2801]
+IMU Pitch: 0.4714522473587519, Control Mode: nominal
+[61.1239 40.9537 27.1764 47.3467]
+----------------------------------------
+Loop Times for last second: AVG: [0.006335 ms], MAX: [0.014964 ms], Processing %: [12.67%]
+Total Runtime: 16.0009 (loop 320), Total Average Frequency: 19.9989 Hz
+IMU Pitch: 0.47260634881686264, Control Mode: nominal
+[67.3554 31.4860 34.0827 69.9521]
+IMU Pitch: 0.4732686326326013, Control Mode: nominal
+[58.6175 23.3086 20.0801 55.3890]
+IMU Pitch: 0.47471208009959326, Control Mode: nominal
+[61.1009 12.1397 12.1112 61.0723]
+IMU Pitch: 0.4707406836774103, Control Mode: nominal
+[41.9607 25.4857 28.9354 45.4104]
+IMU Pitch: 0.47264308023515633, Control Mode: nominal
+[58.7196 16.9279 15.3200 57.1117]
+IMU Pitch: 0.47338374547997264, Control Mode: nominal
+[74.3605 39.8923 28.5218 62.9900]
+IMU Pitch: 0.47331066726911586, Control Mode: nominal
+[51.4559 38.9801 26.7141 39.1899]
+IMU Pitch: 0.47297317970541597, Control Mode: nominal
+[74.1350 45.1053 37.7223 66.7520]
+IMU Pitch: 0.4726060341019027, Control Mode: nominal
+[52.6055 18.7860 16.8082 50.6277]
+IMU Pitch: 0.47441813538451905, Control Mode: nominal
+[69.9344 50.3134 24.4932 44.1143]
+IMU Pitch: 0.4770994270828118, Control Mode: nominal
+[59.6451 34.6449 15.7139 40.7142]
+IMU Pitch: 0.47628158998898396, Control Mode: nominal
+[63.0452 32.3566 28.9337 59.6223]
+IMU Pitch: 0.47751627560480325, Control Mode: nominal
+[76.6104 54.3466 23.3789 45.6426]
+IMU Pitch: 0.4792790255898194, Control Mode: nominal
+[68.2539 46.9117 44.9180 66.2602]
+IMU Pitch: 0.48250440052584126, Control Mode: nominal
+[72.4030 39.2501 14.5348 47.6876]
+IMU Pitch: 0.48265344690950224, Control Mode: nominal
+[53.5287 17.4204 22.3043 58.4126]
+IMU Pitch: 0.484721981065883, Control Mode: nominal
+[63.1218 37.3860 19.5960 45.3318]
+IMU Pitch: 0.48393110814596557, Control Mode: nominal
+[60.3613 46.8836 32.3586 45.8363]
+IMU Pitch: 0.4873185918728764, Control Mode: nominal
+[74.6276 22.5223 18.3518 70.4571]
+IMU Pitch: 0.48898367050789404, Control Mode: nominal
+[67.2985 32.8156 20.7475 55.2304]
+----------------------------------------
+Loop Times for last second: AVG: [0.004369 ms], MAX: [0.00859 ms], Processing %: [8.74%]
+Total Runtime: 17.0015 (loop 340), Total Average Frequency: 19.9982 Hz
+IMU Pitch: 0.49006432959295265, Control Mode: nominal
+[58.7082 43.7415 32.8208 47.7875]
+IMU Pitch: 0.48868167804514756, Control Mode: nominal
+[66.9460 37.3254 22.9983 52.6189]
+IMU Pitch: 0.487875941105885, Control Mode: nominal
+[57.0672 26.0842 17.3183 48.3013]
+IMU Pitch: 0.4871299361201749, Control Mode: nominal
+[63.2322 44.1233 16.5741 35.6830]
+IMU Pitch: 0.4883977781923517, Control Mode: nominal
+[73.1049 41.7484 28.7507 60.1073]
+IMU Pitch: 0.49153366763835055, Control Mode: nominal
+[77.2040 52.7064 34.8631 59.3608]
+IMU Pitch: 0.4911199726233698, Control Mode: nominal
+[67.6456 38.9326 38.0120 66.7250]
+IMU Pitch: 0.49129904629736226, Control Mode: nominal
+[78.2193 49.3954 36.2021 65.0259]
+IMU Pitch: 0.49247552208599654, Control Mode: nominal
+[73.0963 45.7811 20.4340 47.7491]
+IMU Pitch: 0.4942510510030867, Control Mode: nominal
+[56.6534 27.3327  5.2407 34.5613]
+IMU Pitch: 0.49545456757537565, Control Mode: nominal
+[60.8810 28.3736  5.2675 37.7749]
+IMU Pitch: 0.49701314844468514, Control Mode: nominal
+[63.5393 14.3574 23.7876 72.9695]
+IMU Pitch: 0.4953027326784898, Control Mode: nominal
+[64.0744 51.4569 41.5028 54.1202]
+IMU Pitch: 0.49667879352120636, Control Mode: nominal
+[68.9587 28.7088 29.5683 69.8182]
+IMU Pitch: 0.49805413131560416, Control Mode: nominal
+[72.2046 20.5787 26.7011 78.3271]
+IMU Pitch: 0.49809814019586635, Control Mode: nominal
+[61.2607 36.4684 28.9674 53.7597]
+IMU Pitch: 0.49813666100862636, Control Mode: nominal
+[71.6375 48.4922 44.8277 67.9730]
+IMU Pitch: 0.4976574655358053, Control Mode: nominal
+[73.8487 34.4498 32.1791 71.5780]
+IMU Pitch: 0.4988826547860005, Control Mode: nominal
+[92.9452 43.6207 44.4593 93.7838]
+IMU Pitch: 0.5019206060642202, Control Mode: nominal
+[61.6748 30.2335 12.2397 43.6810]
+----------------------------------------
+Loop Times for last second: AVG: [0.004116 ms], MAX: [0.006768 ms], Processing %: [8.23%]
+Total Runtime: 18.0031 (loop 360), Total Average Frequency: 19.9965 Hz
+IMU Pitch: 0.5043583891143602, Control Mode: nominal
+[54.7657 22.0855  4.8356 37.5158]
+IMU Pitch: 0.50365480040339, Control Mode: nominal
+[59.1758 15.6548 16.9041 60.4251]
+IMU Pitch: 0.500917953004368, Control Mode: nominal
+[41.3873 15.9473 21.5014 46.9414]
+IMU Pitch: 0.5013608574261259, Control Mode: nominal
+[69.0419 24.1360 34.6181 79.5239]
+IMU Pitch: 0.5012176447175467, Control Mode: nominal
+[63.0384 40.3963 34.4998 57.1419]
+IMU Pitch: 0.5049795653289341, Control Mode: nominal
+[72.3214 38.3695 15.3874 49.3393]
+IMU Pitch: 0.503604933157124, Control Mode: nominal
+[59.7598 18.7826  7.2660 48.2433]
+IMU Pitch: 0.5044245425599817, Control Mode: nominal
+[82.9950 41.8926 34.7014 75.8038]
+IMU Pitch: 0.5035509189074672, Control Mode: nominal
+[97.9583 57.6841 46.6301 86.9044]
+IMU Pitch: 0.5055425568931227, Control Mode: nominal
+[71.1987 37.0929 24.8734 58.9792]
+IMU Pitch: 0.5060115667788145, Control Mode: nominal
+[58.1171 38.7284  9.4895 28.8782]
+IMU Pitch: 0.5065640672840557, Control Mode: nominal
+[74.4389 32.6900 23.1415 64.8904]
+IMU Pitch: 0.5077533536804505, Control Mode: nominal
+[78.3105 29.2799 14.3475 63.3782]
+IMU Pitch: 0.5095072506612962, Control Mode: nominal
+[78.3231 56.1753 48.7750 70.9228]
+IMU Pitch: 0.5094798660127545, Control Mode: nominal
+[87.7928 65.4179 47.9901 70.3650]
+IMU Pitch: 0.5091372939899194, Control Mode: nominal
+[73.8057 62.4194 43.2807 54.6669]
+IMU Pitch: 0.5101214801581834, Control Mode: nominal
+[59.3531 35.6382 15.8151 39.5300]
+IMU Pitch: 0.510488504311881, Control Mode: nominal
+[55.5809 32.4381 11.6442 34.7871]
+IMU Pitch: 0.5105019730727333, Control Mode: nominal
+[70.3207 37.7811 31.2466 63.7861]
+IMU Pitch: 0.5112619396935257, Control Mode: nominal
+[80.1499 44.5912 41.7770 77.3357]
+----------------------------------------
+Loop Times for last second: AVG: [0.004737 ms], MAX: [0.01344 ms], Processing %: [9.47%]
+Total Runtime: 19.0011 (loop 380), Total Average Frequency: 19.9988 Hz
+IMU Pitch: 0.5111295066602011, Control Mode: nominal
+[60.4184 47.2540 33.3745 46.5389]
+IMU Pitch: 0.5128297112577866, Control Mode: nominal
+[68.4601 32.2369 34.0456 70.2688]
+IMU Pitch: 0.5127482943520565, Control Mode: nominal
+[79.1159 43.5424 42.9840 78.5574]
+IMU Pitch: 0.5150863361348015, Control Mode: nominal
+[85.0913 48.1819 22.6730 59.5824]
+IMU Pitch: 0.5161684819489214, Control Mode: nominal
+[62.8470 18.0828  2.6313 47.3955]
+IMU Pitch: 0.5173274866878146, Control Mode: nominal
+[55.4200 27.5890  2.5514 30.3824]
+IMU Pitch: 0.5158483433051713, Control Mode: nominal
+[51.8133 42.2043 17.1626 26.7717]
+IMU Pitch: 0.5147244866833248, Control Mode: nominal
+[82.7599 52.6780 40.9931 71.0750]
+IMU Pitch: 0.5172664480528829, Control Mode: nominal
+[88.6344 46.3776 27.0506 69.3074]
+IMU Pitch: 0.5177078079564849, Control Mode: nominal
+[86.1908 47.1267 37.1050 76.1690]
+IMU Pitch: 0.5186861528160588, Control Mode: nominal
+[70.0554 35.3839 14.1979 48.8694]
+IMU Pitch: 0.5188851239520975, Control Mode: nominal
+[67.4814 41.1532 31.6449 57.9731]
+IMU Pitch: 0.5183896215935392, Control Mode: nominal
+[61.6380 33.0613 24.0950 52.6717]
+IMU Pitch: 0.5164905125676625, Control Mode: nominal
+[67.9173 44.9449 36.9309 59.9033]
+IMU Pitch: 0.5158957642670221, Control Mode: nominal
+[59.3281 49.6206 16.2013 25.9089]
+IMU Pitch: 0.5172327023012148, Control Mode: nominal
+[75.4443 27.4924 19.9470 67.8988]
+IMU Pitch: 0.5177261580176697, Control Mode: nominal
+[78.2200 41.0943 43.9688 81.0944]
+IMU Pitch: 0.5165740238874362, Control Mode: nominal
+[68.7365 39.8411 55.4988 84.3942]
+IMU Pitch: 0.5171008505289176, Control Mode: nominal
+[76.2107 24.8639 33.5572 84.9039]
+IMU Pitch: 0.5196209907315856, Control Mode: nominal
+[83.6049 47.7245 30.4297 66.3101]
+----------------------------------------
+Loop Times for last second: AVG: [0.004382 ms], MAX: [0.007468 ms], Processing %: [8.76%]
+Total Runtime: 20.0009 (loop 400), Total Average Frequency: 19.9991 Hz
+IMU Pitch: 0.5214752706878046, Control Mode: nominal
+[73.4709 42.0975  9.7297 41.1031]
+IMU Pitch: 0.5238164136865002, Control Mode: nominal
+[75.0295 27.9039 10.0014 57.1270]
+IMU Pitch: 0.5236515096849484, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(85.16%).
+[76.9016 31.3808 25.5390 71.0597]
+IMU Pitch: 0.5253246401388119, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(85.51%).
+[96.4892 54.3128 45.3529 87.5293]
+IMU Pitch: 0.5271744551076384, Control Mode: nominal
+[74.4937 37.9164  4.9575 41.5348]
+IMU Pitch: 0.5282468056883273, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(85.52%).
+[79.3508 41.9234 31.0564 68.4838]
+IMU Pitch: 0.5287610716693992, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(85.73%).
+[92.4034 47.6676 32.5616 77.2974]
+IMU Pitch: 0.5299264754317403, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(85.87%).
+[96.6240 51.7009 24.5418 69.4650]
+IMU Pitch: 0.5297709667535401, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.54%).
+[92.3164 40.6559 48.1008 99.7613]
+IMU Pitch: 0.5309420185519891, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.41%).
+[87.7873 51.6868 53.0825 89.1830]
+IMU Pitch: 0.5325157846038567, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.22%).
+[93.2796 70.3036 56.6010 79.5770]
+IMU Pitch: 0.5342692897625759, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.58%).
+[98.4694 47.7720 38.4894 89.1868]
+IMU Pitch: 0.5352666313856899, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.12%).
+[85.2290 39.3671 22.7824 68.6443]
+IMU Pitch: 0.5335564305579497, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.29%).
+[79.6904 47.3477 50.2241 82.5668]
+IMU Pitch: 0.5375000906642846, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.65%).
+[98.4615 39.1246 31.2678 90.6047]
+IMU Pitch: 0.5401012012895119, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.66%).
+[105.0845  58.9828  47.1558  93.2575]
+IMU Pitch: 0.5421414744411793, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.68%).
+[84.7783 13.5032 21.9967 93.2719]
+IMU Pitch: 0.544517885879665, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.6%).
+[84.8241 33.3132 40.3291 91.8400]
+IMU Pitch: 0.5455735034928388, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.72%).
+[ 88.6507  34.4780  49.2294 103.4022]
+IMU Pitch: 0.5447716231055258, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.77%).
+[83.4445 37.7918 45.5168 91.1695]
+----------------------------------------
+Loop Times for last second: AVG: [0.005255 ms], MAX: [0.010597 ms], Processing %: [10.51%]
+Total Runtime: 21.001 (loop 420), Total Average Frequency: 19.9991 Hz
+IMU Pitch: 0.5448248404846784, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.98%).
+[ 95.3872  40.0780  52.2892 107.5984]
+IMU Pitch: 0.5464561761321478, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.85%).
+[100.8758  38.9355  43.7273 105.6675]
+IMU Pitch: 0.5482698466222592, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.06%).
+[110.3168  37.9000  47.9479 120.3647]
+IMU Pitch: 0.5512852084096529, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.5%).
+[107.1353  33.6795  55.4127 128.8685]
+IMU Pitch: 0.553411538810363, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.3%).
+[82.8564 24.5655 14.8530 73.1439]
+IMU Pitch: 0.5578108131953141, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.91%).
+[102.6044  39.6614  45.1665 108.1095]
+IMU Pitch: 0.5622868792529608, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.39%).
+[89.4970 41.0296 32.4293 80.8967]
+IMU Pitch: 0.5642339151666835, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.83%).
+[106.0065  44.9782  46.8694 107.8977]
+IMU Pitch: 0.569523675323134, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.24%).
+[111.0473  26.1931  37.4603 122.3144]
+IMU Pitch: 0.573808651057086, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.29%).
+[119.4040  41.9309  48.0029 125.4760]
+IMU Pitch: 0.5776580312956654, Control Mode: nominal
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.08%).
+[110.1396  40.9427  47.0152 116.2121]
+IMU Pitch: 0.5798482057147898, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(85.28%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.95%).
+[100.1296  42.2211  48.2783 106.1868]
+IMU Pitch: 0.5829601290757944, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(85.26%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.9%).
+[ 92.6879  29.2158  41.3056 104.7777]
+IMU Pitch: 0.5877904392863327, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(85.54%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(86.95%).
+[113.9236  33.4860  34.8735 115.3111]
+IMU Pitch: 0.5940344685103577, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(85.64%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.17%).
+[129.4501  42.3854  34.3206 121.3854]
+IMU Pitch: 0.596264781154643, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(85.83%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.57%).
+[126.4933  36.5253  47.2167 137.1847]
+IMU Pitch: 0.5994980412255171, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(85.37%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.8%).
+[125.3602  21.3173  41.2344 145.2773]
+IMU Pitch: 0.6076234619320716, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.36%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.53%).
+[137.2449  58.7925  48.0411 126.4935]
+IMU Pitch: 0.6099845889143661, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.06%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.52%).
+[127.3543  50.3266  57.2029 134.2307]
+IMU Pitch: 0.6161931844339515, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.3%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.81%).
+[150.9012  61.8397  55.4775 144.5391]
+----------------------------------------
+Loop Times for last second: AVG: [0.00578 ms], MAX: [0.015384 ms], Processing %: [11.56%]
+Total Runtime: 22.0014 (loop 440), Total Average Frequency: 19.9987 Hz
+IMU Pitch: 0.6194027383954857, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.28%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.97%).
+[144.5365  56.5357  80.1877 168.1886]
+IMU Pitch: 0.6224377116577929, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.34%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.01%).
+[147.0953  61.7302  69.5395 154.9046]
+IMU Pitch: 0.6274546493638455, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.03%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.97%).
+[132.9131  42.4555  69.0271 159.4847]
+IMU Pitch: 0.6316127067221345, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.17%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.1%).
+[142.8673  43.8876  63.1826 162.1623]
+IMU Pitch: 0.6360553915433618, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(85.9%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.43%).
+[128.5697  33.1831  39.5783 134.9648]
+IMU Pitch: 0.6396948536846379, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.14%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.62%).
+[126.9552  48.3611  66.7887 145.3828]
+IMU Pitch: 0.643562453190659, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.25%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.75%).
+[150.0715  58.2191  63.2240 155.0764]
+IMU Pitch: 0.647633007159341, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.02%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.71%).
+[135.5185  43.4248  58.3277 150.4214]
+IMU Pitch: 0.6535111631013568, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.33%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.45%).
+[130.7933  60.1824  57.8486 128.4595]
+IMU Pitch: 0.6570140896316922, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(85.7%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.83%).
+[123.7345  23.8897  51.9790 151.8238]
+IMU Pitch: 0.6631571231117546, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.38%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.6%).
+[134.7970  51.0013  58.1293 141.9250]
+IMU Pitch: 0.666696201920303, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.36%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.09%).
+[148.6938  66.2196  89.3735 171.8477]
+IMU Pitch: 0.6711428578737098, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.55%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.4%).
+[154.9024  60.9380  84.1121 178.0765]
+IMU Pitch: 0.6765489986878807, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.35%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.53%).
+[130.8407  53.4362  63.1611 140.5656]
+IMU Pitch: 0.6816154164245731, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.07%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.85%).
+[142.4090  40.5048  56.3990 158.3032]
+IMU Pitch: 0.6888110886781835, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.45%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.42%).
+[139.3970  54.4960  53.9935 138.8946]
+IMU Pitch: 0.6930046986095422, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.27%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.41%).
+[148.7775  47.6460  32.7871 133.9186]
+IMU Pitch: 0.7004219498626774, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.5%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.55%).
+[139.3593  64.7723  64.1951 138.7822]
+IMU Pitch: 0.7076650078035819, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(85.97%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.49%).
+[136.4554  44.6725  38.6378 130.4206]
+IMU Pitch: 0.7122039199890426, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.0%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.09%).
+[134.0859  42.0782  30.2433 122.2509]
+----------------------------------------
+Loop Times for last second: AVG: [0.00782 ms], MAX: [0.016372 ms], Processing %: [15.64%]
+Total Runtime: 23.0019 (loop 460), Total Average Frequency: 19.9983 Hz
+IMU Pitch: 0.7171244256786105, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.36%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.61%).
+[150.8692  54.6709  51.0901 147.2883]
+IMU Pitch: 0.726728028630073, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(85.98%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.32%).
+[139.0259  41.6332  32.3739 129.7666]
+IMU Pitch: 0.7306760229566787, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.61%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.86%).
+[158.3036  66.3848  57.7382 149.6570]
+IMU Pitch: 0.7363741188207393, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.52%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.56%).
+[147.5974  60.1598  58.3431 145.7808]
+IMU Pitch: 0.7398928382334217, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.42%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.85%).
+[151.9327  60.4315  69.0272 160.5284]
+IMU Pitch: 0.7431858618902789, Control Mode: nominal
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.17%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.38%).
+[139.8730  46.6953  44.3028 137.4805]
+IMU Pitch: 0.7471188141037686, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(85.22%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.66%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.96%).
+[157.2354  76.0283  73.3128 154.5199]
+IMU Pitch: 0.7495602839242502, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(85.3%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.46%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.33%).
+[152.2689  71.6789  54.3832 134.9731]
+IMU Pitch: 0.7527088855764933, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(85.32%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.41%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.45%).
+[143.3554  57.6688  56.8685 142.5551]
+IMU Pitch: 0.7575472409020759, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(85.86%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.57%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.99%).
+[158.0670  68.9508  70.4856 159.6019]
+IMU Pitch: 0.7617954884549009, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(86.25%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.87%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.93%).
+[173.0981  87.0686  66.7115 152.7410]
+IMU Pitch: 0.7720355245232878, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(87.23%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(86.95%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.68%).
+[200.5837  95.1116  98.2700 203.7421]
+IMU Pitch: 0.778093234830191, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(86.89%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(87.12%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.63%).
+[190.7959  94.6878  92.6837 188.7918]
+IMU Pitch: 0.7914456186311221, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(87.84%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(87.77%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.15%).
+[231.9066 125.9263 117.5738 223.5540]
+IMU Pitch: 0.8069629228183551, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(87.5%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(87.3%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.94%).
+[222.3044 103.7300  92.6882 211.2626]
+IMU Pitch: 0.8191948516203531, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(87.91%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(87.84%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.92%).
+[237.4255 131.9013 112.6077 218.1320]
+IMU Pitch: 0.8306848771164593, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(87.92%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(87.7%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.14%).
+[238.8312 131.2240 112.3630 219.9701]
+IMU Pitch: 0.8518254460901111, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(88.25%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(88.09%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.64%).
+[258.3484 142.9114 125.0197 240.4566]
+IMU Pitch: 0.8767874090353407, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(87.98%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(87.53%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.68%).
+[238.6938 118.6562  84.2484 204.2860]
+IMU Pitch: 0.8943316294701227, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(88.59%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(88.08%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.83%).
+[272.0525 144.3338 124.0090 251.7277]
+----------------------------------------
+Loop Times for last second: AVG: [0.010302 ms], MAX: [0.015162 ms], Processing %: [20.6%]
+Total Runtime: 24.0022 (loop 480), Total Average Frequency: 19.9982 Hz
+IMU Pitch: 0.9232135865604637, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(88.11%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(87.73%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.62%).
+[244.5975 129.8439  76.9922 191.7458]
+IMU Pitch: 0.9440824332477579, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(88.83%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(88.47%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.68%).
+[285.5336 162.2699 128.7906 252.0543]
+IMU Pitch: 0.9774212457341257, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(88.47%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(87.83%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.95%).
+[267.3453 141.4788  85.6734 211.5399]
+IMU Pitch: 1.0029977903211929, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.44%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(88.58%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.66%).
+[313.0953 175.6891 114.4433 251.8495]
+IMU Pitch: 1.026985733704961, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.17%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(88.38%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.5%).
+[299.4156 167.1375 115.6164 247.8945]
+IMU Pitch: 1.065731529790377, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.64%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(88.69%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.68%).
+[316.7074 174.8789 105.7806 247.6091]
+IMU Pitch: 1.0945813002279412, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.45%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(88.65%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.36%).
+[319.4929 178.9227  92.2763 232.8465]
+IMU Pitch: 1.1383337490548915, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.6%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(88.72%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.33%).
+[319.2839 188.2457 101.8400 232.8782]
+IMU Pitch: 1.1832945468805398, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.85%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(89.17%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(90.01%).
+[345.1624 199.8708 117.0616 262.3532]
+IMU Pitch: 1.213900664051158, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.75%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(89.04%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.23%).
+[324.2511 195.0433 103.4297 232.6375]
+IMU Pitch: 1.2607344741244257, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(90.1%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(89.8%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.67%).
+[357.1105 230.8229 119.5622 245.8499]
+IMU Pitch: 1.293647795768356, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.97%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(89.14%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.16%).
+[340.3889 214.0762  92.1239 218.4366]
+IMU Pitch: 1.323501121986378, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(90.18%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(89.73%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.07%).
+[348.1462 231.3691 103.1064 219.8835]
+IMU Pitch: 1.3685044808099651, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(90.19%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(90.18%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.07%).
+[348.6584 249.7893 125.9357 224.8048]
+IMU Pitch: 1.3957751936986396, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(90.24%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(90.08%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(89.23%).
+[352.0979 252.0280 122.9556 223.0254]
+IMU Pitch: 1.4369890756588497, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.86%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(90.56%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.94%).
+[343.9090 284.4561 149.4771 208.9300]
+IMU Pitch: 1.4723872484504241, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(90.38%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(91.45%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.72%).
+[357.7837 325.2145 182.9220 215.4912]
+IMU Pitch: 1.4935138719750687, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(90.09%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(91.64%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.51%).
+[352.0543 331.6302 172.3354 192.7596]
+IMU Pitch: 1.5186944425168565, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(90.05%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(92.12%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.78%).
+[344.6173 360.2588 216.1978 200.5563]
+IMU Pitch: 1.5330236737527803, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(90.1%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(91.96%).
+WARNING - Motor 2 is oversatured. New duty cycle request ignored: Over 80% limit(85.89%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.66%).
+[344.8098 356.0250 210.3788 199.1636]
+----------------------------------------
+Loop Times for last second: AVG: [0.007705 ms], MAX: [0.018214 ms], Processing %: [15.41%]
+Total Runtime: 25.0013 (loop 500), Total Average Frequency: 19.999 Hz
+IMU Pitch: 1.5454864860124464, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.6%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(91.75%).
+WARNING - Motor 2 is oversatured. New duty cycle request ignored: Over 80% limit(86.5%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.18%).
+[326.7282 346.0039 192.4742 173.1985]
+IMU Pitch: 1.5618507460670075, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.86%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(92.29%).
+WARNING - Motor 2 is oversatured. New duty cycle request ignored: Over 80% limit(87.39%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.4%).
+[340.0606 365.9937 211.1956 185.2625]
+IMU Pitch: 1.5711047772346998, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.33%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(92.2%).
+WARNING - Motor 2 is oversatured. New duty cycle request ignored: Over 80% limit(87.86%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(87.92%).
+[318.1240 371.4589 210.7747 157.4398]
+IMU Pitch: 1.583963924591295, Control Mode: nominal
+WARNING - Motor 0 is oversatured. New duty cycle request ignored: Over 80% limit(89.85%).
+WARNING - Motor 1 is oversatured. New duty cycle request ignored: Over 80% limit(92.48%).
+WARNING - Motor 2 is oversatured. New duty cycle request ignored: Over 80% limit(88.43%).
+WARNING - Motor 3 is oversatured. New duty cycle request ignored: Over 80% limit(88.38%).
+[336.4196 383.4381 232.7584 185.7399]
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Python 3.7.3 (/usr/bin/python3)
+>>> %Run main.py
+Hello world from Prudentia!
+Setting up GUI server. Accessible on LAN through "172.30.0.20:8009"
+Data will be exchanged via websockets on LAN through "172.30.0.20:8010"
+Loading Gui Files from directory: "/home/pi/Desktop/Prudentia/rPi Scripts/GUI Files"
+Websocket server started on port 8010
+Initializing imu.py
+Initializing motors.py
+Is VESC port /dev/ttyAMA1 open? : True
+Is VESC port /dev/ttyAMA2 open? : True
+Is VESC port /dev/ttyAMA3 open? : True
+Is VESC port /dev/ttyAMA4 open? : True
+WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py
+Initializing emergency stop
+Starting in 2 seconds...
+IMU Pitch: -0.6671062118759041, Control Mode: nominal
+IMU Pitch: -0.6817391084801466, Control Mode: nominal
+IMU Pitch: -0.7006948621060352, Control Mode: nominal
+IMU Pitch: -0.7080977989321201, Control Mode: nominal
+IMU Pitch: -0.7180515433850926, Control Mode: nominal
+IMU Pitch: -0.7268631574192976, Control Mode: nominal
+IMU Pitch: -0.7339533910896155, Control Mode: nominal
+IMU Pitch: -0.7431790321444871, Control Mode: nominal
+IMU Pitch: -0.7439824351245857, Control Mode: nominal
+IMU Pitch: -0.7467174729630233, Control Mode: nominal
+IMU Pitch: -0.7489341164729221, Control Mode: nominal
+IMU Pitch: -0.7491951187649103, Control Mode: nominal
+IMU Pitch: -0.7500557736729789, Control Mode: nominal
+IMU Pitch: -0.7501020672925974, Control Mode: nominal
+IMU Pitch: -0.7521308586925441, Control Mode: nominal
+IMU Pitch: -0.7546070957135071, Control Mode: nominal
+IMU Pitch: -0.7533933777548024, Control Mode: nominal
+IMU Pitch: -0.7515035665799313, Control Mode: nominal
+IMU Pitch: -0.7488985651989278, Control Mode: nominal
+IMU Pitch: -0.748662962714382, Control Mode: nominal
+----------------------------------------
+Loop Times for last second: AVG: [0.003957 ms], MAX: [0.010374 ms], Processing %: [7.91%]
+Total Runtime: 1.0037 (loop 20), Total Average Frequency: 19.9264 Hz
+IMU Pitch: -0.7457380704954802, Control Mode: nominal
+IMU Pitch: -0.7412201028746599, Control Mode: nominal
+IMU Pitch: -0.7391523561323052, Control Mode: nominal
+IMU Pitch: -0.7351547821836162, Control Mode: nominal
+IMU Pitch: -0.7306852599966149, Control Mode: nominal
+IMU Pitch: -0.7276873137874666, Control Mode: nominal
+IMU Pitch: -0.7220538995738993, Control Mode: nominal
+IMU Pitch: -0.717787111269515, Control Mode: nominal
+IMU Pitch: -0.712070557627865, Control Mode: nominal
+IMU Pitch: -0.706643696360655, Control Mode: nominal
+IMU Pitch: -0.7019493805061705, Control Mode: nominal
+IMU Pitch: -0.6970925074830548, Control Mode: nominal
+IMU Pitch: -0.6905111994278814, Control Mode: nominal
+IMU Pitch: -0.6854641814761915, Control Mode: nominal
+IMU Pitch: -0.678982873222043, Control Mode: nominal
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Python 3.7.3 (/usr/bin/python3)
+>>> %Run main.py
+Hello world from Prudentia!
+Setting up GUI server. Accessible on LAN through "172.30.0.20:8009"
+Data will be exchanged via websockets on LAN through "172.30.0.20:8010"
+Loading Gui Files from directory: "/home/pi/Desktop/Prudentia/rPi Scripts/GUI Files"
+Websocket server started on port 8010
+Initializing imu.py
+Initializing motors.py
+Is VESC port /dev/ttyAMA1 open? : True
+Is VESC port /dev/ttyAMA2 open? : True
+Is VESC port /dev/ttyAMA3 open? : True
+Is VESC port /dev/ttyAMA4 open? : True
+WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py
+Initializing emergency stop
+Starting in 2 seconds...
+----------------------------------------
+Loop Times for last second: AVG: [0.004465 ms], MAX: [0.009899 ms], Processing %: [8.93%]
+Total Runtime: 1.0013 (loop 20), Total Average Frequency: 19.9731 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.003339 ms], MAX: [0.010103 ms], Processing %: [6.68%]
+Total Runtime: 2.0013 (loop 40), Total Average Frequency: 19.9873 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.003313 ms], MAX: [0.005324 ms], Processing %: [6.63%]
+Total Runtime: 3.0012 (loop 60), Total Average Frequency: 19.9922 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.004188 ms], MAX: [0.015228 ms], Processing %: [8.38%]
+Total Runtime: 4.0011 (loop 80), Total Average Frequency: 19.9943 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002359 ms], MAX: [0.004788 ms], Processing %: [4.72%]
+Total Runtime: 5.0023 (loop 100), Total Average Frequency: 19.9908 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.00354 ms], MAX: [0.006817 ms], Processing %: [7.08%]
+Total Runtime: 6.0026 (loop 120), Total Average Frequency: 19.9914 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002321 ms], MAX: [0.004664 ms], Processing %: [4.64%]
+Total Runtime: 7.0059 (loop 140), Total Average Frequency: 19.9832 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002525 ms], MAX: [0.009078 ms], Processing %: [5.05%]
+Total Runtime: 8.0024 (loop 160), Total Average Frequency: 19.9941 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.004101 ms], MAX: [0.006546 ms], Processing %: [8.2%]
+Total Runtime: 9.0025 (loop 180), Total Average Frequency: 19.9944 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.004236 ms], MAX: [0.016815 ms], Processing %: [8.47%]
+Total Runtime: 10.0021 (loop 200), Total Average Frequency: 19.9958 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.003017 ms], MAX: [0.008141 ms], Processing %: [6.03%]
+Total Runtime: 11.0054 (loop 220), Total Average Frequency: 19.9902 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002352 ms], MAX: [0.006933 ms], Processing %: [4.7%]
+Total Runtime: 12.0025 (loop 240), Total Average Frequency: 19.9959 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.003933 ms], MAX: [0.008015 ms], Processing %: [7.87%]
+Total Runtime: 13.0014 (loop 260), Total Average Frequency: 19.9979 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.003816 ms], MAX: [0.007555 ms], Processing %: [7.63%]
+Total Runtime: 14.0014 (loop 280), Total Average Frequency: 19.9981 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.003735 ms], MAX: [0.00763 ms], Processing %: [7.47%]
+Total Runtime: 15.0052 (loop 300), Total Average Frequency: 19.993 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.003229 ms], MAX: [0.006405 ms], Processing %: [6.46%]
+Total Runtime: 16.0009 (loop 320), Total Average Frequency: 19.9989 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.003106 ms], MAX: [0.00665 ms], Processing %: [6.21%]
+Total Runtime: 17.0035 (loop 340), Total Average Frequency: 19.9959 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002876 ms], MAX: [0.007106 ms], Processing %: [5.75%]
+Total Runtime: 18.0017 (loop 360), Total Average Frequency: 19.9981 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002871 ms], MAX: [0.007458 ms], Processing %: [5.74%]
+Total Runtime: 19.0018 (loop 380), Total Average Frequency: 19.9981 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002514 ms], MAX: [0.005482 ms], Processing %: [5.03%]
+Total Runtime: 20.0027 (loop 400), Total Average Frequency: 19.9973 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002453 ms], MAX: [0.005219 ms], Processing %: [4.91%]
+Total Runtime: 21.002 (loop 420), Total Average Frequency: 19.9981 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.004369 ms], MAX: [0.009129 ms], Processing %: [8.74%]
+Total Runtime: 22.0013 (loop 440), Total Average Frequency: 19.9988 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002269 ms], MAX: [0.006347 ms], Processing %: [4.54%]
+Total Runtime: 23.0025 (loop 460), Total Average Frequency: 19.9978 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002439 ms], MAX: [0.004607 ms], Processing %: [4.88%]
+Total Runtime: 24.0012 (loop 480), Total Average Frequency: 19.999 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.002877 ms], MAX: [0.007102 ms], Processing %: [5.75%]
+Total Runtime: 25.002 (loop 500), Total Average Frequency: 19.9984 Hz
+----------------------------------------
+Loop Times for last second: AVG: [0.004532 ms], MAX: [0.007517 ms], Processing %: [9.06%]
+Total Runtime: 26.0011 (loop 520), Total Average Frequency: 19.9991 Hz

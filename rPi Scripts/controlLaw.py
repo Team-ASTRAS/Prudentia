@@ -113,8 +113,8 @@ class ControlLawSingleton:
     Irw = 0.000453158
     motorAngle = 45
 
-    overshoot = 0.25 # arbitrary percent OS
-    ts = 120 # seconds, arbitrary settling time
+    overshoot = 0.05 # arbitrary percent OS
+    ts = 20 # seconds, arbitrary settling time
 
     #Functions named with the format routineName are functions that are called
     #by main.py when the state machine is set to run a particular routine
@@ -158,9 +158,12 @@ class ControlLawSingleton:
         sinAngle = np.sin(np.deg2rad(self.motorAngle))
         cosAngle = np.cos(np.deg2rad(self.motorAngle))
 
+#         self.motorAngles = np.array([[sinAngle,  sinAngle,  sinAngle,  sinAngle],
+#                                     [0,         -cosAngle,  0,         cosAngle],
+#                                     [cosAngle,   0,         -cosAngle, 0        ]])
         self.motorAngles = np.array([[sinAngle,  sinAngle,  sinAngle,  sinAngle],
-                                    [0,         -cosAngle,  0,         cosAngle],
-                                    [cosAngle,   0,         -cosAngle, 0        ]])
+                                     [0,         cosAngle,  0,         -cosAngle],
+                                     [-cosAngle,   0,         cosAngle, 0        ]])
         
         #cosAngle30 = np.cos(np.deg2rad(self.motorAngle))*np.cos(np.deg2rad(30))
         #cosAngle60 = np.cos(np.deg2rad(self.motorAngle))*np.cos(np.deg2rad(60))

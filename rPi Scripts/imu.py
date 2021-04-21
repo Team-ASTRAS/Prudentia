@@ -102,9 +102,9 @@ class ImuSingleton:
         i+=4
         self.wRaw[2] = struct.unpack('f', packet[i:i+4])[0]
 
-        self.w[0] = self.wRaw[0] + self.gyroOffsets[0]
+        self.w[0] = -(self.wRaw[2] + self.gyroOffsets[2])
         self.w[1] = self.wRaw[1] + self.gyroOffsets[1]
-        self.w[2] = -(self.wRaw[2] + self.gyroOffsets[2])
+        self.w[2] = self.wRaw[0] + self.gyroOffsets[0]
 
         self.a[0] = self.aRaw[0] + self.accelOffsets[0]
         self.a[1] = self.aRaw[1] + self.accelOffsets[1]
@@ -131,13 +131,14 @@ class ImuSingleton:
         wAxis = w / wMag
 
         if(wMag < 0.01):
-            results = self.getRollPitch()
-            roll = results['r']
-            pitch = results['p']
-            ypr = quat2ypr(self.q)
-            ypr[2] = roll
-            ypr[1] = pitch
-            #print(ypr)
+            pass
+            #results = self.getRollPitch()
+            #roll = results['r']
+            #pitch = results['p']
+            #ypr = quat2ypr(self.q)
+            #ypr[2] = roll
+            #ypr[1] = pitch
+            #print("Using accels")
             #self.q = ypr2quat(ypr)
             
         deltaQ = eulerAxis2quat(wAxis, wMag)
