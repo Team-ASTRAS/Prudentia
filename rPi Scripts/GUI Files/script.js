@@ -25,7 +25,6 @@ var dataMode = document.querySelector('.DataMode'),
     // NAVIGATION BUTTONS
     homeNav = document.querySelector('.HomeButton'),
     instructionsNav = document.querySelector('.InstructionButton'),
-    settingsNav = document.querySelector('.SettingsButton'),
     rtcNav = document.querySelector('.RTCButton'),
     aiNav = document.querySelector('.AIButton'),
     searchNav = document.querySelector('.SMButton'),
@@ -79,6 +78,7 @@ if (calibrate){
 }
 stop.onclick = function (event) {
     console.log('Stop');
+    stop.style.background = "#cf0404";
     setState("standby");
 }
 // NAVIGATION BUTTONS
@@ -90,11 +90,6 @@ homeNav.onclick = function (event) {
 instructionsNav.onclick = function (event) {
     console.log('Instructions Navigation');
     window.location = "InstructionPage.html";
-    Initialized = false;
-}
-settingsNav.onclick = function (event) {
-    console.log('Settings Navigation');
-    window.location = "SettingsPage.html";
     Initialized = false;
 }
 aiNav.onclick = function (event) {
@@ -114,12 +109,14 @@ searchNav.onclick = function (event) {
 // LOGGING
 if (startlog){
     startlog.onclick = function (event) {
+        startlog.style.color = "#36d146";
         var msg = {"messageType":"DataLogging", "LogType":"StartLog"};
         jsonMSG = JSON.stringify(msg);
         console.log(jsonMSG);
         websocket.send(jsonMSG);
       }
       stoplog.onclick = function (event) {
+        startlog.style.color = "#F7F7F7";
         var msg = {"messageType":"DataLogging", "LogType":"StopLog"};
         jsonMSG = JSON.stringify(msg);
         console.log(jsonMSG);
