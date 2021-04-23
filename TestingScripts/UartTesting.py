@@ -47,9 +47,9 @@ dutyCyclePerStep = 0.004  #was 0.008
 while timeNow - startTime < 300:
     c = c + 1
     
-    if dc >= 0.80 and increasing:
+    if dc >= 0.95 and increasing:
         increasing = False
-    if dc <= -0.80 and not increasing:
+    if dc <= -0.95 and not increasing:
         increasing = True
         
     if increasing:

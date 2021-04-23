@@ -94,6 +94,7 @@ resolution = 500
 camera.resolution = (resolution, resolution) # if this changes then the FOV math below needs to be updated
 camera.framerate = 24
 #camera.shutter_speed = 8000
+
 def startCamServer():
     #Uncomment the next line to change your Pi's Camera rotation (in degrees)
     #camera.rotation = 90
@@ -106,12 +107,28 @@ def startCamServer():
     finally:
         camera.stop_recording()
             
-def takePictures():
-    while True:
-        time.sleep(1)
+class CameraSingleton:
+            
+    deltaX = 0 #Latest target offset
+    deltaY = 0
+    
+    def findTargetAsync(self):
+        while True:
+            time.sleep(1)
+            self.findTarget()
+            
+    def findTarget(self):
         #imgOutput = np.empty((512,512,3), dtype=np.uint8)
         camera.capture('/home/pi/Desktop/Prudentia/rPi Scripts/images/image3.bmp', use_video_port=True)
-        print(findLocation())
+        results = findLocation()
+        if results[0] is None:
+            self.deltaX = 0
+            self.deltaY = 0
+        else:
+            self.deltaX = results[0]
+            self.deltaY = results[1]
+            
+        print("Deltas: %s, %s" % (self.deltaX, self.deltaY))
         
 def findLocation():
     #Return screen position based on target in picture
@@ -161,11 +178,15 @@ def findLocation():
         return [None, None]
         
 if __name__ == "__main__":
-    camThread = Thread(target=startCamServer)
-    camThread.start()
-    takePictures()
+  
+    Camera = CameraSingleton()
+  
+    camViewThread = Thread(target=startCamServer)
+    camViewThread.start()
+    findTargetThread = Thread(target=Camera.findTargetAsync)
+    findTargetThread.start()
     
-    camThread.join() #Wait for thread to finish running
+    findTargetThread.join() #Wait for thread to finish running
     
     
     

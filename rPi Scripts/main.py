@@ -17,7 +17,7 @@ enableImu = True
 enableMotors = True
 #When set to False, motor input and output is ignored.
 
-enableCamera = False
+enableCamera = True
 #When set to False, the camera is not initialized and is unused.
 
 enableStop = True
@@ -45,10 +45,10 @@ imuPortName = '/dev/ttyUSB0'
 sharedData = user.SharedDataPackage()
 
 sharedData.state = State.running
-sharedData.controlRoutine = ControlRoutine.attitudeInput
+sharedData.controlRoutine = ControlRoutine.search
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
-sharedData.target = [0, 0, 0]
+sharedData.target = [0, 0, -90]
 
 log('Setting up GUI server. Accessible on LAN through \"%s:%s\"' % (ip, htmlPort))
 log('Data will be exchanged via websockets on LAN through \"%s:%s\"' % (ip, websocketPort))
@@ -102,6 +102,11 @@ if enableCamera:
     log("Initializing camera.py")
     import camera
     Camera = camera.CameraSingleton()
+    
+    camViewThread = Thread(target=camera.startCamServer)
+    camViewThread.start()
+    findTargetThread = Thread(target=Camera.findTargetAsync)
+    findTargetThread.start()
 else:
     log("WARNING: Camera functionality disabled. To reverse this, set 'enableCamera = True' in main.py")
 
@@ -218,12 +223,10 @@ while True:
         sharedData.orientation = np.degrees(ypr).tolist()
 
         sharedData.velocity = Imu.w.tolist()
-        sharedData.velocityMagnitude = np.linalg.norm(Imu.w)
+        sharedData.velocityMagnitude = np.degrees(np.linalg.norm(Imu.w))
+        print("Speed: %s"  % sharedData.velocityMagnitude)
 
         sharedData.acceleration = Imu.a.tolist()
-
-        if enableCamera:
-            sharedData.image = Camera.getPictureString()
 
         #Set timestamp
         sharedData.timestamp = time.time()
@@ -282,15 +285,39 @@ while True:
             if enableMotors:
                 Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
                 #print(response.motorAccels * 60 / (2 * np.pi))
-               
+                
                 sharedData.duty = Motors.duty
 
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search
-            # Set ControlLaw Data
-            response = ControlLaw.routineSearch()
-            # Use response to actuate motors
+            #Unpack qTarget from shared data.
+            qTarget = Imu.q
+            
+            print("Deltas: %s, %s" % (Camera.deltaX, Camera.deltaY))
 
+            #Run control law with latest IMU data and qTarget
+#             response = ControlLaw.routineAttitudeInput(Imu.q, Imu.w, qTarget)
+# 
+#             sharedData.quatTarget = qTarget.tolist()
+#             sharedData.pdMode = response.pdMode.name
+# 
+#             sharedData.qError = response.qError.tolist()
+#             ypr = quat2ypr(response.qError)
+#             sharedData.eulerError = np.degrees(ypr).tolist() #TODO - Because qError flips qhat, I think this needs to use a XYZ rotation instead of a ZYX to get back to Euler coordinates properly.
+#             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
+# 
+#             sharedData.inertialTorque = response.inertialTorque.tolist()
+#             sharedData.motorTorque = response.motorTorques.tolist()
+#             sharedData.motorAccels = response.motorAccels.tolist()
+# 
+#             #print("IMU Pitch: %s, Control Mode: %s" % (np.degrees(ypr)[1], sharedData.pdMode))
+#             
+#             # Use response to actuate motors
+#             if enableMotors:
+#                 Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
+#                 #print(response.motorAccels * 60 / (2 * np.pi))
+#                 
+#                 sharedData.duty = Motors.duty
         else:
             log("Error: controlRoutine not found")
             pass
