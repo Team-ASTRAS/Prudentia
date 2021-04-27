@@ -158,12 +158,9 @@ class ControlLawSingleton:
         sinAngle = np.sin(np.deg2rad(self.motorAngle))
         cosAngle = np.cos(np.deg2rad(self.motorAngle))
 
-#         self.motorAngles = np.array([[sinAngle,  sinAngle,  sinAngle,  sinAngle],
-#                                     [0,         -cosAngle,  0,         cosAngle],
-#                                     [cosAngle,   0,         -cosAngle, 0        ]])
         self.motorAngles = np.array([[sinAngle,  sinAngle,  sinAngle,  sinAngle],
-                                     [0,         cosAngle,  0,         -cosAngle],
-                                     [-cosAngle,   0,         cosAngle, 0        ]])
+                                     [0,         -cosAngle,  0,         cosAngle],
+                                     [cosAngle,   0,         -cosAngle, 0        ]])
         
         #cosAngle30 = np.cos(np.deg2rad(self.motorAngle))*np.cos(np.deg2rad(30))
         #cosAngle60 = np.cos(np.deg2rad(self.motorAngle))*np.cos(np.deg2rad(60))
@@ -314,17 +311,18 @@ if __name__ == "__main__":
     q = ypr2quat(np.radians([0, 0, 0]))
     w = np.array([0, 0, 0])
     qTarget = ypr2quat(np.radians([90, 0, 0]))
- 
+
     res = cls.routineAttitudeInput(q, w, qTarget)
-     
+    log("Motor Angle Configuration: %s" % cls.motorAngle)
     log("IN q:             %s Euler: %s" % (q , np.degrees(quat2ypr(q))) )
     log("IN w:             %s" % w)
     log("IN qTarget:       %s Euler: %s" % (qTarget , np.degrees(quat2ypr(qTarget))) )
     log("-" * 20)
     log("OUT qError:       %s Euler: %s]" % (res.qError , np.degrees(quat2ypr(res.qError))) )
-    log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , np.degrees(quat2ypr(res.qErrorAdjusted))) )
-    log("OUT lqrMode:      %s" % res.lqrMode)
+    #log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , np.degrees(quat2ypr(res.qErrorAdjusted))) )
+    log("OUT lqrMode:      %s" % res.pdMode)
     log("OUT Inert Torque: %s" % res.inertialTorque)
-    log("OUT Motor Torque: %s" % res.motorTorques)
-    log("OUT Motor Alpha:  %s (rad/s)" % res.motorAccels)
+    #log("OUT Motor Torque: %s" % res.motorTorques)
+    #log("OUT Motor Alpha:  %s (rad/s)" % res.motorAccels)
     log("OUT Motor Alpha:  %s (rpm)" % (res.motorAccels * 60 / (2 * np.pi)))
+
