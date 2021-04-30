@@ -158,6 +158,7 @@ if (go){
         console.log(jsonMSG);
         websocket.send(jsonMSG);
         setRoutine("attitudeInput");
+        setState("running")
         page = "AI";
         GraphInitialization();
       }

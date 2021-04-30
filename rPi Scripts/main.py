@@ -17,7 +17,7 @@ enableImu = True
 enableMotors = True
 #When set to False, motor input and output is ignored.
 
-enableCamera = True
+enableCamera = False
 #When set to False, the camera is not initialized and is unused.
 
 enableStop = True
@@ -45,10 +45,10 @@ imuPortName = '/dev/ttyUSB0'
 sharedData = user.SharedDataPackage()
 
 sharedData.state = State.running
-sharedData.controlRoutine = ControlRoutine.search
+sharedData.controlRoutine = ControlRoutine.attitudeInput
 sharedData.angularPosition = [0, 0, 0]
 sharedData.angularVelocity = [0, 0, 0]
-sharedData.target = [0, 0, -90]
+sharedData.target = [0, 0, 0]
 
 log('Setting up GUI server. Accessible on LAN through \"%s:%s\"' % (ip, htmlPort))
 log('Data will be exchanged via websockets on LAN through \"%s:%s\"' % (ip, websocketPort))
@@ -130,7 +130,7 @@ def processCommands():
 
         # State change was issued
         if msgJSON["messageType"] == "setState":
-
+            print("Set state hit")
             if   msgJSON["state"] == "shutdown":
                 sharedData.state = State.shutdown
 
@@ -201,7 +201,12 @@ while True:
         log("Mode changed from %s to %s." % (lastState, sharedData.state))
         lastState = sharedData.state
         #TODO if changing from running, make sure we turn motors off
-
+        if sharedData.state == State.running and lastState == State.standby:
+            Imu.q = np.array([0, 0, 0, 1])
+        if sharedData.state == State.standby and lastState == State.running:
+            log("Reseting motors...")
+            Motors.resetMotors()
+            
     # Switch behavior depending on state
     if sharedData.state == State.shutdown:
         #Stop websocket server (stop object defined in startWebsocketServer in user.py)
@@ -224,7 +229,6 @@ while True:
 
         sharedData.velocity = Imu.w.tolist()
         sharedData.velocityMagnitude = np.degrees(np.linalg.norm(Imu.w))
-        print("Speed: %s"  % sharedData.velocityMagnitude)
 
         sharedData.acceleration = Imu.a.tolist()
 
@@ -246,7 +250,7 @@ while True:
 
             sharedData.qError = response.qError.tolist()
             ypr = quat2ypr(response.qError)
-            sharedData.eulerError = np.degrees(ypr).tolist() #TODO - Because qError flips qhat, I think this needs to use a XYZ rotation instead of a ZYX to get back to Euler coordinates properly.
+            sharedData.eulerError = np.degrees(ypr).tolist()
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
 
             sharedData.inertialTorque = response.inertialTorque.tolist()
@@ -257,7 +261,7 @@ while True:
             if enableMotors:
                 Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi) / loopSpeed)
                
-                sharedData.duty = Motors.duty
+                sharedData.duty = Motors.duty.tolist()
 
         elif sharedData.controlRoutine == ControlRoutine.attitudeInput:
 
@@ -286,7 +290,7 @@ while True:
                 Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
                 #print(response.motorAccels * 60 / (2 * np.pi))
                 
-                sharedData.duty = Motors.duty
+                sharedData.duty = Motors.duty.tolist()
 
         elif sharedData.controlRoutine == ControlRoutine.search:
             # Search
@@ -317,7 +321,7 @@ while True:
 #                 Motors.setAllMotorRpm(response.motorAccels * 60 / (2 * np.pi))
 #                 #print(response.motorAccels * 60 / (2 * np.pi))
 #                 
-#                 sharedData.duty = Motors.duty
+#                 sharedData.duty = Motors.duty.tolist()
         else:
             log("Error: controlRoutine not found")
             pass

@@ -178,7 +178,10 @@ class ControlLawSingleton:
         #Calculate gains
         self.kd = 2*zwn*np.diag(self.I)
         self.kp = (wn**2)*np.diag(self.I)
-
+    
+        print("I: %s" % self.I)
+        print("%%os:%s, ts: %s" % (self.overshoot, self.ts))
+        print("KD: %s, KP: %s" % (self.kd, self.kp))
 
         # Gain setup
         #k1 = (I[1,1] - I[2,2])/I[0,0]

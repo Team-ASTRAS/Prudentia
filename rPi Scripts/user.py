@@ -85,6 +85,10 @@ class SharedDataPackage:
 
                         "timestamp" : self.timestamp
                         }
+        
+        #Use this to find types that are unserializable (usually a np.array assignment that isn't using .tolist()
+        #for item in dataObject:
+        #    print(type(dataObject[item]))
 
         return json.dumps(dataObject)
 
@@ -183,7 +187,7 @@ async def prudentiaServer(websocket, path, sharedData):
             msgJSON = json.loads(message)
 
             if msgJSON["messageType"] == "getData":
-                log("Sending data to client.")
+                #log("Sending data to client.")
                 await websocket.send(sharedData.getDataJson())
 
             elif msgJSON["messageType"] == "downloadData":

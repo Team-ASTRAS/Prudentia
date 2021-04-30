@@ -19,6 +19,13 @@ class MotorsSingleton:
     
     lastLoopTime = time.time()
     
+    def resetMotors(self):
+        for i in range(len(self.serialPorts)):
+            ~self.vescs[i]
+        for i in range(len(self.serialPorts)):
+            self.vescs[i] = VESC(self.serialPorts[i])
+            log("Is VESC port %s open? : %s" % (self.serialPorts[i], self.vescs[i].serial_port.is_open))
+    
     def __init__(self):
         for i in range(len(self.serialPorts)):
             self.vescs[i] = VESC(self.serialPorts[i])
@@ -49,7 +56,7 @@ class MotorsSingleton:
 #             else:
                     
             if newDuty > 0.85 or newDuty < -0.85:
-                log("WARNING - Motor %s is oversatured. New duty cycle request ignored: Over 80%% limit(%s%%)." % (i, round(newDuty*100, 2)))
+                log("WARNING - Motor %s is oversatured. New duty cycle request ignored: Over 85%% limit(%s%%)." % (i, round(newDuty*100, 2)))
             else:
                 self.duty[i] = newDuty
                 
@@ -63,10 +70,5 @@ class MotorsSingleton:
 if __name__ == "__main__":
     Motors = MotorsSingleton()
     
-    print(Motors.getDutyFromRpm(0))
-    print(Motors.getDutyFromRpm(1000))
-    print(Motors.getDutyFromRpm(4100))
-    print(Motors.getDutyFromRpm(-1000))
-    print(Motors.getDutyFromRpm(-4100))
-    print(Motors.getDutyFromRpm(819))
-    
+    Motors.setAllMotorRpm(np.array([500, 500, 500, 500]))
+    time.sleep(2)
