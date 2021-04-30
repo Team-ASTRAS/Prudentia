@@ -249,8 +249,10 @@ while True:
             sharedData.lqrMode = response.lqrMode.name
 
             sharedData.qError = response.qError.tolist()
+            
             ypr = quat2ypr(response.qError)
             sharedData.eulerError = np.degrees(ypr).tolist()
+            
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
 
             sharedData.inertialTorque = response.inertialTorque.tolist()
@@ -275,7 +277,7 @@ while True:
             sharedData.pdMode = response.pdMode.name
 
             sharedData.qError = response.qError.tolist()
-            ypr = quat2ypr(response.qError)
+            ypr = quatError2ypr(response.qError)
             sharedData.eulerError = np.degrees(ypr).tolist() #TODO - Because qError flips qhat, I think this needs to use a XYZ rotation instead of a ZYX to get back to Euler coordinates properly.
             sharedData.qErrorAdjusted = response.qErrorAdjusted.tolist()
 

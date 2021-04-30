@@ -79,7 +79,7 @@ def ypr2quat(ypr):
         
     return quat
 
-#Returns roll, pitch, and yaw in radians, given a quaternion.
+#Returns roll, pitch, and yaw in radians, given a quaternion. DO NOT USE QERROR HERE, USE quatError2ypr()
 def quat2ypr(q):
     result = np.array([0.0, 0.0, 0.0])
     result[2] = np.arctan2(2 * (q[1] * q[2] + q[0] * q[3]), q[3]**2 - q[0]**2 - q[1]**2 + q[2]**2)
@@ -87,6 +87,12 @@ def quat2ypr(q):
     result[0] = np.arctan2(2 * (q[0] * q[1] + q[2] * q[3]), q[3]**2 + q[0]**2 - q[1]**2 - q[2]**2)
     
     return result
+
+#Returns roll, pitch, and yaw in radians, given an error quaternion.
+#Since qError flips qHat, the ZYX rotation must be reversed to XYZ, or qHat must be flipped then the conversion result negated
+def quatError2ypr(q):
+    qFlipped = np.array([-q[0], -q[1], -q[2], q[3]])
+    return -1 * quat2ypr(qFlipped)
 
 #Returns a quaternion based on a normalized euler axis and angle. Expects units in radians.
 def eulerAxis2quat(axis, angle):
@@ -310,18 +316,21 @@ class ControlLawSingleton:
 
 if __name__ == "__main__":
     cls = ControlLawSingleton()
-
+    
+    inputEuler = [90, -10, -90]
     q = ypr2quat(np.radians([0, 0, 0]))
     w = np.array([0, 0, 0])
-    qTarget = ypr2quat(np.radians([90, 0, 0]))
+    qTarget = ypr2quat(np.radians(inputEuler))
 
     res = cls.routineAttitudeInput(q, w, qTarget)
+
+
     log("Motor Angle Configuration: %s" % cls.motorAngle)
     log("IN q:             %s Euler: %s" % (q , np.degrees(quat2ypr(q))) )
     log("IN w:             %s" % w)
     log("IN qTarget:       %s Euler: %s" % (qTarget , np.degrees(quat2ypr(qTarget))) )
     log("-" * 20)
-    log("OUT qError:       %s Euler: %s]" % (res.qError , np.degrees(quat2ypr(res.qError))) )
+    log("OUT qError:       %s Euler: %s]" % (res.qError , np.degrees(quatError2ypr(res.qError))) )
     #log("OUT qAdjusted:    %s Euler: %s]" % (res.qErrorAdjusted , np.degrees(quat2ypr(res.qErrorAdjusted))) )
     log("OUT lqrMode:      %s" % res.pdMode)
     log("OUT Inert Torque: %s" % res.inertialTorque)
